@@ -27,6 +27,7 @@
     10) GUI
     11) MV 3D face recognition
     12) Pointcloud postprocessing
+    13) Path planning
 
 6) Test and simulation
     1) Python test
