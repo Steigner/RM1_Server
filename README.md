@@ -17,23 +17,24 @@
 5) Robo Medicinae I
     1) Aim
     2) Technology
-    3) Architecture
-    4) Flask vs Django
-    5) ROS
-    6) GUI
-    7) Design and implementation station
-    8) Design end effector
-    9) MV 3D face recognition
-    10) Pointcloud postprocessing
-    11) 
+    3) Design and implementation station
+    4) Design end effector
+    5) Architecture
+    6) Flask vs Django
+    7) Databases
+    8) ROS
+    9) Simulation environment
+    10) GUI
+    11) MV 3D face recognition
+    12) Pointcloud postprocessing
 
 6) Test and simulation
     1) Python test
     2) Penetration attack and SQL injection
     3) Deploy Docker and ROS
-    4) Robot connect
-    5) Camera connect
-    6) Movemenet Simulation
-    7) 
+    4) Movemenet Simulation
+    5) Connecting a real robot to the ROS
+    6) Camera connect
+    7) Real world testing
 
 7) Conclusion
