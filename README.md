@@ -85,8 +85,8 @@
     
     6.7 Real world testing
 
-7) Conclusion
-
+7) **Conclusion**
+8) 
 ### Note:
 * UR5 UR10 will be better, longer arm
 * hanging on the ceiling
