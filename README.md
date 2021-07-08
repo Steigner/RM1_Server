@@ -38,26 +38,26 @@
         5.1.3 Design end-effector
     
     5.2 Software architecture
-           
-        5.2.1 Software topology
         
-        5.2.2 Flask vs Django
+        7.2.1 Technology
         
-        5.2.3 Docker container app
+        7.2.2 Software topology
         
-        5.2.4 Databases
+        5.2.3 Flask vs Django
+        
+        5.2.4 Docker container app
+        
+        5.2.5 Databases
    
-        5.2.5 ROS
+        5.2.6 ROS
     
-        5.2.6 Simulation environment
+        5.2.7 Simulation environment
     
     5.3 Graphical User Interface
         
         5.3.1 Designe GUI
         
-        5.3.2 Software resources
-        
-        5.3.3 User Interface
+        5.3.2 User Interface
         
     5.4 Machine vision 3D object recognition
     
