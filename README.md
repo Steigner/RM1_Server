@@ -1,7 +1,7 @@
 ### Content
 
-1) Introduction
-2) Collaborative robotics
+1) **Introduction**
+2) **Collaborative robotics**
 
     2.1 History, trend and future
         
@@ -9,31 +9,67 @@
     
     2.3 Universal Robots UR3
 
-3) 3D cameras
-    1) Intel Realsense(D435i fast introduction)
-    2) Other cameras(Photoneo, PickIt, advantages / disadvantages)
+3) **Machine vision**
 
-4) Robots in Medicine
-    1) Surgery robots(DaVinci, Puma, AOT Carlo ...)
-    2) medical applications(OpenTube, Kuka Roboert, ...) 
-    3) smart hospital
+    3.1 Robotics and machine vision
+    
+    3.2 Pickit
+    
+    3.3 Photoneo
 
-5) Robo Medicinae I
-    1) Aim
-    2) Technology
-    3) Design and implementation station
-    4) Design end effector
-    5) Architecture
-    6) Flask vs Django
-    7) Databases
-    8) ROS
-    9) Simulation environment
-    10) GUI
-    11) MV 3D face recognition
-    12) Pointcloud postprocessing
-    13) Path planning
+    3.4 Intel Realsense
 
-6) Test and simulation
+4) **Robots in healthcare**
+    
+    4.1 Surgery robots(DaVinci, Puma, AOT Carlo ...)
+    
+    4.2 Medical applications of cobots(OpenTube, Kuka Roboert, ...) 
+    
+    4.3 Smart hospital
+
+5) **Robo Medicinae I** 
+    
+    5.1 Designe station
+    
+        5.1.1 Technology
+
+        5.1.2 Hardware topology
+
+        5.1.3 Design end-effector
+    
+    5.2 Software architecture
+           
+        5.2.1 Software topology
+        
+        5.2.2 Flask vs Django
+        
+        5.2.3 Docker container app
+        
+        5.2.4 Databases
+   
+        5.2.5 ROS
+    
+        5.2.6 Simulation environment
+    
+    5.3 Graphical User Interface
+        
+        5.3.1 Designe GUI
+        
+        5.3.2 Software resources
+        
+        5.3.3 User Interface
+        
+    5.4 Machine vision 3D object recognition
+    
+        5.4.1 Pointcloud postprocessing
+        
+        5.4.2 Some algorithms 
+        
+        5.4.3 ...
+    
+    5.5 Path planning
+
+6) Test, simulation and deploy
     1) Python test
     2) Penetration attack and SQL injection
     3) Deploy Docker and ROS
