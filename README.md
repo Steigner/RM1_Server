@@ -69,14 +69,21 @@
     
     5.5 Path planning
 
-6) Test, simulation and deploy
-    1) Python test
-    2) Penetration attack and SQL injection
-    3) Deploy Docker and ROS
-    4) Movemenet Simulation
-    5) Connecting a real robot to the ROS
-    6) Camera connect
-    7) Real world testing
+6) **Test, simulation and deploy**
+    
+    6.1 Python test
+    
+    6.2 Penetration attack and SQL injection
+    
+    6.3 Deploy Docker and ROS
+    
+    6.4 Movemenet Simulation
+    
+    6.5 Connecting a real robot to the ROS
+    
+    6.6 Camera connect
+    
+    6.7 Real world testing
 
 7) Conclusion
 
