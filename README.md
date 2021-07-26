@@ -5,7 +5,7 @@
 
     2.1 History, trend and future
         
-    2.2 ABB GoFa, SWIFTI and Yumi
+    2.2 Collaborative robots (ABB GoFa, SWIFTI and Yumi)
     
     2.3 Universal Robots UR3
 
