@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/home_admin.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+    
+    <!-- script -> edit table of users -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/edit_table.js') }}"></script>
+    
+    <!-- title -->
+    <div class="title">FAST SEARCH FOR USER</div>
+
+    <!-- form for fast search user -->
+    <form action="" method="post">
+        {{ search_form.hidden_tag() }}
+        <p>
+            {{ search_form.email.label(class="label") }}<br>
+            {{ search_form.email(size=32,class="input") }}<br>
+        </p>
+        <p>
+            {{ search_form.surname.label(class="label")  }}<br>
+            {{ search_form.surname(size=32,class="input") }}<br>
+        </p>
+        <p>
+            {{ search_form.session_token.label(class="label")  }}<br>
+            {{ search_form.session_token(size=32,class="input") }}<br>
+        </p>
+        <p>{{ search_form.search(class="button_auth") }}</p>
+    </form> 
+
+    <!-- show table of searched users -->
+    <div class="title">SEARCHED USERS</div>
+    <table id="users">
+        <tr>
+            <th>ID</th>
+            <th>Login Email</th>
+            <th>Role</th>
+            <th>Title</th>
+            <th>Username</th>
+            <th>Surname</th>
+            <th>Department</th>
+            <th>Token</th>
+            <th>Edit</th> 
+            <th>Change</th>
+            <th>Delete</th>
+        </tr>
+        {% for user in search_list %}
+            <tr>
+                <td class="notedit_id">{{ user.id }}</td>
+                
+                <td class="edit_val">{{ user.email }}</td>
+                <td class="edit_val">{{ user.role }}</td>
+                <td class="edit_val">{{ user.title }}</td>
+                <td class="edit_val">{{ user.username }}</td>
+                <td class="edit_val">{{ user.surname }}</td>
+                <td class="edit_val">{{ user.department }}</td>
+
+                <td class="notedit_val">{{ user.session_token }}</td>
+                
+                <td><input class="edit" type="button" value="Edit"></td>
+                <td><input class="change" type="button" value="Change"></td>
+                <td><input class="delete" type="button" value="Delete"></td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <!-- all users show -->
+    <div class="title">USERS</div>
+    <table id="users">
+        <tr>
+            <th>ID</th>
+            <th>Login Email</th>
+            <th>Role</th>
+            <th>Title</th>
+            <th>Username</th>
+            <th>Surname</th>
+            <th>Department</th>
+            <th>Token</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.title }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.department }}</td>
+                <td>{{ user.session_token }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <!-- button for add new user -->
+    <button class="button_auth" id="add_user"onclick="window.location.href='{{ url_for( 'auth.register_admin') }}';">Add user</button>
+
+{% endblock %}

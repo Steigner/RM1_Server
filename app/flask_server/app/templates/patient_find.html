@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/patient_find.css') }}">
+
+<!-- stylescript -> virtual keyboard alfanumeric -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vk_an.css') }}">
+
+<!-- css library -> virtual keyboard -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+
+{% extends "layout.html" %}
+{% block content %}
+
+    <!-- library -> jquery user interface -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+
+    <!-- NAVIGATION MENU -->
+    <div class="info_panel">
+
+        <!-- back button -->
+        <button class="back_button"onclick="window.location.href='{{ url_for( 'app.patient_menu') }}';">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.18 52.23" class="back_logo">
+                <defs><style>.cls-1{fill:none;stroke:#21697c;stroke-miterlimit:10;stroke-width:2.02px;}</style></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><polygon class="cls-1" points="33.17 26.11 33.17 50.18 17.42 38.15 1.67 26.11 17.42 14.08 33.17 2.04 33.17 26.11"/></g></g>
+            </svg>
+        </button>
+
+        <!-- title -->
+        <div class="title">Find patient</div>
+        
+    </div>
+
+    <!-- MAIN PART -->
+    <div class="post_container">
+        
+        <!-- form for search in database in patients -->
+        <form  autocomplete="off" action="{{ url_for('auth.patients_searched') }}", method="post" novalidate>
+            {{ search_form.hidden_tag() }}
+            
+            <div class="find_patient">
+               
+                <!-- search patient button -->
+                <button class="search_button" id="search" name="search" type="submit" value="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.03 40.65" class="find_logo">
+                        <defs></defs>
+                        <g id="Vrstva_2" data-name="Vrstva 2">
+                            <g id="Layer_1" data-name="Layer 1">
+                                <line class="cls-11" x1="1.13" y1="39.52" x2="14.48" y2="21.84"/>
+                                <circle class="cls-11" cx="21.52" cy="12.51" r="11.38"/>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+
+                {{ search_form.search_data(class="input", placeholder="surname or Personal Identification Number", size=32) }}
+
+            </div>
+
+        </form>
+
+        <!-- virtual keyboard button -->
+        <button class="keyboard">
+            <!-- SVG - virtual keyboard logo -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.66 47.81" class="keyboard_logo"><defs>
+                </defs>
+                <g id="Vrstva_2" data-name="Vrstva 2">
+                <g id="Layer_1" data-name="Layer 1">
+                    <rect class="cls-7" x="60.6" y="11.27" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="50.19" y="11.27" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="40.01" y="11.27" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="29.44" y="11.27" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="9.78" y="20.9" width="9.31" height="5.83"/>
+                    <rect class="cls-7" x="56.51" y="21.09" width="9.31" height="5.83"/>
+                    <rect class="cls-7" x="60.31" y="31.48" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="9.47" y="31.48" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="45.07" y="20.99" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="34.89" y="20.99" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="24.51" y="20.99" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="19.48" y="11.27" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="8.91" y="11.27" width="5.83" height="5.83"/>
+                    <rect class="cls-7" x="19.99" y="31.29" width="35.62" height="6.21"/>
+                    <rect class="cls-8" x="1.25" y="1.25" width="71.16" height="45.31" rx="7.12"/>
+                </g>
+                </g>
+            </svg>
+        </button>
+
+        <!-- virtual keyboard with dragable area -->
+        <div id="find_patient" class="simple-keyboard">
+            <div class="dragable_place"></div>
+        </div> 
+    </div>
+
+
+    <!-- library -> virtual keyboard -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+    
+    <!-- script -> customize virtual keyboard -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/vk_an.js') }}"></script>
+
+    <!-- script -> patient finding manage -->
+    <script type="module" src="{{ url_for('static', filename = 'js/patient_find.js') }}"></script>
+
+{% endblock %}

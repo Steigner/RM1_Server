@@ -1,0 +1,9 @@
+@import "menu_nav.css";
+
+.pdf{
+    display: flex;
+    position: sticky;
+    margin-top: 1%;
+    width: 100%;
+    height: 88%;
+}

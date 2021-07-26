@@ -1,0 +1,161 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/robot_control.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+	<!-- library -> digital twin -->
+	<script src="https://static.robotwebtools.org/threejs/current/three.js"></script>
+
+	<!-- library -> digital twin -->
+	<script src="https://static.robotwebtools.org/threejs/current/ColladaLoader.js"></script>
+
+	<!-- library -> digital twin -->
+	<script src="https://static.robotwebtools.org/threejs/current/STLLoader.js"></script>
+
+	<!-- library -> digital twin -->
+	<script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+
+	<!-- library -> ros.js -->
+	<script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+
+	<!-- library -> ros3D - digital twin -->
+	<script src="https://static.robotwebtools.org/ros3djs/current/ros3d.min.js"></script>
+
+	<!-- script -> connect ros -->
+	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
+
+	<!-- script -> digital twin -->
+	<script type="module" src="{{ url_for('static', filename = 'js/robot_show.js') }}"></script>
+
+	<!-- script -> robot control -->
+	<script type="module" src="{{ url_for('static', filename = 'js/robot_control.js') }}"></script>
+
+	<!-- NAVIGATION MENU -->
+	<div class="info_panel">
+
+		<!-- back button -->
+		<button class="back_button"onclick="window.location.href='{{ url_for( 'app.menu') }}';">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.18 52.23" class="back_logo">
+				<defs><style>.cls-1{fill:none;stroke:#21697c;stroke-miterlimit:10;stroke-width:2.02px;}</style></defs>
+				<g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><polygon class="cls-1" points="33.17 26.11 33.17 50.18 17.42 38.15 1.67 26.11 17.42 14.08 33.17 2.04 33.17 26.11"/></g></g>
+			</svg>
+		</button>
+		
+		<!-- title -->
+		<div class="title">Manual robot control</div>
+		
+	</div>
+
+	<div class="post_container">
+
+		<!-- INFO PART -->
+		<div class="column" id="left">
+		<!-- digital twin -->
+		<div class="ROS_win"><div id="urdf"></div></div>
+		<!-- label -->
+		<div class="TCP_label">TCP</div>
+		<!-- TCP info panel -->
+		<div class="TCP">
+			<div class="cart_labels">
+			<div class="labels">X</div>
+			<div class="labels">Y</div>
+			<div class="labels">Z</div>
+			</div>
+
+			<div class="cart_labels" id="value">
+			<div class="labels" id="x"></div>
+			<div class="labels" id="y"></div>
+			<div class="labels" id="z"></div>
+			</div>
+
+			<div class="cart_labels">
+			<div class="labels">RX</div>
+			<div class="labels">RY</div>
+			<div class="labels">RZ</div>
+			</div>
+
+			<div class="cart_labels" id="value">
+			<div class="labels" id="RX"></div>
+			<div class="labels" id="RY"></div>
+			<div class="labels" id="RZ"></div>
+			</div>
+		</div>
+
+		</div>
+
+		<!-- CONTROL PART -->
+		<div class="column" id="right">
+		<!-- label -->
+		<div class="move_joints_label">Move joints</div>
+		<!-- main part -->
+		<div class="main_control">
+
+			<!-- joints labels -->
+			<div class="joint_column">
+			<div class="joint_label">base</div>
+			<div class="joint_label">shoulder</div>
+			<div class="joint_label">elbow</div>
+			<div class="joint_label">wrist 1</div>
+			<div class="joint_label">wrist 2</div>
+			<div class="joint_label">wrist 3</div>
+			</div>
+
+			<div class="control_grid">
+			<!-- left arrow -->
+			<div class="control">
+				<div class="left" id="base"></div>
+				<div class="left" id="shoulder"></div>
+				<div class="left" id="elbow"></div>
+				<div class="left" id="wrist_1"></div>
+				<div class="left" id="wrist_2"></div>
+				<div class="left" id="wrist_3"></div>
+			</div>
+
+			<!-- sliders -->
+			<div class="control">
+				<input class="slider" type="range" id="base" min="-360" max="360" value="180">
+				<input class="slider" type="range" id="shoulder" min="-360" max="360" value="180">
+				<input class="slider" type="range" id="elbow" min="-360" max="360" value="180">
+				<input class="slider" type="range" id="wrist_1" min="-360" max="360" value="180">
+				<input class="slider" type="range" id="wrist_2" min="-360" max="360" value="180">
+				<input class="slider" type="range" id="wrist_3" min="-360" max="360" value="180">
+			</div>
+
+			<!-- right arrow -->
+			<div class="control">
+				<div class="right" id="base"></div>
+				<div class="right" id="shoulder"></div>
+				<div class="right" id="elbow"></div>
+				<div class="right" id="wrist_1"></div>
+				<div class="right" id="wrist_2"></div>
+				<div class="right" id="wrist_3"></div>
+			</div>
+
+			</div>
+			
+			<!-- joints status -->
+			<div class="joint_column">
+			<div class="joint_label" id="base"></div>
+			<div class="joint_label" id="shoulder"></div>
+			<div class="joint_label" id="elbow"></div>
+			<div class="joint_label" id="wrist_1"></div>
+			<div class="joint_label" id="wrist_2"></div>
+			<div class="joint_label" id="wrist_3"></div>
+			</div>
+
+		</div>
+
+		<!-- STOP PART -->
+		<div class="vel_stop">
+			<div class="vel_grid">
+			<div class="vel_label">velocity</div>
+			<div class="vel_slider"><div class="vel_level"></div><input class="slider" type="range" id="vel" min="1" max="100" value="100" step="1"></div>
+			<div class="vel_label" id="value">100%</div>
+			</div>
+			<button class="emergency_stop">EMERGANCY STOP</button>
+		</div>
+
+		</div>
+
+	</div>
+
+{% endblock %}

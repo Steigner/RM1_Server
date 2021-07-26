@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/authors.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+
+    <!-- NAVIGATION MENU -->
+    <div class="info_panel">
+        
+        <!-- back button -->
+        {% if current_user.role == "Admin" %}
+            <button class="back_button"onclick="window.location.href='{{ url_for('auth.documentation_cam') }}';">
+        {% else %}
+            <button class="back_button"onclick="window.location.href='{{ url_for('app.documentation') }}';">
+        {% endif %}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.18 52.23" class="back_logo">
+                    <defs><style>.cls-1{fill:none;stroke:#21697c;stroke-miterlimit:10;stroke-width:2.02px;}</style></defs>
+                    <g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><polygon class="cls-1" points="33.17 26.11 33.17 50.18 17.42 38.15 1.67 26.11 17.42 14.08 33.17 2.04 33.17 26.11"/></g></g>
+                </svg>
+            </button>
+
+        <!-- title -->
+        <div class="title">Documentation</div>
+
+    </div>
+
+    <!-- MAIN PART -->
+    <div class="post_container">
+        <!-- 1. card -->
+        <div class="card">
+            <h1>Martin Juricek</h1>
+            <p class="title_author">Author</p>
+            <p>Brno Univesrity of Technology</p> 
+            <p>Faculty of Mechanical Engineering</p> 
+            <p>Institue of Automation and Computer Science</p>
+            <div style="margin: 24px 0;">
+                <a href="https://www.linkedin.com/in/martin-juricek/"><i id="linkedin1" class="fa fa-linkedin"></i></a>
+                <a href="https://github.com/Steigner"><i class="fa fa-github"></i></a>
+            </div>
+        </div>
+
+        <!-- 2. card -->
+        <div class="card">
+            <h1>Katerina Monsportova</h1>
+            <p class="title_author">Designer</p>
+            <p>Brno Univesrity of Technology</p> 
+            <p>Faculty of Mechanical Engineering</p> 
+            <p>Institute of Machine and Industrial Design</p>
+        </div>
+
+        <!-- 3. card -->
+        <div class="card">
+            <h1>Roman Parak</h1>
+            <p class="title_author">Supervisor</p>
+            <p>Brno Univesrity of Technology</p> 
+            <p>Faculty of Mechanical Engineering</p> 
+            <p>Institue of Automation and Computer Science</p>
+            <div style="margin: 24px 0;">
+                <a href="https://www.linkedin.com/in/roman-parak-53960910a/"><i id="linkedin3" class="fa fa-linkedin"></i></a>
+                <a href="https://www.vutbr.cz/en/people/roman-parak-184605"><i id="university3" class="fa fa-university"></i></a>
+                <a href="https://github.com/rparak"><i class="fa fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

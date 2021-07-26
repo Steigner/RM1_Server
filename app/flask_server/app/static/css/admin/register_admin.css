@@ -1,0 +1,93 @@
+.info_panel{
+    font-family : var(--font);
+    color : #21697C;
+    color : rgb(33, 105, 124);
+
+    position : sticky;
+    background : #F2F2F2;
+    background : rgba(242, 242, 242, 1);
+
+    width : 100%;
+    height: 10%;
+
+    border-radius : calc(14px / var(--width-divisor));
+    -moz-border-radius : calc(14px / var(--width-divisor));
+    -webkit-border-radius : calc(14px / var(--width-divisor));
+
+    display: grid;
+    align-items: center;
+}
+
+.title{
+    position: absolute;
+    font-size : calc(40px / var(--height-divisor));
+    justify-self: center;
+}
+
+.back_button{
+    background : #F2F2F2;
+    background : rgba(242, 242, 242, 1);
+
+    display: flex;
+    justify-content: flex-start;
+    margin-left: calc(20px / var(--width-divisor));
+    align-items: center;
+
+    width : calc(50px / var(--width-divisor));
+    height : calc(60px / var(--height-divisor));
+
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.back_logo{
+    width : calc(30px / var(--width-divisor));
+    height : calc(50px / var(--height-divisor));
+}
+
+.back_button:active{
+    opacity: 0.4;
+}
+
+.input{
+    color: #21697C;
+    color: rgb(33, 105, 124);
+    font-size: calc(15px / var(--height-divisor));
+    font-family: var(--font);
+}
+
+.label{
+    font-size: calc(20px / var(--height-divisor));
+    font-family: var(--font);
+
+    color: #21697C;
+    color: rgb(33, 105, 124);
+}
+
+.button_auth{
+    margin-top: 10px;
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: var(--font);
+    font-size: calc(15px / var(--height-divisor));
+
+    color: #E6E6E6;
+    color: rgb(230, 230, 230);
+    background: #21697C;
+    background: rgba(33, 105, 124, 1);
+
+    width: calc(100px / var(--width-divisor));
+    height: calc(40px / var(--height-divisor));
+    border-radius: calc(30px / var(--width-divisor));
+    -moz-border-radius: calc(30px / var(--width-divisor));
+    -webkit-border-radius: calc(30px / var(--width-divisor));
+}

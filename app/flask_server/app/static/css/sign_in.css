@@ -1,0 +1,228 @@
+@import "size.css";
+@import "font.css";
+
+/* inputs placeholder, opacity = 0.4*/
+::placeholder{
+    opacity: 0.4;
+    color: #21697C;
+    color : rgba(33, 105, 124, 1);
+}
+
+/* Set up inputs and background around them */
+input{
+    font-family : var(--font);
+    font-size : calc(20px / var(--height-divisor));
+    color: #21697C;
+    color : rgba(33, 105, 124, 1);
+}
+
+.email, .password{    
+    align-items: center;
+    display: flex;
+
+    background : #F2F2F2;
+    background : rgba(242, 242, 242, 1);
+
+    width : calc(640px / var(--width-divisor));
+    height : calc(55px / var(--height-divisor));
+
+    border-radius : calc(27px / var(--width-divisor));
+    -moz-border-radius : calc(27px / var(--width-divisor));
+    -webkit-border-radius : calc(27px / var(--width-divisor));
+}
+
+.password{
+    position : absolute;
+    left : calc(320px / var(--width-divisor));
+    top : calc(580px / var(--height-divisor));
+}
+
+.email{
+    position : absolute;
+    left : calc(320px / var(--width-divisor));
+    top : calc(500px / var(--height-divisor));
+}
+
+#email_input, #password_input{
+    color : #21697C;
+    color : rgba(33, 105, 124, 1);
+
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0px solid #eee;
+    
+    background : #F2F2F2;
+    background : rgba(242, 242, 242, 1);
+
+    width : calc(500px / var(--width-divisor));
+    margin-left: calc(10px / var(--width-divisor));
+    height : 100%;
+}
+
+/* Inputs logos */
+.email_logo{
+    width : calc(40px / var(--width-divisor));
+    height : calc(28px / var(--height-divisor));
+    margin-left: calc(30px / var(--width-divisor));
+}
+
+.password_logo{
+    width : calc(40px / var(--width-divisor));
+    height : calc(35px / var(--height-divisor));
+    margin-left: calc(30px / var(--width-divisor));
+}
+
+/* set up button -> no default layot */
+.sign_button, .keyboard{
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+}
+
+/* SET UP KEYBOARD*/ 
+.keyboard{
+    position: absolute;
+    width : calc(70px / var(--width-divisor));
+    height : calc(45px / var(--height-divisor));
+    left : calc(1175px / var(--width-divisor));
+    top : calc(875px / var(--height-divisor));
+}
+
+.keyboard_logo{
+    width: 100%;
+    height: 100%;
+}
+
+/* SIGN IN BUTTON */ 
+.sign_button{
+    color : #F2F2F2;
+    color : rgba(242, 242, 242, 1);
+
+    background : #21697C;
+    background : rgba(33, 105, 124, 1);
+    
+    position : absolute;
+    
+    left : calc(785px / var(--width-divisor));
+    top :  calc(662px / var(--height-divisor));
+    
+    width : calc(173px / var(--width-divisor));
+    height : calc(54px / var(--height-divisor));
+    
+    border-radius : calc(27px / var(--width-divisor));
+    -moz-border-radius : calc(27px / var(--width-divisor));
+    -webkit-border-radius : calc(27px / var(--width-divisor));
+}
+
+/* Set up div for title */ 
+.name_place{
+    position: absolute;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width : calc(800px / var(--width-divisor));
+    height : calc(150px / var(--height-divisor));
+    top : calc(280px / var(--height-divisor));
+    left : calc(250px / var(--width-divisor));
+}
+
+/* Set parts of title */
+.name, .name2, .name3{
+    vertical-align: middle;
+    display: inline-block;
+    font-family : var(--font-light);
+    font-size : calc(100px / var(--height-divisor));
+    color : #21697C;
+    color : rgb(33, 105, 124);
+}
+
+.name{
+    margin-left: calc(-50px / var(--width-divisor));
+}
+
+.name2{
+    margin-left: calc(140px / var(--width-divisor));
+}
+
+.name3{
+    float: left;
+    margin-left: calc(10px / var(--width-divisor));
+}
+
+/* Set up position and parametres of app logo */
+.logo{
+    position: absolute;
+    width: calc(110px / var(--width-divisor));
+    height: calc(190px / var(--height-divisor));
+    left: calc(470px / var(--width-divisor));
+    top: calc(280px / var(--height-divisor));
+}
+
+/* If clicked button(keyboard, signin) => change opacity  */ 
+.keyboard:active, .sign_button:active{
+    opacity: 0.4;
+}
+
+/* Set up for background -> opacity = 0.25 */
+body::after {
+    content: "";
+    background-color : #F2F2F2;
+    background-color : rgba(242, 242, 242, 1);
+    opacity: 0.25;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+/* ------------ SVG'S ----------------- */
+
+/* -------- APP LOGO --------- */ 
+.cls-1{
+    fill:#f2f2f2;
+}
+
+.cls-2{
+    fill:none;opacity:0.5;
+}
+
+.cls-3{
+    fill:#85acb7;
+}
+
+.cls-4{
+    fill:#21697c;
+}
+
+/* -------- EMAIL LOGO --------- */ 
+.cls-5{
+    fill:none;
+    stroke:#21697c;
+    stroke-miterlimit:10;
+    stroke-width:1.6px;
+}
+
+/* -------- PASSWORD LOGO --------- */ 
+.cls-6{
+    fill:none;
+    stroke:#21697c;
+    stroke-miterlimit:10;
+    stroke-width:1.6px;
+}
+
+/* -------- KEYBOARD LOGO --------- */ 
+.cls-7{
+    fill:#21697c;
+}
+
+.cls-8{
+    fill:none;
+    stroke:#21697c;
+    stroke-miterlimit:10;
+    stroke-width:2.5px;
+}

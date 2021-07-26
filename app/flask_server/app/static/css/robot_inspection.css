@@ -1,0 +1,115 @@
+@import "menu_nav.css";
+
+.post_container{
+    position: sticky;
+    width: 100%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: 95% 5%;
+}
+
+.graph_grid{
+    display: grid;
+    grid-template-rows: 10% 40% 10% 40%;
+}
+
+.graphs{
+    display: grid;
+    grid-template-columns: 15%  15%  15%  15%  15%  15%;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(1090px/var(--width-divisor));
+}
+
+.num{
+    position: sticky;
+    display: flex;
+    align-self: center;
+    
+    z-index: -1;
+    
+    font-family: var(--font);
+    font-size: calc(25px/var(--height-divisor));
+    
+    color: #21697C;
+    color: rgb(33, 105, 124);
+}
+
+.motor_label{
+    display: flex;
+    align-self: center;
+    
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
+    
+    width: 100%;
+    height: calc(60px/var(--height-divisor));
+    
+    border-radius: calc(16px/var(--width-divisor));;
+    -moz-border-radius: calc(16px/var(--width-divisor));
+    -webkit-border-radius: calc(16px/var(--width-divisor));
+}
+
+.motor_label_text{
+    display: flex;
+    align-self: center;
+
+    margin-left: calc(25px/var(--width-divisor));
+    font-family: var(--font);
+    font-size: calc(25px/var(--height-divisor));
+
+    color: #21697C;
+    color: rgb(33, 105, 124);
+}
+
+.sidebar{
+    z-index: 10;
+    display: flex;
+    justify-self: flex-end;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    margin-top: calc(5px/var(--height-divisor));
+    
+    background: #E6E6E6;
+    background: rgba(230, 230, 230, 1);
+    
+    width: calc(52px/var(--width-divisor));
+    height: 100%;
+    
+    border-radius: calc(14px/var(--width-divisor));
+    -moz-border-radius: calc(14px/var(--width-divisor));
+    -webkit-border-radius: calc(14px/var(--width-divisor));
+}
+
+.robot{
+    height: calc(500px/var(--height-divisor));
+}
+
+#tool_flange, #wrist_3_joint, #wrist_2_joint, #wrist_1_joint, #elbow_joint, #shoulder_joint, #base_joint, #base, #part_0, #part_1, #part_2{
+    opacity: 0.4;
+}
+
+#label{
+    margin-top: calc(25px/var(--width-divisor));
+    
+    font-family: var(--font);
+    font-size: calc(25px/var(--height-divisor));
+
+    color: #21697C;
+    color: rgb(33, 105, 124);
+}
+
+.show{
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    background: #E6E6E6;
+    background: rgba(230, 230, 230, 1);
+
+    margin-bottom: calc(25px/var(--width-divisor));
+}

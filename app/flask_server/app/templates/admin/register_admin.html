@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/register_admin.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+
+    <!-- NAVIGATION MENU -->
+    <div class="info_panel">
+
+        <!-- back button -->
+        <button class="back_button"onclick="window.location.href='{{ url_for( 'auth.home_admin') }}';">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.18 52.23" class="back_logo">
+                <defs><style>.cls-1{fill:none;stroke:#21697c;stroke-miterlimit:10;stroke-width:2.02px;}</style></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><polygon class="cls-1" points="33.17 26.11 33.17 50.18 17.42 38.15 1.67 26.11 17.42 14.08 33.17 2.04 33.17 26.11"/></g></g>
+            </svg>
+        </button>
+
+        <!-- title -->
+        <div class="title">Register User</div>
+
+    </div>
+
+    <!-- ADD USER FORM -->
+    <form action="" method="post">
+        {{ reg_form.hidden_tag() }}
+        <!-- email -->
+        <p>
+            {{ reg_form.email.label(class="label") }}<br>
+            {{ reg_form.email(size=32,class="input") }}<br>
+            {% for error in reg_form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <!-- username -->
+        <p>
+            {{ reg_form.username.label(class="label") }}<br>
+            {{ reg_form.username(size=32, class="input") }}<br>
+        </p>
+
+        <!-- surname -->
+        <p>
+            {{ reg_form.surname.label(class="label")  }}<br>
+            {{ reg_form.surname(size=32, class="input") }}<br>
+        </p>
+        
+        <!-- title -->
+        <p>
+            {{ reg_form.title.label(class="label")  }}<br>
+            {{ reg_form.title(size=32, class="input") }}<br>
+        </p>
+
+        <!-- department -->
+        <p>
+            {{ reg_form.department.label(class="label")  }}<br>
+            {{ reg_form.department(size=32, class="input") }}<br>
+        </p>
+
+        <!-- role -->
+        <p>
+            {{ reg_form.role.label(class="label")  }}<br>
+            {{ reg_form.role(size=5, class="input") }}<br>
+        </p>
+
+        <!-- password -->
+        <p>
+            {{ reg_form.password.label(class="label")  }}<br>
+            {{ reg_form.password(size=32, class="input") }}<br>
+            {% for error in reg_form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <!-- password2 -->
+        <p>
+            {{ reg_form.password2.label(class="label")  }}<br>
+            {{ reg_form.password2(size=32,class="input") }}<br>
+            {% for error in reg_form.password2.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <!-- submit button -->
+        <p>{{ reg_form.register(class="button_auth") }}</p>
+    </form>
+
+{% endblock %}

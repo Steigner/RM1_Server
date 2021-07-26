@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+
+    {% if count == 1 %}
+        {% if current_user.is_authenticated %}
+            <div class="title">welcome  {{ current_user.username }} </div>
+        {% endif %}
+    {% else %}
+        <div class="title">{{ current_user.title }} {{ current_user.username }} {{ current_user.surname }} </div>
+    {% endif %}
+
+    <!-- menu button -->
+    <button class="button_home" id="start_button"onclick="window.location.href='{{ url_for( 'app.menu') }}';">Menu</button>
+
+    <!-- connect robot button -->
+    <button class="button_home" id="connect_button"onclick="window.location.href='{{ url_for( 'app.robot_connect') }}';">Connect Robot</button>
+
+    <!-- disconnect robot button -->
+    <button class="button_home" id="disconnect_button"onclick="window.location.href='{{ url_for( 'app.robot_disconnect') }}';">Disconnect Robot</button>
+
+    <!-- reload button -->
+    <button class="button_home" id="reload"onclick="window.location.href='{{ url_for( 'app.reload') }}';">Reload</button>
+
+    {% if current_user.role == "Admin" %}
+        <button class="button_home" id="admin_menu"onclick="window.location.href='{{ url_for( 'auth.home_admin') }}';">Admin Menu</button>
+    {% endif %}
+
+    <div id="connect" class="title">Robot connected on ip-adress: {{ ip }}</div>
+
+    {% if cam == "Camera status: device is pluged-in" %}
+        <div id="camera" class="title">{{ cam }}</div>
+    {% else %}
+        <div id="camera" class="title">{{ cam }}</div>
+    {% endif %}
+
+    <!-- !! in progress fast dec. of scripts -->
+    <script>
+        $("#reload.button_home").prop("disabled", true);
+        $( '.title' ).hide();
+        $( '.title' ).fadeIn(4000);
+        setTimeout(function(){ 
+            $("#reload.button_home").prop("disabled", false); 
+        }, 4000);
+    </script>
+
+    {% if ip == "none" %}
+        <script>
+            $("#disconnect_button.button_home").prop("disabled", true);
+            $("#connect_button.button_home").prop("disabled", false);
+        </script>
+    {% else %}
+        <script>
+            $("#disconnect_button.button_home").prop("disabled", false);
+            $("#connect_button.button_home").prop("disabled", true);
+        </script>
+    {% endif %}
+
+{% endblock %}

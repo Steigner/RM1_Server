@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/con_pan_show_cam.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+
+    <!-- script -> streaming from camera -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/cam_stream.js') }}"></script>
+
+    <!-- NAVIGATION MENU -->
+    <div class="info_panel">
+
+        <!-- back button -->
+        <button class="back_button"onclick="window.location.href='{{ url_for( 'app.con_pan') }}';">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.18 52.23" class="back_logo">
+                <defs><style>.cls-1{fill:none;stroke:#21697c;stroke-miterlimit:10;stroke-width:2.02px;}</style></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><polygon class="cls-1" points="33.17 26.11 33.17 50.18 17.42 38.15 1.67 26.11 17.42 14.08 33.17 2.04 33.17 26.11"/></g></g>
+            </svg>
+        </button>
+        
+        <!-- title -->
+        <div class="title">Camera stream</div>
+    </div>
+
+    <!-- MAIN PART -->
+    <div class="post_container">
+        
+        <!-- GUI SWITCH -->
+        <div class="column">
+
+            <!-- 1. option depth -->
+            <div class="output">
+                <div class="label">Depth</div>
+                <label class="switch">
+                    <input type="checkbox" id="depth_cam" value="Off_depth">
+                    <div class="slider"></div>
+                </label>
+            </div>
+
+            <!-- 2. option depth -->
+            <div class="output">
+                <div class="label">Color</div>
+                <label class="switch">
+                    <input type="checkbox" id="color_cam" value="Off_color">
+                    <div class="slider"></div>
+                </label>
+            </div>
+
+            <!-- 3. option depth -->
+            <div class="output">
+                <div class="label">Infra</div>
+                <label class="switch">
+                    <input type="checkbox" id="infra_cam" value="Off_infra">
+                    <div class="slider"></div>
+                </label>
+            </div>
+
+        </div>
+
+        <!-- streaming -->
+        <div class="image">
+            <img class="stream">
+        </div>
+
+    </div>
+
+{% endblock %}

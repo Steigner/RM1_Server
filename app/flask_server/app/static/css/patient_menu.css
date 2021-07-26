@@ -1,0 +1,62 @@
+@import "menu_nav.css";
+
+.post_container{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.nav_button{
+    margin: calc(40px / var(--width-divisor));
+    background : #F2F2F2;
+    background : rgba(242, 242, 242, 1);
+
+    position : sticky;
+
+    width : calc(425px / var(--width-divisor));
+    height : calc(170px / var(--height-divisor));
+    border-radius : calc(20px / var(--width-divisor));
+    -moz-border-radius : calc(20px / var(--width-divisor));
+    -webkit-border-radius : calc(20px / var(--width-divisor));
+
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    font-family : var(--font);
+    font-size : calc(40px / var(--height-divisor));
+    color : #21697C;
+    color : rgb(33, 105, 124);
+}
+
+.image{
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
+    border-radius: calc(18px / var(--width-divisor));
+    -moz-border-radius: calc(18px / var(--width-divisor));
+    -webkit-border-radius: calc(18px / var(--width-divisor));
+    width: calc(640px + 50px);
+    height: calc(480px + 50px);
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
+.stream{
+    border-radius: calc(18px / var(--width-divisor));
+    -moz-border-radius: calc(18px / var(--width-divisor));
+    -webkit-border-radius: calc(18px / var(--width-divisor));
+}
+
+.nav_button:active{
+    opacity: 0.4;
+}

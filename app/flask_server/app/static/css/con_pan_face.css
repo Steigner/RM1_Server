@@ -1,0 +1,80 @@
+@import "menu_nav.css";
+
+.post_container{
+    position: sticky;
+    width: 100%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+.image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
+
+    border-radius: calc(18px / var(--width-divisor));
+    -moz-border-radius: calc(18px / var(--width-divisor));
+    -webkit-border-radius: calc(18px / var(--width-divisor));
+
+    width: calc(640px + 100px);
+    height: calc(480px + 100px);
+    margin-bottom: calc(10px / var(--height-divisor));
+
+    align-self: flex-end;
+    justify-self: flex-start;
+}
+
+.stream{
+    border-radius: calc(18px / var(--width-divisor));
+    -moz-border-radius: calc(18px / var(--width-divisor));
+    -webkit-border-radius: calc(18px / var(--width-divisor));
+}
+
+.output{
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
+
+    border-radius: calc(18px / var(--width-divisor));
+    -moz-border-radius: calc(18px / var(--width-divisor));
+    -webkit-border-radius: calc(18px / var(--width-divisor));
+    height: calc(120px / var(--height-divisor));
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: calc(10px / var(--height-divisor));
+}
+
+.next_button{
+    background: #21697C;
+    background: rgba(33, 105, 124, 1);
+
+    width: calc(300px / var(--width-divisor));
+    height: calc(90px / var(--height-divisor));
+    
+    border-radius: calc(17px / var(--width-divisor));
+    -moz-border-radius: calc(17px / var(--width-divisor));
+    -webkit-border-radius: calc(17px / var(--width-divisor));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: var(--font);
+    font-size: calc(50px / var(--height-divisor));;
+
+    color: #F2F2F2;
+    color: rgb(242, 242, 242);
+}

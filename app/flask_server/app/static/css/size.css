@@ -1,0 +1,13 @@
+@media (min-device-width: 1280px) and (min-device-height: 960px) {
+  :root {
+    --width-divisor: 1;
+    --height-divisor : 1;
+  }
+}
+
+@media (min-device-width: 1920px) and (min-device-height: 1080px){
+  :root {
+    --width-divisor: calc(1280 / 1920);
+    --height-divisor : calc(960 / 1080);
+  }
+}

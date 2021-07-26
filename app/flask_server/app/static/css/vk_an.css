@@ -1,0 +1,14 @@
+@import "vk.css";
+
+#sign_in.simple-keyboard {
+    max-width: calc(600px / var(--width-divisor));
+    top : calc(600px / var(--height-divisor));
+    left : calc(330px / var(--width-divisor));
+}
+
+#find_patient.simple-keyboard{
+    position: absolute;
+    top : calc(400px / var(--height-divisor));
+    max-width: calc(600px / var(--width-divisor));
+    align-self: center;
+}

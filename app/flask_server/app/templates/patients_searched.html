@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/patients_searched.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+
+    <!-- NAVIGATION MENU -->
+    <div class="info_panel">
+
+        <!-- back button -->
+        <button class="back_button"onclick="window.location.href='{{ url_for( 'auth.patient_find') }}';">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.18 52.23" class="back_logo">
+                <defs><style>.cls-1{fill:none;stroke:#21697c;stroke-miterlimit:10;stroke-width:2.02px;}</style></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><polygon class="cls-1" points="33.17 26.11 33.17 50.18 17.42 38.15 1.67 26.11 17.42 14.08 33.17 2.04 33.17 26.11"/></g></g>
+            </svg>
+        </button>
+        
+        <!-- title -->
+        <div class="title">Searched patients</div>
+        
+    </div>
+
+    <!-- MAIN PART -->
+    <div class="post_container">
+
+        <!-- if finded patients -->
+        {% if patients %}
+
+            <!-- show finded patients -->
+            {% for patient in patients %}
+            <form action="{{ url_for('auth.patient_data') }}" method="post">
+                <div class="searched_patients">
+                    <!-- show data patient button -->
+                    <button class="search_button" type="submit" value="Search">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.03 40.65" class="find_logo">
+                            <defs></defs>
+                            <g id="Vrstva_2" data-name="Vrstva 2">
+                                <g id="Layer_1" data-name="Layer 1">
+                                    <line class="cls-11" x1="1.13" y1="39.52" x2="14.48" y2="21.84"/>
+                                    <circle class="cls-11" cx="21.52" cy="12.51" r="11.38"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+                    
+                    <!-- some basic info for identification right one patient -->
+                    <div class="output">
+                        {{ patient.name }}
+                        {{ patient.surname }}
+                        {{ patient.dob }}
+                        <input type="hidden" name="patient" value="{{ patient.pid }}"/>
+                    </div>
+                    
+                </div>
+            </form>
+            {% endfor %}
+
+        {% else %}
+            <!-- if not find patients -->
+            <div id="warning_patient">The patient is not in the database</div>
+        {% endif %}
+        
+        <!-- script -> on click loading -->
+        <script>
+            $(".search_button").click(function(){
+                $(".loading_background, .loading_label, .wrapper").show();
+            });
+        </script>
+
+    </div>
+
+{% endblock %}

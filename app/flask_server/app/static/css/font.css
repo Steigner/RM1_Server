@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Myriad Pro Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Myriad Pro Light'), url('fonts-woff/MyriadPro-Light.woff') format('woff');
+}
+
+:root {
+    --font: Verdana, Geneva, sans-serif;
+    --font-light: Myriad Pro Light;
+}

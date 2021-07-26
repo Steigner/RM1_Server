@@ -1,0 +1,81 @@
+.title{
+    margin-top: calc(200px / var(--height-divisor));
+    text-align: center;
+    
+    max-width: calc(1150px / var(--width-divisor));
+    
+    font-family: var(--font-light);
+    font-size: calc(120px / var(--height-divisor));
+
+    color: #21697C;
+    color: rgb(33, 105, 124);
+}
+
+#connect.title{
+    margin-top: calc(25px / var(--height-divisor));
+    font-size: calc(25px / var(--height-divisor));
+    font-family: var(--font);
+}
+
+#camera.title{
+    margin-top: calc(10px / var(--height-divisor));
+    font-size: calc(25px / var(--height-divisor));
+    font-family: var(--font);
+}
+
+.button_home{
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    font-family: var(--font);
+    font-size: calc(25px / var(--height-divisor));
+
+    color: #E6E6E6;
+    color: rgb(230, 230, 230);
+    background: #21697C;
+    background: rgba(33, 105, 124, 1);
+
+    width: calc(260px / var(--width-divisor));
+    height: calc(80px / var(--height-divisor));
+    border-radius: calc(30px / var(--width-divisor));
+    -moz-border-radius: calc(30px / var(--width-divisor));
+    -webkit-border-radius: calc(30px / var(--width-divisor));
+}
+
+#start_button.button_home{
+    bottom: calc(5px / var(--height-divisor));
+    right: 0px;
+}
+
+#connect_button.button_home{
+    bottom: calc(90px / var(--height-divisor));
+    right: 0px;
+}
+
+#disconnect_button.button_home{
+    bottom: calc(175px / var(--height-divisor));
+    right: 0px;
+}
+
+#reload.button_home{
+    bottom: calc(260px / var(--height-divisor));
+    right: 0px;
+}
+
+#admin_menu.button_home{
+    bottom: calc(5px / var(--height-divisor));
+    right: calc(280px / var(--width-divisor));
+}
+
+#start_button.button_home:active, #connect_button.button_home:active, 
+#disconnect_button.button_home:active, #reload.button_home:active,
+#admin_menu.button_home:active{
+    opacity: 0.4;
+}

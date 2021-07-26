@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block content %}
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/robot_connect.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/vk_n.css') }}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js" integrity="sha512-x2Owc9WayRcRj80Znkau58shVfXN2OIX+gQAlrx6KPugZBKrIC6AwgEWQQCI06p2Q8RB4ilxD+y+1BdNd+1fQA==" crossorigin="anonymous"></script>
+
+	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
+
+	<div class="title">Robot connection</div>
+
+	<div class="ip">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.48 35.32" class="ip_logo">
+			<g id="Vrstva_2" data-name="Vrstva 2">
+				<g id="Layer_1" data-name="Layer 1">
+				<path class="cls-1" d="M24.74,12.65c0,7.52-8.5,21.92-12,21.92-3.67,0-12-14.4-12-21.92S6.11.74,12.74.74,24.74,5.12,24.74,12.65Z"/>
+				<circle class="cls-1" cx="13.17" cy="13.36" r="6.79"/>
+				</g>
+			</g>
+		</svg>
+		<input class="ip_input" placeholder="ip adress" size=32></input>
+
+	</div>
+
+	<button class="button_con" id="connect_button">Connect</button>
+
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.66 47.81" class="keyboard_logo"><defs>
+	</defs>
+	<g id="Vrstva_2" data-name="Vrstva 2">
+	<g id="Layer_1" data-name="Layer 1">
+		<rect class="cls-7" x="60.6" y="11.27" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="50.19" y="11.27" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="40.01" y="11.27" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="29.44" y="11.27" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="9.78" y="20.9" width="9.31" height="5.83"/>
+		<rect class="cls-7" x="56.51" y="21.09" width="9.31" height="5.83"/>
+		<rect class="cls-7" x="60.31" y="31.48" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="9.47" y="31.48" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="45.07" y="20.99" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="34.89" y="20.99" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="24.51" y="20.99" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="19.48" y="11.27" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="8.91" y="11.27" width="5.83" height="5.83"/>
+		<rect class="cls-7" x="19.99" y="31.29" width="35.62" height="6.21"/>
+		<rect class="cls-8" x="1.25" y="1.25" width="71.16" height="45.31" rx="7.12"/>
+	</g>
+	</g>
+	</svg>
+
+	<div class="simple-keyboard">
+		<div class="dragable_place"></div>
+	</div> 
+
+	<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename = 'js/vk_n.js') }}"></script>
+	<script type="module" src="{{ url_for('static', filename = 'js/robot_connect.js') }}"></script>
+
+{% endblock %}

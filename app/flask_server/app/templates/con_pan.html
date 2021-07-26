@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/con_pan.css') }}">
+
+{% extends "layout.html" %}
+{% block content %}
+	
+	<!-- NAVIGATION MENU -->
+	<div class="info_panel">
+
+		<!-- back button -->
+		<button class="back_button"onclick="window.location.href='{{ url_for( 'app.menu') }}';">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.18 52.23" class="back_logo">
+			<defs><style>.cls-1{fill:none;stroke:#21697c;stroke-miterlimit:10;stroke-width:2.02px;}</style></defs>
+			<g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><polygon class="cls-1" points="33.17 26.11 33.17 50.18 17.42 38.15 1.67 26.11 17.42 14.08 33.17 2.04 33.17 26.11"/></g></g>
+			</svg>
+		</button>
+		
+		<!-- title -->
+		<div class="title">Find patient</div>
+
+	</div>
+
+	<!-- MAIN PART -->
+	<div class="post_container">
+		
+		<!-- 1. option to show camera stream -->
+		<button class="menu_button"onclick="window.location.href='{{ url_for( 'app.show_cam_stream') }}';">Show stream camera</button>
+		
+		<!-- 2. option got to process validation patient and ready -->
+		<button class="menu_button"onclick="window.location.href='{{ url_for( 'app.face_position') }}';">Face ID</button>
+	
+	</div>
+
+{% endblock %}

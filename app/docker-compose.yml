@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  flask:
+    build: ./flask_server
+    container_name: flask_server
+    restart: always
+    environment:
+      - APP_NAME=Robo_Medicinae_I
+    expose:
+      - 8080
+    
+    # eneable Camera to docker acces
+    #devices:
+      #- /dev/video0:/dev/video0
+      #- /dev/video1:/dev/video1
+      #- /dev/video2:/dev/video2
+      #- /dev/video3:/dev/video3
+      #- /dev/video4:/dev/video4
+      #- /dev/video5:/dev/video5
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
