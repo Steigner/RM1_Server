@@ -74,7 +74,7 @@ input{
 }
 
 /* set up button -> no default layot */
-.sign_button, .keyboard{
+.submit_button, .keyboard{
     border: 0;
     outline: none;
     -webkit-appearance: none;
@@ -97,7 +97,7 @@ input{
 }
 
 /* SIGN IN BUTTON */ 
-.sign_button{
+.submit_button{
     color : #F2F2F2;
     color : rgba(242, 242, 242, 1);
 
@@ -117,52 +117,56 @@ input{
     -webkit-border-radius : calc(27px / var(--width-divisor));
 }
 
-/* Set up div for title */ 
+/* Set up div for title 
+
+    align-items: center;
+    
+    display: flex;
+    
+    justify-content: center;
+
+*/ 
 .name_place{
     position: absolute;
+    
+    display: grid;
     align-items: center;
-    display: flex;
-    justify-content: center;
+    grid-template-columns: 25% 25% 60%;
+
     width : calc(800px / var(--width-divisor));
     height : calc(150px / var(--height-divisor));
+    left: 50%;
+    transform: translate(-50%);
     top : calc(280px / var(--height-divisor));
-    left : calc(250px / var(--width-divisor));
 }
 
 /* Set parts of title */
-.name, .name2, .name3{
-    vertical-align: middle;
-    display: inline-block;
+.name, .name2{
     font-family : var(--font-light);
     font-size : calc(100px / var(--height-divisor));
     color : #21697C;
     color : rgb(33, 105, 124);
 }
 
+
 .name{
-    margin-left: calc(-50px / var(--width-divisor));
+    justify-self: right;
 }
+
 
 .name2{
-    margin-left: calc(140px / var(--width-divisor));
+    justify-self: left;
 }
 
-.name3{
-    float: left;
-    margin-left: calc(10px / var(--width-divisor));
-}
 
-/* Set up position and parametres of app logo */
 .logo{
-    position: absolute;
+    justify-self: center;
     width: calc(110px / var(--width-divisor));
     height: calc(190px / var(--height-divisor));
-    left: calc(470px / var(--width-divisor));
-    top: calc(280px / var(--height-divisor));
 }
 
 /* If clicked button(keyboard, signin) => change opacity  */ 
-.keyboard:active, .sign_button:active{
+.keyboard:active, .submit_button:active{
     opacity: 0.4;
 }
 

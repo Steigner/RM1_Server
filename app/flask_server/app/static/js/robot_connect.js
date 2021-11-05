@@ -8,24 +8,47 @@ $(function() {
     var plus_dist = '+=' + dist + "px"
     var minus_dist = '-=' + dist + "px"
 
+    var dp_width = $('#numerical.dragable_place').width();
+    var dp_height = 100 / height_devisor;
+
     /**
      * Prepare all elements, for interaction
      * in animations, dragable functions, and so on.  
     */
 
+    // hide scrollbar
+    document.body.style.overflow = 'hidden';
+    
     // counter for clicks on keyboard_logo
     var counter = 0;
 
+    // find the element that you want to drag.
+    var box = document.getElementById('con_rob');
+
+    /* listen to the touchMove event,
+    every time it fires, grab the location
+    of touch and assign it to box */
+    box.addEventListener('touchmove', function(e) {
+        // grab the location of touch
+        var touchLocation = e.targetTouches[0];
+        
+        // assign box new coordinates based on the touch.
+        box.style.left = (touchLocation.pageX - dp_width) + 'px';
+        box.style.top = (touchLocation.pageY - dp_height) + 'px';
+
+        e.preventDefault();
+    })
+
+    /* record the position of the touch
+    when released using touchend event.
+    This will be the drop position. */
+    box.addEventListener('touchend', function(e) {
+        // current box position.
+        var x = parseInt(box.style.left);
+        var y = parseInt(box.style.top);
+    })
+
     $('.simple-keyboard').hide();
-
-    // need to be first defined elemet, which will be draggable
-    $('.simple-keyboard').draggable({});
-
-    // this prevented move with virtual keybouard out from screen resolution
-    $('.simple-keyboard').draggable("option", "scroll", false);
-
-    // disable, becouse after holding *.dragable_place* area, we enable it again. 
-    $('.simple-keyboard').draggable("disable")
 
     // after click on keyboard_logo, we use jquery simple animation function to move defined 
     // elemetns up if is counter == 1, if not so second click on keyboard_logo, we use inverted function
@@ -87,20 +110,21 @@ $(function() {
             window.setTimeout(function(){   
                 var ros = ROS_connect();
                 
-                /* ROS SERVICE !! */
-                var service_connect = new ROSLIB.Service({
+                // twist change!!
+                var cmdVel = new ROSLIB.Topic({
                     ros : ros,
-                    name : '/connect_robot',
-                    serviceType : 'std_srvs/Trigger'
+                    name : '/switch',
+                    messageType : 'std_msgs/String'
                 });
             
-                // Use the advertise() method to indicate that we want to provide this service
-                service_connect.advertise(function(request, response) {
-                    response['success'] = true;
-                    response['message'] = value;
-                    return true;
+                var twist = new ROSLIB.Message({
+                    data: value       
                 });
+            
+                // And finally, publish.
+                cmdVel.publish(twist);
 
+                //----------------------------------------------------------
                 var listener = new ROSLIB.Topic({
                     ros : ros,
                     name : '/rosout_agg',
@@ -122,7 +146,7 @@ $(function() {
                             window.location.href="/home";
                         }, 3000);
                     }
-                
+
                 });
                 
             }, 2000);
@@ -130,16 +154,54 @@ $(function() {
         }
         
         else{
-            alert("U dont put valid IP adress!!")
-        }           
+
+            if(value == "sim"){
+                alert("U pi tsa")
+                
+                $(".loading_background, .loading_label, .wrapper").show();
+    
+                window.setTimeout(function(){   
+                    var ros = ROS_connect();
+                    
+                    // twist change!!
+                    var cmdVel = new ROSLIB.Topic({
+                        ros : ros,
+                        name : '/switch',
+                        messageType : 'std_msgs/String'
+                    });
+                
+                    var twist = new ROSLIB.Message({
+                        data: value       
+                    });
+                
+                    // And finally, publish.
+                    cmdVel.publish(twist);
+    
+                    //----------------------------------------------------------
+                    var listener = new ROSLIB.Topic({
+                        ros : ros,
+                        name : '/rosout_agg',
+                        messageType : 'rosgraph_msgs/Log'
+                    });
+        
+                    listener.subscribe(function(message) {
+                        console.log(message.msg)
+                        
+                        if (message.msg.includes('MoveGroup context initialization complete')) { 
+                              
+                            window.setTimeout(function(){  
+                                $(".loading_background, .loading_label, .wrapper").hide();
+                                window.location.href="/home";
+                            }, 3000);
+                        }
+    
+                    });
+                    
+                }, 2000);    
+            }
+            else{
+                alert("U dont put valid IP adress!!")
+            };
+        };           
     });
-
 });
-
-$(function() {
-    $('.dragable_place').on('mousedown touchstart', function(e) {
-        $( ".simple-keyboard" ).draggable("enable");
-    })
-}).bind('mouseup mouseleave touchend', function() {
-    $('.simple-keyboard').draggable("disable")
-})

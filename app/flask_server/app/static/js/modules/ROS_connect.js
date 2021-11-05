@@ -3,6 +3,7 @@ const url = "ws://localhost:9090"
 
 function get_ip(){
     var ip_adress = "ws://localhost:9090";
+    
     $.ajax({        
         url: '/ip_adress',
         type: 'POST',
@@ -28,7 +29,7 @@ export function ROS_connect() {
     
     // First, we need to connect to our ROS bridge server setup earlier with the same port number.
     // there is var ip
-    ros.connect(url);
+    ros.connect('ws://localhost:9090');
 
     ros.on('connection', function() {
         console.log("We are connected!")

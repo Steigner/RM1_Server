@@ -37,7 +37,7 @@
     height : calc(30px / var(--height-divisor));
 }
 
-.search_button{
+.submit_button{
     display: flex;
     align-items:center;
     justify-content: center;
@@ -96,7 +96,7 @@
     height: 100%;
 }
 
-#search.search_button:active, .keyboard:active{
+#search.submit_button:active, .keyboard:active{
     opacity: 0.4;
 }
 

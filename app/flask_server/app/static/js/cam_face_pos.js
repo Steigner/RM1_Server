@@ -1,4 +1,63 @@
-$(function() {    
+import {ROS_connect} from './modules/ROS_connect.js';
+
+$(function() {
+    $("#up").prop("disabled", true);
+    $("#down").prop("disabled", true);
+    //$(".back_button").prop("disabled", true);
+    $("#face_val.next_button").prop("disabled", true);
+
+    var ros = ROS_connect();
+    
+    var up_down = new ROSLIB.Topic({
+        ros : ros,
+        name : '/up_down',
+        messageType : 'std_msgs/String'
+    });
+
+    var menu = new ROSLIB.Topic({
+        ros : ros,
+        name : '/switch',
+        messageType : 'std_msgs/String'
+    });
+
+    var init = new ROSLIB.Message({
+        data: "init"       
+    });
+
+    // And finally, publish.
+    menu.publish(init);
+    
+    var listener = new ROSLIB.Topic({
+        ros : ros,
+        name : '/info',
+        messageType : 'std_msgs/String'
+    });
+    
+    listener.subscribe(function(message) {
+        console.log('Received message on ' + message.data);
+        listener.unsubscribe();
+        $("#up").prop("disabled", false);
+        $("#down").prop("disabled", false);
+        //$(".back_button").prop("disabled", false);
+        $("#face_val.next_button").prop("disabled", false);
+    });
+    
+    $("#up").click(function(){
+        var data = new ROSLIB.Message({
+            data: "up"
+        });
+        up_down.publish(data);
+        return
+    });
+
+    $("#down").click(function(){
+        var data = new ROSLIB.Message({
+            data: "down"
+        });
+        up_down.publish(data);
+        return
+    });
+
     // AJAX
     // Note:
     //  If click on back button stop streaming -> garbage collector.
@@ -33,7 +92,7 @@ $(function() {
             }
         });
         setTimeout(function(){
-            window.location.href="/face_validation";
+            window.location.href="/face_scan";
         }, 3000);
     });
 

@@ -7,6 +7,8 @@ import numpy as np
 # script -> inicialized camera setting
 from app.camera.cam import Camera
 
+import pyrealsense2 as rs
+
 class FaceDet(Camera):
     # public classmethod:
     #   input: none
@@ -77,13 +79,17 @@ class FaceDet(Camera):
             
             # show all landrmarks points
             for landmark in landmarks:
-                land = landmark
+                # land = landmark
                 
+                # land = [int(landmark[0][33][0]), int(landmark[0][33][1])]
+                
+                cv2.circle(image, (int(landmark[0][33][0]), int(landmark[0][33][1])), 4, (255, 0, 0), 4)
+
                 for x,y in landmark[0]:
                     # (B-G-R)--thicknes 
                     # due to compatibility to opencv version 5.2.1
                     cv2.circle(image, (int(x), int(y)), 1, (0, 0, 139), 2)
-
+                    
                     # if is face landmarks out of range    
                     if x > x2 or y > y2 or x < x1 or y <y1:
                         # landmarks is out of defined zone
@@ -91,8 +97,11 @@ class FaceDet(Camera):
                         
                         self.validation = False
 
-        return land, image
-    
+        return image
+
+    """
+    # tohle nebude potreba jelikoz je to stare na porovnavani pozice xichtu !!!
+    # 
     # !!private classmethod:
     #   input: color image [np.asarray], landmarks [np.array]
     #   return image with opencv changes [np.array]
@@ -142,6 +151,7 @@ class FaceDet(Camera):
         
         cv2.putText(image, text, (20,50), font, 0.75, (255, 255, 255), 1)
         return image
+    """
 
     # private classmethod:
     #   input: none
@@ -155,7 +165,31 @@ class FaceDet(Camera):
         color_frame = aligned_frames.get_color_frame()
         image = np.asarray(color_frame.get_data())
         
-        return image
+        return image, aligned_frames
+
+    """
+    should be deleted!!
+    
+    @classmethod
+    def __computed_point(self, land, aligned_frames):
+        depth_frame = aligned_frames.get_depth_frame()
+        
+        aligned_color_frame = aligned_frames.get_color_frame()
+        
+        color_intrin = aligned_color_frame.profile.as_video_stream_profile().intrinsics
+        
+        depth_image = np.asanyarray(depth_frame.get_data())
+        color_image = np.asanyarray(aligned_color_frame.get_data())
+        
+        x, y = land[0], land[1] 
+
+        depth = depth_frame.get_distance(x, y)
+        
+        dx ,dy, dz = rs.rs2_deproject_pixel_to_point(color_intrin, [x,y], depth)
+        # print(dx,dy,dz)
+        
+        return [dx, dy, dz]
+    """
 
     # public classmethod:
     #   input: none
@@ -163,24 +197,14 @@ class FaceDet(Camera):
     # Note: get color image and put into __show() method, then return modified data.
     @classmethod
     def set_position(self):            
-        image = self.__image()
+        image, aligned_frames = self.__image()
 
-        self.landmark, image_color = self.__show(image)
+        image_color = self.__show(image)
+        
         jpeg = cv2.imencode('.jpg', image_color)[1].tobytes()
+
         return jpeg
 
-    # public classmethod:
-    #   input: none
-    #   return jpeg color modifed by __validation_position() method [jpg - tobytes]
-    # Note: get color image and put into _validation_position() method, then return modified data.
-    @classmethod
-    def set_postion_face(self):
-        image = self.__image()
-
-        image_color = self.__validation_position(self.landmark, image)  
-        jpeg = cv2.imencode('.jpg', image_color)[1].tobytes()
-        return jpeg
-    
     # public classmethod:
     #   input: none
     #   return validation variable [bool]

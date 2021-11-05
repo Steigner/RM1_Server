@@ -9,9 +9,13 @@ class Config:
     SECRET_KEY = 'secret'
     SQLALCHEMY_BINDS = {
         'db_users': 'sqlite:///db_users.db',
-        'db_patients': 'db2:// YOUR KEY DB2'
+        'db_patients': 'db2://sxj87782:6hns9qcp60qx39%409@dashdb-txn-sbox-yp-lon02-13.services.eu-gb.bluemix.net:50000/BLUDB'
     }
     # property for commit changes into databases
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     # property which is used for logging
     USE_SESSION_FOR_NEXT = True
+    
+    SESSION_COOKIE_SECURE = True
+    REMEMBER_COOKIE_SECURE = True
+    REMEMBER_COOKIE_HTTPONLY = True

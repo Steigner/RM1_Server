@@ -65,8 +65,8 @@
 }
 
 #reload.button_home{
-    bottom: calc(260px / var(--height-divisor));
-    right: 0px;
+    bottom: calc(5px / var(--height-divisor));
+    left: 0px;
 }
 
 #admin_menu.button_home{

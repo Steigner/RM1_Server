@@ -34,6 +34,10 @@ class RegistrationForm(FlaskForm):
 #   return: none
 # Note: Structure of login form sqlite -> non-user level
 class LoginForm(FlaskForm):
+    # for brute_force testing
+    # class Meta:
+    #    csrf = False
+        
     email = StringField('email', validators = [InputRequired(), Length(min = 4, max = 40)])
     password = PasswordField('password', validators = [InputRequired(), Length(min = 4, max = 40)])
     submit = SubmitField('Sign in')

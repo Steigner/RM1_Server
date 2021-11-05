@@ -3,8 +3,11 @@
 {% extends "layout.html" %}
 {% block content %}
 
+	<script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
+
 	<!-- script -> face position manage -->
-	<script type="text/javascript" src="{{ url_for('static', filename = 'js/cam_face_pos.js') }}"></script>
+	<script type="module" src="{{ url_for('static', filename = 'js/cam_face_pos.js') }}"></script>
 
 	<!-- NAVIGATION MENU -->
 	<div class="info_panel">
@@ -32,7 +35,9 @@
 
 		<!-- next button -->
 		<div class="column">
-			<div id="face_val" class="next_button">Face validation</div>
+			<button id="up" class="next_button">ROTATE UP</button>
+			<button id="down" class="next_button">ROTATE DOWN</button>
+			<button id="face_val" class="next_button">Face validation</button>
 		</div>
 
 	</div>

@@ -34,3 +34,9 @@ class Counter:
     counter = 0
     def __init__(self):
         pass
+
+# toto nebude potreba
+class Point:
+    point = []
+    def __init__(self):
+        pass

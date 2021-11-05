@@ -1,21 +1,23 @@
 import {ROS_connect} from './modules/ROS_connect.js';
 
-$(function() { 
+$(function() {
     var ros = ROS_connect();
-    var service_disconnect = new ROSLIB.Service({
+    
+    var cmdVel = new ROSLIB.Topic({
         ros : ros,
-        name : '/disconnect_robot',
-        serviceType : 'std_srvs/Trigger'
+        name : '/switch',
+        messageType : 'std_msgs/String'
     });
 
-    service_disconnect.advertise(function(request, response) {
-        response['success'] = true;
-        response['message'] = "disconnect";
-        return true;
+    var twist = new ROSLIB.Message({
+        data: "disconnect"       
     });
+
+    // And finally, publish.
+    cmdVel.publish(twist);
     
     // wait on connection, then disconnect!!
     window.setTimeout(function(){  
         window.location.href="/home";
-    }, 5000);
+    }, 1000);
 });

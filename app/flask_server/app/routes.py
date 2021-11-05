@@ -29,7 +29,7 @@ from .camera.func_take_pc import TakePC
 from .robot.get_data import Robot_info
 
 # script -> store variables in back-end
-from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation
+from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation, Point
 
 # script -> detect server ip-adress(self ip adress)
 from .self_ipadress import get_ip
@@ -42,6 +42,8 @@ from base64 import b64encode
 
 # library -> time manage
 import time
+
+from .camera.func_nostrill_det import NostrillDet
 
 # set 1. blueprint = app 
 app = Blueprint('app', __name__)
@@ -61,8 +63,21 @@ def custom_401(error):
 @login_required
 def home():
     Counter.counter += 1
-    info = Camera_Init().inicialize()
-    StoreCam.cam = Camera_Init().dev
+
+    # if Counter.counter <= 1:
+    #    NostrillDet.init()
+    
+    try:
+        StreamCam.start()
+        StreamCam.stop()
+        
+        # TODO get exactly type of camera !! 
+        info = Camera_Init().inicialize()
+        StoreCam.cam = Camera_Init().dev
+    
+    except RuntimeError:
+        info = "Camera status: not pluged-in compatible device"
+        StoreCam.cam = info
 
     return render_template('home.html', ip = StoreIP.ip, count = Counter.counter, cam = info)
 
@@ -84,6 +99,8 @@ def ip_adress():
 @app.route('/reload')
 @login_required
 def reload():
+    # TODO: !!!!
+    # if cam is pluged in delete cookies about error cameras!
     return redirect(url_for('app.home'))
 
 # page -> route robot connect:
@@ -162,8 +179,9 @@ def robot_control():
 @login_required
 def robot_inspection():
     # for localhost simulation => self ip adress need to be added
-    Robot_info.connect("192.168.20.105")
-    
+    #Robot_info.connect("192.168.20.105")
+    Robot_info.connect("127.0.0.1")
+
     if request.method == 'POST':
         if request.form['value'] == 'data_feed':
             url = url_for('.data_feed')
@@ -196,10 +214,14 @@ def authors():
 def dash():
     if request.method == 'POST':
         points_x, points_y, points_z, colors  = Show_PointCloud.load_pc()
+        
+        # !!
+        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : Point.point[0], 'ny':Point.point[1], 'nz':Point.point[2]})
         return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
 
     return render_template('dash.html')
 
+"""
 # !!page -> route take pointcloud:
 # Note: 
 #   1. in progress 
@@ -211,6 +233,7 @@ def take_pointcloud():
     TakePC.stop()
 
     return render_template('home.html')
+"""
 
 # page -> route show camera stream:
 # Note: 
@@ -220,25 +243,29 @@ def take_pointcloud():
 @login_required
 def show_cam_stream():
     if request.method == 'POST':
-        if request.form['value'] == 'depth_cam':
-            StreamCam.start()
-            url = url_for('.video_stream_depth')
-            return jsonify({'url' : url})
-        
-        if request.form['value'] == 'color_cam':
-            StreamCam.start()
-            url = url_for('.video_stream_color')
-            return jsonify({'url' : url})
+        try:
+            if request.form['value'] == 'depth_cam':
+                StreamCam.start()
+                url = url_for('.video_stream_depth')
+                return jsonify({'url' : url})
+            
+            if request.form['value'] == 'color_cam':
+                StreamCam.start()
+                url = url_for('.video_stream_color')
+                return jsonify({'url' : url})
+                
+            if request.form['value'] == 'infra_cam':
+                StreamCam.start()
+                url = url_for('.video_stream_infra')
+                return jsonify({'url' : url})
 
-        if request.form['value'] == 'infra_cam':
-            StreamCam.start()
-            url = url_for('.video_stream_infra')
-            return jsonify({'url' : url})
+            if request.form['value'] == 'stop_cam':
+                time.sleep(0.5)
+                StreamCam.stop()
+                return jsonify("Stop")
         
-        if request.form['value'] == 'stop_cam':
-            time.sleep(0.5)
-            StreamCam.stop()
-            return jsonify("Stop")
+        except RuntimeError:
+            return jsonify("Camera is not pluged-in!")
 
     return render_template('con_pan_show_cam.html')
 
@@ -250,11 +277,21 @@ def faceID():
             time.sleep(0.5)
             FaceReco.stop()
         
-        if request.form['value'] == 'recognition':  
-            patient = Patient.query.filter_by(pid = StoreID.id).first()
-            FaceReco.init_patient(patient.photo, str(patient.name + " " + patient.surname))
+        if request.form['value'] == 'recognition':
+            # print(StoreID.id)
             
-            time.sleep(1)
+            # time.sleep(2)
+
+            # patient = Patient.query.filter_by(pid = StoreID.id).first()
+            
+            # time.sleep(3)
+            
+            # FaceReco.init_patient(patient.photo, str(patient.name + " " + patient.surname))
+            
+            FaceReco.init_patient("test", "test")
+
+            time.sleep(3)
+            
             FaceReco.start()
 
             url = url_for('.video_feed_facereco')
@@ -265,7 +302,8 @@ def faceID():
 @app.route('/face_position', methods=['GET','POST'])
 @login_required
 def face_position():
-    if Validation.val == True:
+
+    # if Validation.val == True:
         if request.method == 'POST':
             if request.form['value'] == 'stop_det_cam':
                 time.sleep(0.5)
@@ -280,17 +318,40 @@ def face_position():
 
         return render_template('con_pan_face_pos.html')
 
-    else:
-        return render_template('con_pan.html')
+    # else:
+    #    return render_template('con_pan.html')
 
-@app.route('/face_validation', methods=['GET','POST'])
+
+# !! TADY BUDE SCAN NOSTRILL -> POINT CLOUD -> GET POINT OF NOSTRILL !!
+@app.route('/face_scan', methods=['GET','POST'])
 @login_required
-def face_validation():
-    if Validation.val == True:
-        return render_template('con_pan_face_val.html')
-        
-    else:
+def face_scan():
+    # if Validation.val == True:
+        NostrillDet.start()
+        Point.point = NostrillDet.scan_nostrill()
+        NostrillDet.stop()
+
+        print(Point.point)
+        time.sleep(3)
+
+        TakePC.start()
+        TakePC.take_pointcloud()
+        TakePC.stop()
+
         return render_template('con_pan.html')
+        
+        """
+        if request.method == 'POST':
+            if request.form['value'] == 'point':
+                
+                # print(Point.point)
+                # reconstruct axis
+                return jsonify({'point': [0.030752645805478096, -0.12229534238576889, 0.44669997692108154]})
+
+        return render_template('con_pan_face_scan.html')
+        """
+    # else:
+    #     return render_template('con_pan.html')
 
 # page -> route patient data:
 # Note: 
@@ -303,7 +364,6 @@ def face_validation():
 def patient_data_qr():
     if request.method == 'POST':
         if request.form['value'] == 'stop_qr_cam':
-            time.sleep(0.5)
             ReadQR.stop()
 
     data = ReadQR.output_data()
@@ -326,7 +386,6 @@ def patient_menu():
     if request.method == 'POST':
         if request.form['value'] == 'QR_detection':
             ReadQR.start()
-            time.sleep(10)
             url = url_for('.video_stream_QR')
             return jsonify({'on':'Streaming video!', 'off':'Stop Streaming!', 'url' : url})
     
@@ -357,6 +416,7 @@ def video_feed_facereco():
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+"""
 # yield -> route video stream face validation:
 # Note: 
 #   1. Stream color image with face validation position and store validation.
@@ -369,6 +429,7 @@ def video_feed_faceval():
             Validation.val = FaceDet.get_val()
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+"""
 
 # yield -> route video stream face detector:
 # Note: 

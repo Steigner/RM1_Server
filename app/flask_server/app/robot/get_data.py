@@ -21,21 +21,21 @@ class Robot_info(object):
     #   return none
     # Note: Init ip adress of robot with static ports for communication
     @classmethod
-    def connect(self, ip_adress):
+    def connect(cls, ip_adress):
         # ip address of host
-        self.HOST = ip_adress
+        cls.HOST = ip_adress
         # Interface realtime = port number
-        self.PORT_RT = 30003
-        self.PORT_DS = 29999
+        cls.PORT_RT = 30003
+        cls.PORT_DS = 29999
     
     # public classmethod:
     #   input: none
     #   return none
     # Note: This method represents remote acces to play button in polyscope
     @classmethod
-    def play_button(self):
-        HOST = self.HOST
-        PORT = self.PORT_DS
+    def play_button(cls):
+        HOST = cls.HOST
+        PORT = cls.PORT_DS
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((HOST, PORT))
@@ -51,7 +51,7 @@ class Robot_info(object):
     # Note: This method create socket communication with robot and parse data,
     # which are post to route. 
     @classmethod
-    def get_data(self):
+    def get_data(cls):
         HOST = self.HOST
         PORT_RT = self.PORT_RT
 

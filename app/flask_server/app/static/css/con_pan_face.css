@@ -73,8 +73,15 @@
     justify-content: center;
 
     font-family: var(--font);
-    font-size: calc(50px / var(--height-divisor));;
+    font-size: calc(40px / var(--height-divisor));
 
     color: #F2F2F2;
     color: rgb(242, 242, 242);
+
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    margin-top: calc(5px / var(--height-divisor));
 }

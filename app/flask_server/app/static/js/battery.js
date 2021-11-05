@@ -1,11 +1,8 @@
 // script -> size devisor
 import {Size} from './modules/size.js';
 
-// script -> infos
-import {allert} from './modules/infos.js';
-
 // script -> cookies manage
-import {delete_warning_cookie, insert_error_cookie, insert_warning_cookie} from './modules/cookies.js';
+import {delete_warning_cookie, insert_error_cookie, insert_warning_cookie, allert} from './modules/cookies.js';
 
 // animation of batery level
 function anim(level,width_devisor){

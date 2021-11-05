@@ -1,5 +1,5 @@
 import {Size} from './modules/size.js';
-import {num_errors, num_warnings} from './modules/infos.js';
+import {num_errors, num_warnings} from './modules/cookies.js';
 
 var [width, height, width_devisor, _] = Size()
 

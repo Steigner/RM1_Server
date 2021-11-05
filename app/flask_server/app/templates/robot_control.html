@@ -2,9 +2,9 @@
 
 {% extends "layout.html" %}
 {% block content %}
+	
 	<!-- library -> digital twin -->
 	<script src="https://static.robotwebtools.org/threejs/current/three.js"></script>
-
 	<!-- library -> digital twin -->
 	<script src="https://static.robotwebtools.org/threejs/current/ColladaLoader.js"></script>
 
@@ -25,9 +25,6 @@
 
 	<!-- script -> digital twin -->
 	<script type="module" src="{{ url_for('static', filename = 'js/robot_show.js') }}"></script>
-
-	<!-- script -> robot control -->
-	<script type="module" src="{{ url_for('static', filename = 'js/robot_control.js') }}"></script>
 
 	<!-- NAVIGATION MENU -->
 	<div class="info_panel">
@@ -84,78 +81,88 @@
 
 		<!-- CONTROL PART -->
 		<div class="column" id="right">
-		<!-- label -->
-		<div class="move_joints_label">Move joints</div>
-		<!-- main part -->
-		<div class="main_control">
+			<!-- label -->
+			<div class="move_joints_label">Move joints</div>
+			<!-- main part -->
+			<div class="main_control">
 
-			<!-- joints labels -->
-			<div class="joint_column">
-			<div class="joint_label">base</div>
-			<div class="joint_label">shoulder</div>
-			<div class="joint_label">elbow</div>
-			<div class="joint_label">wrist 1</div>
-			<div class="joint_label">wrist 2</div>
-			<div class="joint_label">wrist 3</div>
+				<!-- joints labels -->
+				<div class="joint_column">
+				<div class="joint_label">base</div>
+				<div class="joint_label">shoulder</div>
+				<div class="joint_label">elbow</div>
+				<div class="joint_label">wrist 1</div>
+				<div class="joint_label">wrist 2</div>
+				<div class="joint_label">wrist 3</div>
+				</div>
+
+				<div class="control_grid">
+				<!-- left arrow -->
+				<div class="control">
+					<div class="left" id="base"></div>
+					<div class="left" id="shoulder"></div>
+					<div class="left" id="elbow"></div>
+					<div class="left" id="wrist_1"></div>
+					<div class="left" id="wrist_2"></div>
+					<div class="left" id="wrist_3"></div>
+				</div>
+
+				<!-- sliders -->
+				<div class="control">
+					<input class="slider" type="range" id="base" min="-360" max="360" value="180">
+					<input class="slider" type="range" id="shoulder" min="-360" max="360" value="180">
+					<input class="slider" type="range" id="elbow" min="-360" max="360" value="180">
+					<input class="slider" type="range" id="wrist_1" min="-360" max="360" value="180">
+					<input class="slider" type="range" id="wrist_2" min="-360" max="360" value="180">
+					<input class="slider" type="range" id="wrist_3" min="-360" max="360" value="180">
+				</div>
+
+				<!-- right arrow -->
+				<div class="control">
+					<div class="right" id="base"></div>
+					<div class="right" id="shoulder"></div>
+					<div class="right" id="elbow"></div>
+					<div class="right" id="wrist_1"></div>
+					<div class="right" id="wrist_2"></div>
+					<div class="right" id="wrist_3"></div>
+				</div>
+
+				</div>
+				
+				<!-- joints status -->
+				<div class="joint_column">
+				<div class="joint_label" id="base"></div>
+				<div class="joint_label" id="shoulder"></div>
+				<div class="joint_label" id="elbow"></div>
+				<div class="joint_label" id="wrist_1"></div>
+				<div class="joint_label" id="wrist_2"></div>
+				<div class="joint_label" id="wrist_3"></div>
+				</div>
+
 			</div>
 
-			<div class="control_grid">
-			<!-- left arrow -->
-			<div class="control">
-				<div class="left" id="base"></div>
-				<div class="left" id="shoulder"></div>
-				<div class="left" id="elbow"></div>
-				<div class="left" id="wrist_1"></div>
-				<div class="left" id="wrist_2"></div>
-				<div class="left" id="wrist_3"></div>
-			</div>
-
-			<!-- sliders -->
-			<div class="control">
-				<input class="slider" type="range" id="base" min="-360" max="360" value="180">
-				<input class="slider" type="range" id="shoulder" min="-360" max="360" value="180">
-				<input class="slider" type="range" id="elbow" min="-360" max="360" value="180">
-				<input class="slider" type="range" id="wrist_1" min="-360" max="360" value="180">
-				<input class="slider" type="range" id="wrist_2" min="-360" max="360" value="180">
-				<input class="slider" type="range" id="wrist_3" min="-360" max="360" value="180">
-			</div>
-
-			<!-- right arrow -->
-			<div class="control">
-				<div class="right" id="base"></div>
-				<div class="right" id="shoulder"></div>
-				<div class="right" id="elbow"></div>
-				<div class="right" id="wrist_1"></div>
-				<div class="right" id="wrist_2"></div>
-				<div class="right" id="wrist_3"></div>
-			</div>
-
+			<!-- STOP PART -->
+			<div class="vel_stop">
+				<div class="vel_grid">
+				<div class="vel_label">velocity</div>
+				<div class="vel_slider"><input class="slider" type="range" id="vel" min="1" max="100" value="100" step="1"></div>
+				<div class="vel_label" id="value">100%</div>
+				</div>
+				<button class="emergency_stop">EMERGANCY STOP</button>
 			</div>
 			
-			<!-- joints status -->
-			<div class="joint_column">
-			<div class="joint_label" id="base"></div>
-			<div class="joint_label" id="shoulder"></div>
-			<div class="joint_label" id="elbow"></div>
-			<div class="joint_label" id="wrist_1"></div>
-			<div class="joint_label" id="wrist_2"></div>
-			<div class="joint_label" id="wrist_3"></div>
-			</div>
+			<!-- library stylescript -> rangeslider.js -->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.min.css" integrity="sha512-Rp0yZ3NMh1xOUZ4VHYggmX4pq4ZJdpcOETH03qBD5qNDsqTBw1MzUnX0T5PcTJmr2mNTOmtbxsHaGwzjylNpHA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+			
+			<!-- library -> rangeslider.js -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.min.js" integrity="sha512-BUlWdwDeJo24GIubM+z40xcj/pjw7RuULBkxOTc+0L9BaGwZPwiwtbiSVzv31qR7TWx7bs6OPTE5IyfLOorboQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			
+			<!-- stylescript -> sliders -->
+			<link rel="stylesheet" href="{{ url_for('static', filename='css/range_slider.css') }}">
 
+			<!-- script -> robot control -->
+			<script type="module" src="{{ url_for('static', filename = 'js/robot_control.js') }}"></script>
 		</div>
-
-		<!-- STOP PART -->
-		<div class="vel_stop">
-			<div class="vel_grid">
-			<div class="vel_label">velocity</div>
-			<div class="vel_slider"><div class="vel_level"></div><input class="slider" type="range" id="vel" min="1" max="100" value="100" step="1"></div>
-			<div class="vel_label" id="value">100%</div>
-			</div>
-			<button class="emergency_stop">EMERGANCY STOP</button>
-		</div>
-
-		</div>
-
 	</div>
 
 {% endblock %}

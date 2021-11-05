@@ -1,0 +1,16 @@
+.rangeslider__fill{
+    opacity: 0;
+}
+.rangeslider {
+    background-color: #CCCCCC;
+    border-radius: 0;
+    height: calc(2.5px / var(--height-divisor));
+    width: calc(250px / var(--width-divisor));
+}
+.rangeslider__handle {
+    width: calc(20px / var(--height-divisor));
+    height: calc(20px / var(--height-divisor));
+    position: absolute;
+    background-color: #21697C;
+    border-color: #21697C;
+}

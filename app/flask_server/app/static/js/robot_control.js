@@ -1,19 +1,16 @@
 // script -> ros connection
 import {ROS_connect} from './modules/ROS_connect.js';
 
-// script -> size devisor
-import {Size} from './modules/size.js';
-
 /* REDAME: on this file is neccesary to run action_sub.py file
     no private methods for better acces to methods
 */
 // EXCEPTIONS!!
 
 class RobotControl{
-    constructor(ros, width_devisor){
+    constructor(ros){
         this.ros = ros;
-        this.width_devisor = width_devisor;
         this.timeOut = 0;
+        this.count = 0;
     }
 
     // public method:
@@ -21,14 +18,15 @@ class RobotControl{
     //   return none
     // Note: In this method we defined topics and parametres for communication
     // with ROS websocket server, which control robot.
-    rosnode_init(){ 
-        // ROS PARAM 
-        this.stop = new ROSLIB.Param({
+    rosnode_init(){  
+        // ROS NODES
+        // emergency stop node
+        this.stop = new ROSLIB.Topic({
             ros : this.ros,
-            name : 'emergency_stop'
+            name : '/switch',
+            messageType : 'std_msgs/String'
         });
 
-        // ROS NODES
         // init current position node
         this.cartesian_data = new ROSLIB.Topic({
             ros : this.ros,
@@ -72,24 +70,21 @@ class RobotControl{
     // Note: Set up velocity by slider + animation of slider with his level
     velocity_control(){
         var vel_acc_pub = this.vel_acc_pub;
-        var width_devisor = this.width_devisor;
 
-        $("#vel.slider").on('input', function() {
-            var val = (2/width_devisor) * this.value;
-            $(".vel_level").css({"width": val + "px"});
-        });
+        $('#vel.slider').rangeslider({
+            polyfill: false,
 
-        $('#vel.slider').on('change', function() {
-            
-            $("#value.vel_label").text( this.value + " %" );
+            onSlideEnd: function(position, value) {
+                $("#value.vel_label").text( value + " %" );
 
-            var move_sett = new ROSLIB.Message({
-                // must be Number
-                data: Number(this.value),
-            });
-
-            vel_acc_pub.publish(move_sett);
-
+                var move_sett = new ROSLIB.Message({
+                    // must be Number
+                    data: Number(this.value),
+                });
+    
+                vel_acc_pub.publish(move_sett);
+                return 
+            }
         })
     }
 
@@ -146,14 +141,14 @@ class RobotControl{
             var wrist_1 = message.position[3] * (180/Math.PI);
             var wrist_2 = message.position[4] * (180/Math.PI);
             var wrist_3 = message.position[5] * (180/Math.PI);
+            
+            $("#base.slider").val(base).change();
+            $("#shoulder.slider").val(shoulder).change();
+            $("#elbow.slider").val(elbow).change();
+            $("#wrist_1.slider").val(wrist_1).change();
+            $("#wrist_2.slider").val(wrist_2).change();
+            $("#wrist_3.slider").val(wrist_3).change();
 
-            $("#base.slider").val(base);
-            $("#shoulder.slider").val(shoulder);
-            $("#elbow.slider").val(elbow);
-            $("#wrist_1.slider").val(wrist_1);
-            $("#wrist_2.slider").val(wrist_2);
-            $("#wrist_3.slider").val(wrist_3);
-    
             $("#base.joint_label").text( Math.round(base) + " °" );
             $("#shoulder.joint_label").text( Math.round(shoulder) +" °" );
             $("#elbow.joint_label").text( Math.round(elbow) + " °" );
@@ -163,66 +158,64 @@ class RobotControl{
         })
     }
 
+    robot_status(){
+        var status_topic = this.status_topic;
+        var get_data_joint = this.get_data_joint;
+        
+        var count = 0;
+        
+        status_topic.subscribe(function(message){ 
+            var status = message.status.status;
+            
+            if (status == 3 || status == 4){
+
+                count += 1;
+                
+                if(count == 1){
+                    // if status 4 -> error!!
+                    // $('input[type="range"]').prop("disabled", false);
+                    get_data_joint.subscribe();
+                    $('.rangeslider__handle').css("visibility","visible");
+                    $('.right, .left').css("visibility","visible");
+                    //alert("Pohyb byl proveden!");
+                    return
+                }
+                else{
+                    count = 0;
+                };
+            }
+            else{
+                return
+            };
+        });
+    }
+
     // public method:
     //   input: none
     //   return none
     // Note: there we checking status from move group, if it done or in proceses etc ...
-    rosnode_status(){
-        var status_topic = this.status_topic
-
-        status_topic.subscribe(function(message){ 
-            var status = message.status.status
-
-            if (status == 3 || status == 4){
-                // if status 4 -> error!!
-                $(".slider").prop("disabled", false);
-            }
-
-            else{
-                $(".slider").prop("disabled", true);
-            }
-            
-        })
-
-    }
-
-    // public method:
-    //   input: slider
-    //   return none
-    // Note: if is touch on slider we stop subscribe data on take of we start subscribe again
-    on_input(slider){
-        var get_data_joint = this.get_data_joint
-
-        $(slider + '.slider').on('mousedown touchstart', function() {            
-            get_data_joint.unsubscribe();
-
-        }).bind('mouseup mouseleave touchend', function(){
-            get_data_joint.subscribe();
-        
-        })
-    }
-
-    // public method:
-    //   input: slider
-    //   return none
-    // Note: if is touch on slider we stop subscribe data on take of we start subscribe again
-    on_change(slider){
-        // import rosnode status, which there we subscribe stutus
-        this.rosnode_status();
-        
-        // for publishing -> action_sub.py
+    on_slider(slider){
         var joint_act = this.joint_act;
-        
-        $(slider + '.slider').on('change', function() {
-                  
-            var joint = new ROSLIB.Message({
-                name : [slider],
-                position:[this.value * (Math.PI/180)]
-            });
+        var get_data_joint = this.get_data_joint;
 
-            joint_act.publish(joint);
+        $(slider + '.slider').rangeslider({
+            polyfill: false,
 
-        })
+            onSlide: function(position, value) {
+                get_data_joint.unsubscribe();
+            },
+
+            onSlideEnd: function(position, value) {
+                var joint = new ROSLIB.Message({
+                    name : [slider],
+                    position:[value * (Math.PI/180)]
+                });
+                $('.rangeslider__handle').css("visibility","hidden");
+                $('.right, .left').css("visibility","hidden");
+                joint_act.publish(joint);
+                return
+            }
+        });
     }
 
     // public method:
@@ -232,37 +225,29 @@ class RobotControl{
     // then start subscribe again
     on_left(left){
         var get_data_joint = this.get_data_joint
-
         var joint_act = this.joint_act;
 
-        $(left + '.left').on('mousedown touchstart', function() {
-            $(this).addClass('active');
-
-            // get value from position of slider -> find as more easy way 
+        $(left + '.left').on('touchend mousedown', function() {
+            get_data_joint.unsubscribe();
+            
             var i = Number($(left+'.slider').val());
             
-            this.timeOut = setInterval(function(){
+            // get value from position of slider -> find as more easy way      
 
-                get_data_joint.unsubscribe();
-                
-                i = i - 0.5;
+            i = i - 5;
 
+            var joint = new ROSLIB.Message({
+                name : [left, "no_wait"],
+                position:[i * (Math.PI/180)]
+            });
+
+            joint_act.publish(joint);
+
+            setTimeout(function(){
+                get_data_joint.subscribe();
                 $(left + ".joint_label").text( Math.round(i) + " °" );
-                
-                var joint = new ROSLIB.Message({
-                    name : [left, "no_wait"],
-                    position:[i * (Math.PI/180)]
-                });
-
-                joint_act.publish(joint);
-    
-            }, 100);
-    
-        }).bind('mouseup mouseleave touchend', function() {
-            $(this).removeClass('active');
-            clearInterval(this.timeOut);
-            get_data_joint.subscribe();
-        });
+            }, 200);
+        });      
     }
 
     // public method:
@@ -272,45 +257,40 @@ class RobotControl{
     // then start subscribing again
     on_right(right){
         var get_data_joint = this.get_data_joint
-
         var joint_act = this.joint_act;
 
-        $(right + '.right').on('mousedown touchstart', function() {
-            $(this).addClass('active');
-
-            var i = Number($(right +'.slider').val());
+        $(right + '.right').on('touchend mousedown', function() {
+            get_data_joint.unsubscribe();
             
-            this.timeOut = setInterval(function(){
+            var i = Number($(right+'.slider').val());
+            
+            // get value from position of slider -> find as more easy way      
 
-                get_data_joint.unsubscribe();
-                
-                i += 0.5;
+            i = i + 5;
 
+            var joint = new ROSLIB.Message({
+                name : [right, "no_wait"],
+                position:[i * (Math.PI/180)]
+            });
+
+            joint_act.publish(joint);
+
+            setTimeout(function(){
+                get_data_joint.subscribe();
                 $(right + ".joint_label").text( Math.round(i) + " °" );
-
-                var joint = new ROSLIB.Message({
-                    name : [right, "no_wait"],
-                    position:[i * (Math.PI/180)]
-                });
-
-                joint_act.publish(joint);
-    
-            }, 100);
-    
-        }).bind('mouseup mouseleave touchend', function() {
-            $(this).removeClass('active');
-            clearInterval(this.timeOut);
-            get_data_joint.subscribe();
-        });
+            }, 200); 
+        });      
     }
 
     // =============================
     // IN PROGRESS
     emergency_stop(){
-        // send signal 0 as STOP
-        this.stop.set(0);
-        // send signal 100 as NO STOP
-        this.stop.set(100);
+        var data = new ROSLIB.Message({
+            data: "emergency_stop"       
+        });
+    
+        this.stop.publish(data);
+
         alert("EMERGENCY BUTTON WAS PRESSED");
     }
 
@@ -319,32 +299,39 @@ class RobotControl{
     //   return none
     // Note: MAIN
     main(){
-        this.rosnode_init()
-        this.data_feed()
-        this.velocity_control()
+        this.rosnode_init();
+        this.data_feed();
+        this.velocity_control();
 
         // get all joints of robot
-        var elements = ['#base','#shoulder', '#elbow', '#wrist_1', '#wrist_2', '#wrist_3']
+        var elements = ['#base','#shoulder', '#elbow', '#wrist_1', '#wrist_2', '#wrist_3'];
         
         for (var element of elements) {
-            this.on_input(element);
-            this.on_change(element);
+            this.on_slider(element);
             this.on_right(element);
             this.on_left(element);
         }
+
+        this.robot_status();
     }
 }
 
 // MAIN FUNCTION
 $(function() {
     var ros = ROS_connect();
-    var [e1, e2, width_devisor, e3] = Size()
 
-    let robot = new RobotControl(ros, width_devisor);
+    let robot = new RobotControl(ros);
 
     robot.main();
-
+    
     $(".emergency_stop").click(function() {
         robot.emergency_stop();
-    })
+    });
+
+    // prevent to open dialog windwo of touch 
+    window.oncontextmenu = function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+   };
 })

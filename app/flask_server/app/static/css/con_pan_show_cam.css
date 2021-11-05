@@ -113,6 +113,10 @@ input:checked + .slider {
     background: rgba(102, 102, 102, 1);
 }
 
+input:disabled + .slider{
+    opacity: 0.6;
+}
+
 input:checked + .slider:before {
     -webkit-transform: translateX(calc(80px / var(--height-divisor)));
     -ms-transform: translateX(calc(80px / var(--height-divisor)));

@@ -4,6 +4,9 @@
  * Devisor is so far designe for defined resolutions of some screens.
 */
 
+// hide scrollbar
+document.body.style.overflow = 'hidden';
+
 var init = [];
 Cookies.set('warnings', JSON.stringify(init));
 Cookies.set('errors', JSON.stringify(init));
@@ -21,8 +24,11 @@ if(height == 1080 && width == 1920){
 }
 
 var dist = 200/height_devisor;
-var plus_dist = '+=' + dist + "px"
-var minus_dist = '-=' + dist + "px"
+var plus_dist = '+=' + dist + "px";
+var minus_dist = '-=' + dist + "px";
+
+var dp_width = $('.dragable_place').width() / 2;
+var dp_height = 20 / height_devisor;
 
 /**
  * Prepare all elements, for interaction
@@ -32,16 +38,33 @@ var minus_dist = '-=' + dist + "px"
 // counter for clicks on keyboard_logo
 var counter = 0;
 
+// find the element that you want to drag.
+var box = document.getElementById('sign_in');
+
+/* listen to the touchMove event,
+every time it fires, grab the location
+of touch and assign it to box */
+box.addEventListener('touchmove', function(e) {
+	// grab the location of touch
+	var touchLocation = e.targetTouches[0];
+	
+	// assign box new coordinates based on the touch.
+	box.style.left = (touchLocation.pageX - dp_width) + 'px';
+	box.style.top = (touchLocation.pageY - dp_height) + 'px';
+
+	e.preventDefault();
+})
+
+/* record the position of the touch
+when released using touchend event.
+This will be the drop position. */
+box.addEventListener('touchend', function(e) {
+	// current box position.
+	var x = parseInt(box.style.left);
+	var y = parseInt(box.style.top);
+})
+
 $('.simple-keyboard').hide();
-
-// need to be first defined elemet, which will be draggable
-$('.simple-keyboard').draggable({});
-
-// this prevented move with virtual keybouard out from screen resolution
-$('.simple-keyboard').draggable("option", "scroll", false);
-
-// disable, becouse after holding *.dragable_place* area, we enable it again. 
-$('.simple-keyboard').draggable("disable")
 
 // call anime svgs_logo from vk_ann_anim.js
 Anime();
@@ -64,12 +87,8 @@ $(document.body).on('click', '.keyboard', function () {
 		$(".name_place").animate({ 
 			marginTop : minus_dist,
 		});
-		
-		$(".logo").animate({ 
-			marginTop : minus_dist,
-		});
-		
-		$(".sign_button").animate({ 
+				
+		$(".submit_button").animate({ 
 			marginTop : minus_dist,
 		});
 		
@@ -90,11 +109,7 @@ $(document.body).on('click', '.keyboard', function () {
 		marginTop: plus_dist,
 		});
 		
-		$(".logo").animate({ 
-		marginTop: plus_dist,
-		});
-		
-		$(".sign_button").animate({ 
+		$(".submit_button").animate({ 
 		marginTop: plus_dist,
 		});
 
@@ -106,14 +121,3 @@ $(document.body).on('click', '.keyboard', function () {
 		Anime();
 	}
 });
-
-// if we have hold left mouse button we enable dragable virtual_keyboard, 
-// purpose of this function is enable only, if we hold mouse in defined aream, if not
-// we just disable it, this prevent from dragable virtual keyboard from any button on vk.
-$(function() {
-    $('.dragable_place').on('mousedown touchstart', function(e) {
-        $( ".simple-keyboard" ).draggable( "enable" );
-    })
-}).bind('mouseup mouseleave touchend', function() {
-    $('.simple-keyboard').draggable("disable")
-})

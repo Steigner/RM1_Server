@@ -18,7 +18,7 @@ $(function init(){
 
 	var tfClient = new ROSLIB.TFClient({
 		ros : ros,
-		fixedFrame : 'world',
+		//fixedFrame : 'world',
 		angularThres : 0.001,
 		transThres : 0.001,
 		rate : 144

@@ -52,4 +52,3 @@ class Camera_Init(object):
             except Exception as e:
                 print(e)
                 pass
-            

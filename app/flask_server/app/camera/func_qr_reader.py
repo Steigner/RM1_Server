@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # library -> opencv
 import cv2
 
@@ -28,13 +26,14 @@ class ReadQR(Camera):
     @classmethod
     def start(self):
         super(ReadQR, self).start()
-    
+
     # public classmethod:
     #   input: none
     #   return decoded barcode data
     # Note: This method is used for get data and post to route
     @classmethod
     def output_data(self):
+        # !!!!!!!!!!!!!!!!!!!!!
         # exception for no data
         data = self.data
         return data[0][0].decode("utf-8")

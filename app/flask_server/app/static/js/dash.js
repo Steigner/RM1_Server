@@ -6,7 +6,7 @@ $(function() {
         
         success: function(response) {  
             // Define Data
-            var data = [{
+            var data1 = {
                 x: response.x,
                 y: response.y,
                 z: response.z,
@@ -16,7 +16,28 @@ $(function() {
                     color: response.c,
                     size: 1
                 }
-            }];
+            };
+
+            var data2 = {
+                /*
+                x: [response.nz],
+                y: [- response.ny],
+                z: [- response.nz],
+                */
+                
+                x: [0.011995661072432995],
+                y: [0.06672774255275726],
+                z: [-0.3830000162124634],
+                
+                mode: "markers",
+                type: "scatter3d",
+                marker: {
+                    color: "red",
+                    size: 5
+                }
+            };
+            
+            var datal = [data1,data2];
 
             var layout = {
                 scene: {
@@ -59,16 +80,18 @@ $(function() {
                 paper_bgcolor: 'rgba(0,0,0,0)',
             };
             
-            Plotly.newPlot("point_cloud", data, layout, {displayModeBar: true}).then(function() { 
+            Plotly.newPlot("point_cloud", datal, layout, {displayModeBar: true}).then(function() { 
                 $(".loading_background, .loading_label, .wrapper").hide();
             });
-                
+            
+            /*
             // get point -> move to defined point !!
             var myPlot = document.getElementById('point_cloud');
             myPlot.on('plotly_click', function(data){
                 alert(data.points[0].x + " = x")
                 //console.log(data.points[0].x, data.points[0].y, data.points[0].z);
             });
+            */
         },
 
         error: function(error) {

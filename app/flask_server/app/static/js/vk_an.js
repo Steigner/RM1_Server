@@ -26,13 +26,16 @@ function onInputChange(event) {
 }
 
 function onChange(input) {
-	console.log("Input changed", input);
+	//console.log("Input changed", input);
 	document.querySelector(selectedInput || ".input").value = input;
 }
 
 function onKeyPress(button) {
-	console.log("Button pressed", button);
+	//console.log("Button pressed", button);
 	if (button === "{lock}" || button === "{shift}") handleShiftButton();
+	if (button === "{enter}"){
+		$(".submit_button").click();
+	}
 }
 
 function handleShiftButton() {

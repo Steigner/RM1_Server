@@ -1,5 +1,5 @@
 # library -> flask
-from flask import Blueprint, request, url_for, redirect, render_template, session, jsonify, send_file
+from flask import Blueprint, request, url_for, redirect, render_template, session, jsonify, send_file, flash
 
 # library -> protect routes from no-authorized acces by wrapper
 from flask_login import fresh_login_required, login_required, login_user, logout_user
@@ -36,6 +36,8 @@ import pdfkit
 
 # library -> time / date
 import datetime
+
+import time
 
 # set 2. blueprint = auth 
 auth = Blueprint('auth', __name__)
@@ -79,9 +81,11 @@ def sign_in():
                         return redirect(next)
 
                 if user.role == "Admin":
+                    flash('admin sign in')
                     return redirect(url_for('.home_admin'))
 
                 else:
+                    flash('user sign in')
                     return redirect(url_for('app.home'))
 
         return render_template('sign_in.html', form = form, wrong = True)
@@ -283,9 +287,9 @@ def fresh():
 @auth.route('/sign_out')
 @login_required
 def sign_out():
+    # TODO delete all cookies!!
     StoreIP.ip = "none"
     StoreID.id = 0
     Counter.counter = 0
-
     logout_user()
     return redirect(url_for('.sign_in'))

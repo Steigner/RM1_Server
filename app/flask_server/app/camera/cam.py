@@ -22,7 +22,7 @@ class Camera(object):
     # Note: warm up camera
     @classmethod
     def __warm_up(self):
-        time.sleep(1)
+        time.sleep(2)
         for i in range(20):
             self.pipeline.wait_for_frames()
 
@@ -50,7 +50,6 @@ class Camera(object):
         self.align = rs.align(align_to)
 
         self.__warm_up()
-    
 
     # private classmethod:
     #   input: none

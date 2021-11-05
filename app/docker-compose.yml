@@ -11,13 +11,13 @@ services:
       - 8080
     
     # eneable Camera to docker acces
-    #devices:
-      #- /dev/video0:/dev/video0
-      #- /dev/video1:/dev/video1
-      #- /dev/video2:/dev/video2
-      #- /dev/video3:/dev/video3
-      #- /dev/video4:/dev/video4
-      #- /dev/video5:/dev/video5
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+      - /dev/video2:/dev/video2
+      - /dev/video3:/dev/video3
+      - /dev/video4:/dev/video4
+      - /dev/video5:/dev/video5
 
   nginx:
     build: ./nginx
