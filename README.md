@@ -45,9 +45,9 @@
 
 6) **Test, simulation and deploy**
     
-    6.1 Python test
+    6.1 Python unitests
     
-    6.2 Penetration attack and SQL injection
+    6.2 brute force
     
     6.3 Deploy Docker and ROS
     
