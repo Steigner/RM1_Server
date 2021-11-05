@@ -33,7 +33,7 @@
         
         5.3.2 User Interface
         
-    5.4 Machine vision 3D object recognition
+    5.4 Machine vision 3D data processing
     
         5.4.1 Pointcloud postprocessing
         
