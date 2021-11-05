@@ -1,33 +1,6 @@
 # [Under Development]
 ### Content
 
-1) **Introduction**
-2) **Collaborative robotics**
-
-    2.1 History, trend and future
-        
-    2.2 Collaborative robots (ABB GoFa, SWIFTI and Yumi)
-    
-    2.3 Universal Robots UR3
-
-3) **Machine vision**
-
-    3.1 Robotics and machine vision
-    
-    3.2 Pickit
-    
-    3.3 Photoneo
-
-    3.4 Intel Realsense
-
-4) **Robots in healthcare**
-    
-    4.1 Surgery robots(DaVinci, Puma, AOT Carlo ...)
-    
-    4.2 Medical applications of cobots(OpenTube, Kuka Roboert, ...) 
-    
-    4.3 Smart hospital
-
 5) **Robo Medicinae I** 
     
     5.1 Designe station
