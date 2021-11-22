@@ -13,10 +13,10 @@ body{
 }
 
 .name{
-    font-family : var(--font-light);
-    font-size : 50px;
-    color : #21697C;
-    color : rgb(33, 105, 124);
+    font-family: var(--font-light);
+    font-size: 50px;
+    color: #21697C;
+    color: rgb(33, 105, 124);
     margin-top: 100px;
     margin-left: 50px;
 }
@@ -31,10 +31,10 @@ body{
 .patient{
     display: flex;
     justify-content: center;
-    font-family : var(--font-light);
-    font-size : 35px;
-    color : #21697C;
-    color : rgb(33, 105, 124);
+    font-family: var(--font-light);
+    font-size: 35px;
+    color: #21697C;
+    color: rgb(33, 105, 124);
 }
 
 .logo{
@@ -54,23 +54,23 @@ body{
 
 .output{
 
-    background : #F2F2F2;
-    background : rgba(242, 242, 242, 1);
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
 
-    border-radius : 10px;
-    -moz-border-radius : 10px;
-    -webkit-border-radius : 10px;
-    height : 30px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    height: 30px;
     width: 60%;
-    font-family : var(--font-light);
-    font-size : 20px;
+    font-family: var(--font-light);
+    font-size: 20px;
     justify-content: center;
 
     display: flex;
     align-items: center;
 
-    color : #21697C;
-    color : rgb(33, 105, 124);
+    color: #21697C;
+    color: rgb(33, 105, 124);
 }
 
 .label{
@@ -78,22 +78,22 @@ body{
 
     margin-top: 30px;
 
-    font-family : var(--font-light);
-    font-size : 25px;
+    font-family: var(--font-light);
+    font-size: 25px;
 
-    color : #21697C;
-    color : rgb(33, 105, 124);
+    color: #21697C;
+    color: rgb(33, 105, 124);
 }
 
 .declaration{
     margin-top: 40px;
     display: flex;
-    font-family : var(--font-light);
-    font-size : 25px;
+    font-family: var(--font-light);
+    font-size: 25px;
     justify-content: center;
 
-    color : #21697C;
-    color : rgb(33, 105, 124);
+    color: #21697C;
+    color: rgb(33, 105, 124);
 }
 
 .cls-1{

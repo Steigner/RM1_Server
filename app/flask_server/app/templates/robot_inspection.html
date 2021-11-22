@@ -333,8 +333,9 @@
 
 	</div>
 
-	<!-- library -> chart.js -->
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<!-- library -> chart.js 2.8 -->
+	<script src="{{ url_for('static', filename='js/lib/chart.min.js') }}"></script>
+
 	<!-- script -> manage coomunication data from robot -->
 	<script type="module" src="{{ url_for('static', filename = 'js/robot_inspection.js') }}"></script>
 

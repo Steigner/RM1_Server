@@ -52,8 +52,8 @@ class Robot_info(object):
     # which are post to route. 
     @classmethod
     def get_data(cls):
-        HOST = self.HOST
-        PORT_RT = self.PORT_RT
+        HOST = cls.HOST
+        PORT_RT = cls.PORT_RT
 
         try:
             # setup python socket

@@ -26,7 +26,7 @@ class Camera(object):
         for i in range(20):
             self.pipeline.wait_for_frames()
 
-    # private classmethod:
+    # public classmethod:
     #   input: none
     #   return none
     # Note: init camera, enable streaming modes, by most optional resolution and 
@@ -50,8 +50,17 @@ class Camera(object):
         self.align = rs.align(align_to)
 
         self.__warm_up()
+    
+    @classmethod
+    def start_color(self):
+        self.pipeline = rs.pipeline()
+        config = rs.config()
+        config.enable_stream(rs.stream.color, 640, 360, rs.format.bgr8, 60)
+        self.pipeline.start(config)
 
-    # private classmethod:
+        self.__warm_up()
+
+    # public classmethod:
     #   input: none
     #   return none
     # Note: init camera for taking point clouds, enable streaming modes, by most optional resolution and 

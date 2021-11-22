@@ -11,7 +11,7 @@ from .models import Patient
 from .camera.cam_init import Camera_Init
 
 # script -> control camera - streaming color, depth, infra
-from .camera.func_stream_cam import StreamCam
+from .camera.func_stream_cam import StreamCam, StreamColorCam
 
 # script -> control camera - faceID
 from .camera.func_face_reco import FaceReco
@@ -29,7 +29,7 @@ from .camera.func_take_pc import TakePC
 from .robot.get_data import Robot_info
 
 # script -> store variables in back-end
-from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation, Point
+from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation, Point, Token
 
 # script -> detect server ip-adress(self ip adress)
 from .self_ipadress import get_ip
@@ -61,12 +61,34 @@ def custom_401(error):
 #   2. Counter for how many times is reload this page.
 @app.route('/home')
 @login_required
-def home():
+def home(): 
     Counter.counter += 1
+    # import subprocess
+    # subprocess.run('./app/weather/weather.sh', shell=True)
+    
+    # TODO maybe this will be as standalone function !! 
+    import csv
+    weather = []
+    temperature = None
+    humidity = None
+    preasure = None
+    with open('app/weather/weather.csv', 'r') as file:
+        reader = csv.reader(file, delimiter = ' ')
+        for row in reader:
+            temperature = row[-1]
+            humidity = row[-2]
+            preasure = row[-3]
+            for i in range(len(row)-3):
+                weather.append(row[i])
+
+    weather = ' '.join(str(e) for e in weather)
+    
+    # f = open('app/weather/weather.csv', "w+")
+    # f.close()
 
     # if Counter.counter <= 1:
     #    NostrillDet.init()
-    
+    """
     try:
         StreamCam.start()
         StreamCam.stop()
@@ -76,10 +98,12 @@ def home():
         StoreCam.cam = Camera_Init().dev
     
     except RuntimeError:
-        info = "Camera status: not pluged-in compatible device"
-        StoreCam.cam = info
+    """
+    
+    info = "Camera status: not pluged-in compatible device"
+    StoreCam.cam = info
 
-    return render_template('home.html', ip = StoreIP.ip, count = Counter.counter, cam = info)
+    return render_template('home.html', ip = StoreIP.ip, count = Counter.counter, cam = info, weather = weather, temperature = temperature, preasure = preasure, humidity = humidity)
 
 # ajax -> route ip adress:
 # Note: 
@@ -162,11 +186,25 @@ def con_pan():
 # page -> route robot control:
 # Note: 
 #   1. Robot control page.
-@app.route('/robot_control')
+@app.route('/robot_control', methods=['POST', 'GET'])
 @login_required
 def robot_control():
-    return render_template('robot_control.html')
+    if request.method == 'POST':
+        try:
+            if request.form['value'] == 'cam':
+                StreamColorCam.start()
+                url = url_for('.video_color')
+                return jsonify({'url' : url})
+                
+            if request.form['value'] == 'stop_cam':
+                time.sleep(0.5)
+                StreamColorCam.stop()
+                return jsonify("Stop")
+        
+        except RuntimeError:
+            return jsonify("Camera is not pluged-in!")
 
+    return render_template('robot_control.html')
 
 # ========================================================
 # WARNING: Robot_info.connect => need to be deleted!
@@ -194,7 +232,7 @@ def robot_inspection():
 #   1. Documentation page.
 @app.route('/documentation')
 @login_required
-def documentation():    
+def documentation():
     return render_template('documentation.html')
 
 # page -> route authors:
@@ -278,6 +316,9 @@ def faceID():
             FaceReco.stop()
         
         if request.form['value'] == 'recognition':
+            # TODO
+            # database is local sqlite!!!
+            
             # print(StoreID.id)
             
             # time.sleep(2)
@@ -287,6 +328,7 @@ def faceID():
             # time.sleep(3)
             
             # FaceReco.init_patient(patient.photo, str(patient.name + " " + patient.surname))
+            
             
             FaceReco.init_patient("test", "test")
 
@@ -437,11 +479,18 @@ def video_feed_faceval():
 @app.route('/video_feed_facedet')
 @login_required
 def video_feed_facedet():
+    # TODO test atributeERROR for everything
     def generate():
         while 1:
-            frame = FaceDet.set_position()
+            try:
+                frame = FaceDet.set_position()
+            
+            except AttributeError:
+                break
+            
             Validation.val = FaceDet.get_val()
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
+
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # yield -> route video stream color:
@@ -451,10 +500,25 @@ def video_feed_facedet():
 @app.route('/video_stream_color')
 @login_required
 def video_stream_color():
+    if Token.token == True:
+        def generate():
+            while 1:
+                #start_time = time.time()
+                frame = StreamCam.get_frame(switch=0)
+                #print("FPS: ", 1.0 / (time.time() - start_time))
+                yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
+        return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    
+    else:
+        return redirect(url_for('app.home'))
+
+@app.route('/video_color')
+@login_required
+def video_color():
     def generate():
         while 1:
             #start_time = time.time()
-            frame = StreamCam.get_frame(switch=0)
+            frame = StreamColorCam().get_frame()
             #print("FPS: ", 1.0 / (time.time() - start_time))
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')

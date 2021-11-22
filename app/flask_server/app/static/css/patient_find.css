@@ -3,7 +3,7 @@
 ::placeholder{
     opacity: 0.6;
     color: #21697C;
-    color : rgba(33, 105, 124, 1);
+    color: rgba(33, 105, 124, 1);
 }
 
 .post_container{
@@ -18,31 +18,31 @@
 }
 
 .find_patient{
-    background : #F2F2F2;
-    background : rgba(242, 242, 242, 1);
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
 
-    position : sticky;
+    position: sticky;
     display: grid;
     align-items:center;
 
-    width : calc(820px / var(--width-divisor));
-    height : calc(70px / var(--height-divisor));
-    border-radius : calc(10px / var(--width-divisor));
-    -moz-border-radius : calc(10px / var(--width-divisor));
-    -webkit-border-radius : calc(10px / var(--width-divisor));
+    width: calc(820px / var(--width-divisor));
+    height: calc(70px / var(--height-divisor));
+    border-radius: calc(10px / var(--width-divisor));
+    -moz-border-radius: calc(10px / var(--width-divisor));
+    -webkit-border-radius: calc(10px / var(--width-divisor));
 }
 
 .find_logo{
-    width : calc(40px / var(--width-divisor));
-    height : calc(30px / var(--height-divisor));
+    width: calc(40px / var(--width-divisor));
+    height: calc(30px / var(--height-divisor));
 }
 
 .submit_button{
     display: flex;
     align-items:center;
     justify-content: center;
-    width : calc(50px / var(--width-divisor));
-    height : calc(50px / var(--height-divisor));
+    width: calc(50px / var(--width-divisor));
+    height: calc(50px / var(--height-divisor));
 
     margin-left: calc(20px / var(--width-divisor));
 
@@ -50,13 +50,13 @@
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background : #F2F2F2;
-    background : rgba(242, 242, 242, 1);
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
 }
 
 .input{
-    color : #21697C;
-    color : rgba(33, 105, 124, 1);
+    color: #21697C;
+    color: rgba(33, 105, 124, 1);
 
     outline: none;
     -webkit-appearance: none;
@@ -70,10 +70,10 @@
     width: 80%;
     height: 100%;
 
-    background : #F2F2F2;
-    background : rgba(242, 242, 242, 1);
-    font-family : var(--font);
-    font-size : calc(30px / var(--height-divisor));
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
+    font-family: var(--font);
+    font-size: calc(30px / var(--height-divisor));
 }
 
 /* SET UP KEYBOARD*/ 
@@ -87,8 +87,8 @@
     position: absolute;
     align-self: flex-end;
     bottom: 0px;
-    width : calc(70px / var(--width-divisor));
-    height : calc(45px / var(--height-divisor));
+    width: calc(70px / var(--width-divisor));
+    height: calc(45px / var(--height-divisor));
 }
 
 .keyboard_logo{

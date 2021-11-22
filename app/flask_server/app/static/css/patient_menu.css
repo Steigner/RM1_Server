@@ -11,26 +11,26 @@
 
 .nav_button{
     margin: calc(40px / var(--width-divisor));
-    background : #F2F2F2;
-    background : rgba(242, 242, 242, 1);
+    background: #F2F2F2;
+    background: rgba(242, 242, 242, 1);
 
-    position : sticky;
+    position: sticky;
 
-    width : calc(425px / var(--width-divisor));
-    height : calc(170px / var(--height-divisor));
-    border-radius : calc(20px / var(--width-divisor));
-    -moz-border-radius : calc(20px / var(--width-divisor));
-    -webkit-border-radius : calc(20px / var(--width-divisor));
+    width: calc(425px / var(--width-divisor));
+    height: calc(170px / var(--height-divisor));
+    border-radius: calc(20px / var(--width-divisor));
+    -moz-border-radius: calc(20px / var(--width-divisor));
+    -webkit-border-radius: calc(20px / var(--width-divisor));
 
     border: 0;
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    font-family : var(--font);
-    font-size : calc(40px / var(--height-divisor));
-    color : #21697C;
-    color : rgb(33, 105, 124);
+    font-family: var(--font);
+    font-size: calc(40px / var(--height-divisor));
+    color: #21697C;
+    color: rgb(33, 105, 124);
 }
 
 .image{

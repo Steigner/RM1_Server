@@ -7,7 +7,10 @@ class Show_PointCloud(object):
     @classmethod
     def load_pc(cls):
         pcd_o = o3d.io.read_point_cloud("app/graph/point_cloud.ply")
+
         # pcd_ = o3d.io.read_point_cloud("point_cloud.ply")        
+        
+        """
         pcd_ = pcd_o.voxel_down_sample(voxel_size=0.01)
         
         pcd_.estimate_normals()
@@ -24,7 +27,8 @@ class Show_PointCloud(object):
         mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_ball_pivoting(pcd, o3d.utility.DoubleVector([radius, radius * 2]))
        
         o3d.io.write_triangle_mesh("app/graph/share/test.stl", mesh)
-
+        """
+        
         points = np.asarray(pcd_o.points)
         colours = np.asarray(pcd_o.colors)
         normals = np.asarray(pcd_o.normals)

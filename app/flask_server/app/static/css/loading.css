@@ -1,7 +1,7 @@
 .loading_background{
     z-index: 10;    
-    background-color : #F2F2F2;
-    background-color : rgba(242, 242, 242, 1);
+    background-color: #F2F2F2;
+    background-color: rgba(242, 242, 242, 1);
     position: absolute;
     top: 0;
     left: 0;
@@ -29,10 +29,10 @@
 
 .loading_label{
     position: absolute;
-    font-family : var(--font-light);
-    font-size : calc(115px / var(--height-divisor));
-    color : #21697C;
-    color : rgb(33, 105, 124);
+    font-family: var(--font-light);
+    font-size: calc(115px / var(--height-divisor));
+    color: #21697C;
+    color: rgb(33, 105, 124);
     left: 50%;
     transform: translate(-50%);
     top: calc(300px / var(--height-divisor));

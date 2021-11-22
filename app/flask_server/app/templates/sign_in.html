@@ -17,22 +17,22 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/vk_an.css') }}">
 
 		<!-- css libary -> virtual keyboard -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/lib/simple-keyboard.css') }}">
 
 		<!-- libary -> jquery -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-		
+		<script src="{{ url_for('static', filename='js/lib/jquery.min.js') }}"></script>
+
 		<!-- libary -> jquery user interface -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
-		
-		<!-- libary -> animeation -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		
+		<script src="{{ url_for('static', filename='js/lib/jquery-ui.min.js') }}"></script>
+
+		<!-- libary -> animation -->
+		<script src="{{ url_for('static', filename='js/lib/anime.min.js') }}"></script>
+
 		<!-- libary -> virtual keyboard -->
-		<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+		<script src="{{ url_for('static', filename='js/lib/simple-keyboard.js') }}"></script>
 		
 		<!-- libary -> cookies array -->
-		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+		<script src="{{ url_for('static', filename='js/lib/cookie.min.js') }}"></script>
 	</head>
 	
 	<body>

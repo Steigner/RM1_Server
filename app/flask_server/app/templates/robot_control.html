@@ -3,22 +3,23 @@
 {% extends "layout.html" %}
 {% block content %}
 	
+	<!-- library -> roslib current -->
+	<script src="{{ url_for('static', filename='js/lib/three.js') }}"></script>
+	
 	<!-- library -> digital twin -->
-	<script src="https://static.robotwebtools.org/threejs/current/three.js"></script>
-	<!-- library -> digital twin -->
-	<script src="https://static.robotwebtools.org/threejs/current/ColladaLoader.js"></script>
+	<script src="{{ url_for('static', filename='js/lib/ColladaLoader.js') }}"></script>
 
 	<!-- library -> digital twin -->
-	<script src="https://static.robotwebtools.org/threejs/current/STLLoader.js"></script>
+	<script src="{{ url_for('static', filename='js/lib/STLLoader.js') }}"></script>
 
 	<!-- library -> digital twin -->
-	<script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+	<script src="{{ url_for('static', filename='js/lib/eventemitter2.min.js') }}"></script>
 
 	<!-- library -> ros.js -->
-	<script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+	<script src="{{ url_for('static', filename='js/lib/roslib.min.js') }}"></script>
 
 	<!-- library -> ros3D - digital twin -->
-	<script src="https://static.robotwebtools.org/ros3djs/current/ros3d.min.js"></script>
+	<script src="{{ url_for('static', filename='js/lib/ros3d.min.js') }}"></script>
 
 	<!-- script -> connect ros -->
 	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
@@ -47,9 +48,21 @@
 		<!-- INFO PART -->
 		<div class="column" id="left">
 		<!-- digital twin -->
-		<div class="ROS_win"><div id="urdf"></div></div>
+		<div class="ROS_win">
+			<div id="urdf"></div>
+			<img class="stream">
+		</div>
+		
+		<div class="switch">
+			<button id="sim" class="switch_buttons">Simulation</button>
+			<button id="cam" class="switch_buttons">Camera</button>
+			<button id="open" class="switch_buttons">Open RG2</button>
+			<button id="close" class="switch_buttons">Close RG2</button>
+		</div>
+
 		<!-- label -->
 		<div class="TCP_label">TCP</div>
+		
 		<!-- TCP info panel -->
 		<div class="TCP">
 			<div class="cart_labels">
@@ -152,10 +165,10 @@
 			</div>
 			
 			<!-- library stylescript -> rangeslider.js -->
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.min.css" integrity="sha512-Rp0yZ3NMh1xOUZ4VHYggmX4pq4ZJdpcOETH03qBD5qNDsqTBw1MzUnX0T5PcTJmr2mNTOmtbxsHaGwzjylNpHA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+			<link rel="stylesheet" href="{{ url_for('static', filename='css/lib/rangeslider.min.css') }}">
 			
 			<!-- library -> rangeslider.js -->
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.min.js" integrity="sha512-BUlWdwDeJo24GIubM+z40xcj/pjw7RuULBkxOTc+0L9BaGwZPwiwtbiSVzv31qR7TWx7bs6OPTE5IyfLOorboQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script src="{{ url_for('static', filename='js/lib/rangeslider.min.js') }}"></script>
 			
 			<!-- stylescript -> sliders -->
 			<link rel="stylesheet" href="{{ url_for('static', filename='css/range_slider.css') }}">

@@ -110,9 +110,9 @@
 
 .keyboard_logo{
     position: absolute;
-    width : calc(70px / var(--width-divisor));
-    height : calc(45px / var(--height-divisor));
-    right : calc(0.5px / var(--width-divisor));
+    width: calc(70px / var(--width-divisor));
+    height: calc(45px / var(--height-divisor));
+    right: calc(0.5px / var(--width-divisor));
     bottom: calc(5px / var(--height-divisor));
 }
 

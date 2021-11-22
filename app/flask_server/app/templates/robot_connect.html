@@ -2,11 +2,16 @@
 {% block content %}
 
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/robot_connect.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/vk_n.css') }}">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js" integrity="sha512-x2Owc9WayRcRj80Znkau58shVfXN2OIX+gQAlrx6KPugZBKrIC6AwgEWQQCI06p2Q8RB4ilxD+y+1BdNd+1fQA==" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/vk_n.css') }}">
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/lib/simple-keyboard.css') }}">
+
+	<!-- library -> jquery.ui 1.12.1 -->
+	<script src="{{ url_for('static', filename='js/lib/jquery-ui.min.js') }}"></script>
+
+	<!-- library -> roslib current -->
+	<script src="{{ url_for('static', filename='js/lib/roslib.min.js') }}"></script>
 
 	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
 
@@ -53,8 +58,11 @@
 		<div id="numerical" class="dragable_place"></div>
 	</div> 
 
-	<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+	<!-- library -> simple keyboard -->
+	<script src="{{ url_for('static', filename='js/lib/simple-keyboard.js') }}"></script>
+	
 	<script type="text/javascript" src="{{ url_for('static', filename = 'js/vk_n.js') }}"></script>
+	
 	<script type="module" src="{{ url_for('static', filename = 'js/robot_connect.js') }}"></script>
 
 {% endblock %}

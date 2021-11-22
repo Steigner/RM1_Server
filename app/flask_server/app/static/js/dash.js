@@ -1,3 +1,5 @@
+import {ROS_connect} from './modules/ROS_connect.js';
+
 $(function() {
     setTimeout(function(){$(".loading_background, .loading_label, .wrapper").show()},100);
     $.ajax({        
@@ -5,6 +7,35 @@ $(function() {
         type: 'POST',
         
         success: function(response) {  
+            /* possible sending point cloud to ROS
+            var points = [];
+
+            console.log();
+
+            for (let i = 0; i < response.x.length; i++) {
+                const dict = {x : response.x[i], y : response.y[i], z : response.z[i]}
+                points.push(dict);
+            };
+
+            var ros = ROS_connect();
+
+            var pcd = new ROSLIB.Topic({
+                ros : ros,
+                name : '/pcd',
+                messageType : 'sensor_msgs/PointCloud'
+            });
+
+            var data = new ROSLIB.Message(
+            {
+                header: {frame_id : "map"},
+                points: points,               
+            },
+            
+            );
+
+            pcd.publish(data);
+            */
+
             // Define Data
             var data1 = {
                 x: response.x,
@@ -17,7 +48,7 @@ $(function() {
                     size: 1
                 }
             };
-
+        
             var data2 = {
                 /*
                 x: [response.nz],
@@ -80,10 +111,12 @@ $(function() {
                 paper_bgcolor: 'rgba(0,0,0,0)',
             };
             
+            
             Plotly.newPlot("point_cloud", datal, layout, {displayModeBar: true}).then(function() { 
                 $(".loading_background, .loading_label, .wrapper").hide();
             });
             
+
             /*
             // get point -> move to defined point !!
             var myPlot = document.getElementById('point_cloud');

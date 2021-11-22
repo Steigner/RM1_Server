@@ -26,6 +26,7 @@ class NostrillDet(Camera):
     def start(cls):
         # allows us to access methods of the base class -> "Camera"
         super(NostrillDet, cls).start()
+        cls.init()
 
     @staticmethod
     def __mask_input(input_image, mask):
@@ -58,42 +59,37 @@ class NostrillDet(Camera):
         mask = np.expand_dims(mask, axis = -1)
 
         n_1 = np.where(mask == 0)
-        
-        if n_1:
-            centroide1 = (sum(n_1[0]) / len(n_1[0]), sum(n_1[1]) / len(n_1[1]))
-            print("Center of right nostril: " + str(centroide1))
-        
-        else:
-            pass
-        
-        """
-        EXCEPTION FOR ONLY ONE!! 
+
         n_2 = np.where(mask == 2)
         
-        if n_2:
+
+        try:
+            centroide1 = (sum(n_1[0]) / len(n_1[0]), sum(n_1[1]) / len(n_1[1]))
+            print("Center of right nostril: " + str(centroide1))
+
             centroide2 = (sum(n_2[0]) / len(n_2[0]), sum(n_2[1]) / len(n_2[1]))
             print("Center of left nostril: " + str(centroide2))
         
-        else:
-            pass
-        """
+            x = int(centroide1[1])
+            y = int(centroide1[0])
 
-        masked_img = cls.__mask_input(img_in, mask)
+            color_intrin = color_frame.profile.as_video_stream_profile().intrinsics
+            
+            depth = depth_frame.get_distance(x, y)
+
+            dx ,dy, dz = rs.rs2_deproject_pixel_to_point(color_intrin, [x,y], depth)
+
+            return [dx, dy, dz]
+
+        except ZeroDivisionError:
+            print("Nelze urcit!")
+    
+
+        # masked_img = cls.__mask_input(img_in, mask)
         
         
         # plt.imshow(masked_img)
         # plt.scatter([centroide1[1], centroide2[1]], [centroide1[0], centroide2[0]], color = 'b')
         # plt.show()
         
-        x = int(centroide1[1])
-        y = int(centroide1[0])
-
-        color_intrin = color_frame.profile.as_video_stream_profile().intrinsics
-        
-        depth = depth_frame.get_distance(x, y)
-
-        dx ,dy, dz = rs.rs2_deproject_pixel_to_point(color_intrin, [x,y], depth)
-
-        return [dx, dy, dz]
-
         # cls.stop()

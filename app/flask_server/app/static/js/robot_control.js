@@ -1,6 +1,8 @@
 // script -> ros connection
 import {ROS_connect} from './modules/ROS_connect.js';
 
+import {insert_error_cookie, allert} from './modules/cookies.js';
+
 /* REDAME: on this file is neccesary to run action_sub.py file
     no private methods for better acces to methods
 */
@@ -314,6 +316,76 @@ class RobotControl{
 
         this.robot_status();
     }
+};
+
+// TODO in loading image disable all buttons!! 
+class FrontControl{
+    cam_show(){
+        let animation = anime({
+            targets: '.ROS_win',
+            duration: 1500,
+            loop: true,
+            scale: 0.5,
+            direction: 'alternate',
+        });
+
+        $.ajax({        
+            url: '/robot_control',
+            type: 'POST',
+            data: {value: "cam"},
+            success: function(response) {
+                if(response == 'Camera is not pluged-in!'){
+                    insert_error_cookie(response);
+                    animation.restart();
+                    animation.pause();
+                    allert();
+                    alert("Camera is not pluged in!!");
+                }
+
+                else{
+                    $( "#urdf" ).hide();
+                    animation.restart();
+                    animation.pause();
+
+                    $('.stream').attr("src", response.url);
+                    $("#cam").prop('disabled', true);
+                    $("#sim").prop('disabled', false);
+                };
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+    cam_stop(){
+        $('.stream').off();
+        $('.stream').removeAttr("src");
+        
+        $( "#urdf" ).show();
+
+        $.ajax({        
+            url: '/robot_control',
+            type: 'POST',
+            data: {value: "stop_cam"},
+            success: function(response) {
+                if(response == 'Camera is not pluged-in!'){
+                    insert_error_cookie(response);
+                    alert("Camera is not pluged in!!");
+                    allert();
+                }
+
+                else{
+                    $("#sim").prop('disabled', true);
+                    $("#cam").prop('disabled', false);
+                };
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
 }
 
 // MAIN FUNCTION
@@ -326,6 +398,21 @@ $(function() {
     
     $(".emergency_stop").click(function() {
         robot.emergency_stop();
+    });
+    
+    // --------- New part!! ---------
+    let control = new FrontControl();
+    
+    $('.stream').hide();
+
+    $("#sim").prop('disabled', true);
+
+    $("#cam").click(function() {
+        control.cam_show();
+    });
+
+    $("#sim").click(function() {
+        control.cam_stop();
     });
 
     // prevent to open dialog windwo of touch 

@@ -61,3 +61,32 @@ class StreamCam(Camera):
         if switch == 2:
             jpeg = cv2.imencode('.jpg', infra_image)[1].tobytes()
             return jpeg
+
+class StreamColorCam(Camera):
+    # public classmethod:
+    #   input: none
+    #   return none
+    # Note: Stop streaming camera
+    @classmethod
+    def stop(self):
+        self.pipeline.stop()
+    
+    # public classmethod:
+    #   input: none
+    #   return none
+    # Note: Start streaming camera
+    @classmethod
+    def start(self):
+        super(StreamColorCam, self).start_color()
+
+    @classmethod
+    def get_frame(self):
+        frames = self.pipeline.wait_for_frames()
+        
+        color_frame = frames.get_color_frame()
+        
+        color_image = np.asanyarray(color_frame.get_data())
+
+        jpeg = cv2.imencode('.jpg', color_image)[1].tobytes()
+        return jpeg
+        

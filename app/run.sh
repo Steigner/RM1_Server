@@ -2,7 +2,6 @@
 
 echo "Launching application, please wait!"
 
-source /opt/ros/moveit/setup.bash
 roslaunch rosbridge_server rosbridge_websocket.launch &
 P1=$!
 

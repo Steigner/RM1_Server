@@ -17,10 +17,10 @@ class TestCase(unittest.TestCase):
         self.assertAlmostEqual(response.status_code, 200)
     
     def sign_in(self, email, password):
-        return self.client.post('/sign_in', data=dict(
-            email=email,
-            password=password
-        ), follow_redirects=True)
+        return self.client.post('/sign_in', data={
+            'email': email,
+            'password': password
+        }, follow_redirects=True)
 
     def sign_out(self):
         return self.client.get('/sign_out', follow_redirects=True)
@@ -79,14 +79,32 @@ class TestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_camera(self):
+        # TODO -> exactly same!!!
         response = self.client.get('/show_cam_stream', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
+        self.client.post('/show_cam_stream', data={'value': 'color_cam'})
+        self.assertEqual(response.status_code, 200)
+
+        self.client.post('/show_cam_stream', data={'value': 'depth_cam'})
+        self.assertEqual(response.status_code, 200)
+
+        self.client.post('/show_cam_stream', data={'value': 'infra_cam'})
+        self.assertEqual(response.status_code, 200)
+
+        self.client.post('/show_cam_stream', data={'value': 'stop_cam'})
+        self.assertEqual(response.status_code, 200)
+
+        self.client.post('/video_feed_facedet')
+        self.assertEqual(response.status_code, 200)
+        
+        """
         response = self.client.get('/face_position', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
         response = self.client.get('/faceID', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
+        """
 
         # exception for no device connected !!
         # response = self.client.get('/face_scan', follow_redirects=True)

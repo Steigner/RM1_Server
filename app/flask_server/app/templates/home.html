@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% extends "layout.html" %}
 {% block content %}
@@ -23,6 +24,17 @@
     <!-- reload button -->
     <button class="button_home" id="reload"onclick="window.location.href='{{ url_for( 'app.reload') }}';">Reload</button>
 
+    <div class="weather">
+        <div id="weat"> {{ weather }} </div>
+        <div id="temp"> {{ temperature }} </div>
+        <div class="hum">Humidity: {{ humidity }}</div>
+        <div class="hum">Preasure: {{ preasure }}</div>
+    </div>
+    
+    <button class="button_home" id="keep" onclick="location.href='https://keep.google.com/'" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90.67 62.67" class="notes"><defs><style>.cls-1{fill:#21697c;}.cls-2{fill:none;stroke:#f2f2f2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:3px;}.cls-3{fill:#f2f2f2;}</style></defs><g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1"><rect class="cls-1" width="90.67" height="62.67" rx="9.63"/><line class="cls-2" x1="19.79" y1="45.8" x2="46.62" y2="45.8"/><line class="cls-2" x1="19.66" y1="31.33" x2="52.41" y2="31.33"/><line class="cls-2" x1="19.66" y1="16.87" x2="65.62" y2="16.87"/><rect class="cls-3" x="58.27" y="26.08" width="20.44" height="11.49" transform="translate(1.08 65.88) rotate(-51.72)"/><path class="cls-3" d="M74.42,13.43h2.37a5.74,5.74,0,0,1,5.74,5.74v0a5.74,5.74,0,0,1-5.74,5.74H74.42a0,0,0,0,1,0,0V13.43A0,0,0,0,1,74.42,13.43Z" transform="translate(14.81 68.9) rotate(-51.72)"/><path class="cls-3" d="M61.12,41.17l4.5,3.56-5.33,2.13-4.2,1.67a.71.71,0,0,1-1-.76l.65-4.47.83-5.68Z"/><circle class="cls-3" cx="11.13" cy="16.87" r="2.09"/><circle class="cls-3" cx="11.01" cy="31.33" r="2.09"/><circle class="cls-3" cx="11.13" cy="45.8" r="2.09"/></g></g></svg>
+    </button>
+    
     {% if current_user.role == "Admin" %}
         <button class="button_home" id="admin_menu"onclick="window.location.href='{{ url_for( 'auth.home_admin') }}';">Admin Menu</button>
     {% endif %}
@@ -56,5 +68,17 @@
             $("#connect_button.button_home").prop("disabled", true);
         </script>
     {% endif %}
+    
+    <script>
+		let nav = window.navigator.onLine;
+		
+		if (!nav) {
+			alert("U are in offline mode some features may not be accessible!");
+            $("#keep").prop("disabled", true);
+		}
+        else{
+            $("#keep").prop("disabled", false);
+        }
+	</script>
 
 {% endblock %}

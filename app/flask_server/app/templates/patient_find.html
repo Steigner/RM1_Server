@@ -4,13 +4,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/vk_an.css') }}">
 
 <!-- css library -> virtual keyboard -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lib/simple-keyboard.css') }}">
 
 {% extends "layout.html" %}
 {% block content %}
 
     <!-- library -> jquery user interface -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/lib/jquery-ui.min.js') }}"></script>
 
     <!-- NAVIGATION MENU -->
     <div class="info_panel">
@@ -91,7 +91,7 @@
 
 
     <!-- library -> virtual keyboard -->
-    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+    <script src="{{ url_for('static', filename='js/lib/simple-keyboard.js') }}"></script>
     
     <!-- script -> customize virtual keyboard -->
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/vk_an.js') }}"></script>

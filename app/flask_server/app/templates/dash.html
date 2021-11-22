@@ -4,8 +4,12 @@
 {% block content %}
 
 	<!-- library -> 3D graph -->
-	<script src='https://cdn.plot.ly/plotly-2.2.0.min.js'></script>
-		
+	<script src="{{ url_for('static', filename='js/lib/plotly.min.js') }}"></script>
+
+	<script src="{{ url_for('static', filename='js/lib/roslib.min.js') }}"></script>
+
+	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
+	
 	<!-- NAVIGATION MENU -->
 	<div class="info_panel">
 		
@@ -28,6 +32,6 @@
 	</div>
 
 	<!-- script -> point cloud data processing and show -->
-	<script type="text/javascript" src="{{ url_for('static', filename = 'js/dash.js') }}"></script>
+	<script type="module" src="{{ url_for('static', filename = 'js/dash.js') }}"></script>
 
 {% endblock %}

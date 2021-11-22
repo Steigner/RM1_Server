@@ -1,13 +1,14 @@
 import {insert_error_cookie, allert} from './modules/cookies.js';
 
 function anim(){
+
     let animation = anime({
         targets: '.image',
-        rotate: 90,
-        duration: 2500,
-        loop: true,
-        scale: 0.5,
+        borderRadius: '35%',
+        duration: 800,
+        easing: 'linear',
         direction: 'alternate',
+        loop: true
     });
     return animation
 }
