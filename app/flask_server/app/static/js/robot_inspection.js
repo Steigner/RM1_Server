@@ -1,6 +1,9 @@
 // script -> size devisor
 import {Size} from './modules/size.js';
 
+import {insert_error_cookie, allert} from './modules/cookies.js';
+
+
 class RobotInspection{
     constructor(){
         this.add_info_input()
@@ -113,50 +116,56 @@ class RobotInspection{
             type: 'POST',
             data: {value: 'data_feed'},
             success: function(response) {
-                if (!!window.EventSource) {
-                    var source = new EventSource(response);
-                    // onmessage parse data from response url
-                    source.onmessage = function(e) {
-                        var string = e.data;
-                        var data = JSON.parse("[" + string + "]")[0];
-                        
-                        // 0-5 currenct charts -> update it
-                        function update_chart_curr(data, chart){
-                            chart.data.datasets[0].data[0] = data;
-                            chart.data.datasets[0].data[1] = 5 - data;
-                            // set up info center input - current
-                            chart.options.elements.center.text = data.toFixed(2) + " A";
-                            chart.update();
+                if(response == 'Robot is not connected!'){
+                    insert_error_cookie(response);
+                    allert();
+                }
+                else{
+                    if (!!window.EventSource) {
+                        var source = new EventSource(response);
+                        // onmessage parse data from response url
+                        source.onmessage = function(e) {
+                            var string = e.data;
+                            var data = JSON.parse("[" + string + "]")[0];
+                            
+                            // 0-5 currenct charts -> update it
+                            function update_chart_curr(data, chart){
+                                chart.data.datasets[0].data[0] = data;
+                                chart.data.datasets[0].data[1] = 5 - data;
+                                // set up info center input - current
+                                chart.options.elements.center.text = data.toFixed(2) + " A";
+                                chart.update();
 
-                        }
-                        
-                        // 6-11 temperature charts -> update it
-                        function update_chart_temp(data, chart){
-                            chart.data.datasets[0].data[0] = data;
-                            chart.data.datasets[0].data[1] = 60 - data;
-                            // set up info center input - temperature
-                            chart.options.elements.center.text = data.toFixed(1) + " °C";
-                            chart.update();
-                        }
-                        
-                        for (var i in data) {
-                            // 0 -> 5 
-                            if (i <= 5){
-                                update_chart_curr(data[i], charts[i]);
                             }
-                            // 6 -> 11
-                            else{
-                                update_chart_temp(data[i],charts[i]);
+                            
+                            // 6-11 temperature charts -> update it
+                            function update_chart_temp(data, chart){
+                                chart.data.datasets[0].data[0] = data;
+                                chart.data.datasets[0].data[1] = 60 - data;
+                                // set up info center input - temperature
+                                chart.options.elements.center.text = data.toFixed(1) + " °C";
+                                chart.update();
+                            }
+                            
+                            for (var i in data) {
+                                // 0 -> 5 
+                                if (i <= 5){
+                                    update_chart_curr(data[i], charts[i]);
+                                }
+                                // 6 -> 11
+                                else{
+                                    update_chart_temp(data[i],charts[i]);
+                                }
                             }
                         }
                     }
+
+                    // IMPORTANT !! before leave, stop streaming data!
+                    $(window).on('beforeunload', function(){
+                        source.close();
+                    });
+
                 }
-
-                // IMPORTANT !! before leave, stop streaming data!
-                $(window).on('beforeunload', function(){
-                    source.close();
-                });
-
             },
             error: function(error) {
                 console.log(error);

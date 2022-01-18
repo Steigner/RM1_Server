@@ -13,16 +13,16 @@ class StreamCam(Camera):
     #   return none
     # Note: Stop streaming camera
     @classmethod
-    def stop(self):
-        self.pipeline.stop()
+    def stop(cls):
+        cls.pipeline.stop()
     
     # public classmethod:
     #   input: none
     #   return none
     # Note: Start streaming camera
     @classmethod
-    def start(self):
-        super(StreamCam, self).start() 
+    def start(cls):
+        super(StreamCam, cls).start() 
     
     # public classmethod:
     #   input: switch -> which streaming user choose
@@ -32,14 +32,14 @@ class StreamCam(Camera):
     #   switch = 1 -> depth image
     #   switch = 2 -> infra image
     @classmethod
-    def get_frame(self, switch):
-        frames = self.pipeline.wait_for_frames()
+    def get_frame(cls, switch):
+        frames = cls.pipeline.wait_for_frames()
         
-        aligned_frames = self.align.process(frames)
+        aligned_frames = cls.align.process(frames)
         
         depth_frame = aligned_frames.get_depth_frame()
         color_frame = aligned_frames.get_color_frame()
-        infra_frame = frames.first(self.infared_stream)
+        infra_frame = frames.first(cls.infared_stream)
         
         depth_image = np.asanyarray(depth_frame.get_data())
         color_image = np.asanyarray(color_frame.get_data())
@@ -68,20 +68,20 @@ class StreamColorCam(Camera):
     #   return none
     # Note: Stop streaming camera
     @classmethod
-    def stop(self):
-        self.pipeline.stop()
+    def stop(cls):
+        cls.pipeline.stop()
     
     # public classmethod:
     #   input: none
     #   return none
     # Note: Start streaming camera
     @classmethod
-    def start(self):
-        super(StreamColorCam, self).start_color()
+    def start(cls):
+        super(StreamColorCam, cls).start_color()
 
     @classmethod
-    def get_frame(self):
-        frames = self.pipeline.wait_for_frames()
+    def get_frame(cls):
+        frames = cls.pipeline.wait_for_frames()
         
         color_frame = frames.get_color_frame()
         

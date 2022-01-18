@@ -45,6 +45,8 @@ import time
 
 from .camera.func_nostrill_det import NostrillDet
 
+from .weather.weather import Weather
+
 # set 1. blueprint = app 
 app = Blueprint('app', __name__)
 
@@ -63,28 +65,9 @@ def custom_401(error):
 @login_required
 def home(): 
     Counter.counter += 1
-    # import subprocess
-    # subprocess.run('./app/weather/weather.sh', shell=True)
     
-    # TODO maybe this will be as standalone function !! 
-    import csv
-    weather = []
-    temperature = None
-    humidity = None
-    preasure = None
-    with open('app/weather/weather.csv', 'r') as file:
-        reader = csv.reader(file, delimiter = ' ')
-        for row in reader:
-            temperature = row[-1]
-            humidity = row[-2]
-            preasure = row[-3]
-            for i in range(len(row)-3):
-                weather.append(row[i])
-
-    weather = ' '.join(str(e) for e in weather)
-    
-    # f = open('app/weather/weather.csv', "w+")
-    # f.close()
+    # Weather.download_weather()
+    weather, temperature, preasure, humidity = Weather.get_weather()
 
     # if Counter.counter <= 1:
     #    NostrillDet.init()
@@ -113,6 +96,7 @@ def home():
 @login_required
 def ip_adress():
     if request.method == 'POST':
+        # due to safety ... if request data such 
         return jsonify(get_ip())
 
     return redirect(url_for('app.home'))
@@ -222,9 +206,15 @@ def robot_inspection():
 
     if request.method == 'POST':
         if request.form['value'] == 'data_feed':
-            url = url_for('.data_feed')
-            return jsonify(url)
+            try:
+                Robot_info.test_connection()
 
+                url = url_for('.data_feed')
+                return jsonify(url)
+
+            except Exception:
+                return jsonify("Robot is not connected!")
+    
     return render_template('robot_inspection.html')
 
 # page -> route documentation:
@@ -401,20 +391,31 @@ def face_scan():
 #   and show all datas from patients database include encoded image 
 #   2. Closely related to patient menu
 #   3. Same render page in auth blueprint part.
-@app.route('/patient_data_qr', methods=['GET','POST'])
+@app.route('/store_data_qr', methods=['GET','POST'])
 @login_required
-def patient_data_qr():
+def store_data_qr():
     if request.method == 'POST':
-        if request.form['value'] == 'stop_qr_cam':
-            ReadQR.stop()
+        if request.form['value'] == 'store_qr_cam':
+            data = ReadQR.output_data()
+            
+            if data:
+                data = data[0][0].decode("utf-8")
+                StoreID.id = data
+                
+    return render_template('patient_menu.html', cam = StoreCam.cam)
 
-    data = ReadQR.output_data()
+@app.route('/patient_data_qr') 
+@login_required
+def patient_data_qr():  
+    data = StoreID.id
     patient = Patient.query.filter_by(pid = data).first()
-    image = b64encode(patient.photo).decode("utf-8")
+    print(patient)
+    if patient:
+        image = b64encode(patient.photo).decode("utf-8")
+        return render_template('patient_data.html', patient = patient, obj = patient.photo, image = image)
     
-    StoreID.id = data
-
-    return render_template('patient_data.html', patient = patient, obj = patient.photo, image = image)
+    else:
+        return render_template('patients_searched.html', patient = None)
 
 # page -> route patient menu:
 # Note: 
@@ -422,14 +423,21 @@ def patient_data_qr():
 #   patient_find route in auth blueprint.
 #   2. Color image is yield from video_stream_QR route.
 #   3. Closely related to patient data qr route
-@app.route('/patient_menu',methods=['GET','POST'])
+@app.route('/patient_menu', methods=['GET','POST'])
 @login_required
 def patient_menu():
     if request.method == 'POST':
-        if request.form['value'] == 'QR_detection':
-            ReadQR.start()
-            url = url_for('.video_stream_QR')
-            return jsonify({'on':'Streaming video!', 'off':'Stop Streaming!', 'url' : url})
+        try:
+            if request.form['value'] == 'QR_detection':
+                ReadQR.start()
+                url = url_for('.video_stream_QR')
+                return jsonify({'url' : url})
+            
+            if request.form['value'] == 'stop_qr_cam':
+                ReadQR.stop()
+        
+        except RuntimeError:
+            return jsonify("Camera is not pluged-in!")
     
     return render_template('patient_menu.html', cam = StoreCam.cam)
 
@@ -500,17 +508,17 @@ def video_feed_facedet():
 @app.route('/video_stream_color')
 @login_required
 def video_stream_color():
-    if Token.token == True:
-        def generate():
-            while 1:
-                #start_time = time.time()
-                frame = StreamCam.get_frame(switch=0)
-                #print("FPS: ", 1.0 / (time.time() - start_time))
-                yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
-        return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    #if Token.token == True:
+    def generate():
+        while 1:
+            #start_time = time.time()
+            frame = StreamCam.get_frame(switch=0)
+            #print("FPS: ", 1.0 / (time.time() - start_time))
+            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
+    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
     
-    else:
-        return redirect(url_for('app.home'))
+    #else:
+    #    return redirect(url_for('app.home'))
 
 @app.route('/video_color')
 @login_required
@@ -558,6 +566,11 @@ def data_feed():
     if request.headers.get('accept') == 'text/event-stream':
         def gen_data():
             while 1:
-                data = Robot_info.get_data()
-                yield ("data: {}\n\n").format(data)
+                try:
+                    data = Robot_info.get_data()
+                    yield ("data: {}\n\n").format(data)
+                
+                except Exception:
+                    break
+                    
         return Response(gen_data(), content_type='text/event-stream')

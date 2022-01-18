@@ -68,7 +68,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
     
     def test_robot_inspection(self):
-        response = self.client.get('/robot_inspection', follow_redirects=True)
+        response = self.client.get('/robot_inspection', data={'value': 'data_feed'}, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
     
     def test_documentation(self):
@@ -110,9 +110,9 @@ class TestCase(unittest.TestCase):
         # response = self.client.get('/face_scan', follow_redirects=True)
         # self.assertEqual(response.status_code, 200)
 
-    def ip_adress(self):
-        response = self.client.get('/ip_adress', follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
+    # def ip_adress(self):
+    #    response = self.client.get('/ip_adress', follow_redirects=True)
+    #    self.assertEqual(response.status_code, 200)
     
     def test_dash(self):
         response = self.client.get('/dash', follow_redirects=True)

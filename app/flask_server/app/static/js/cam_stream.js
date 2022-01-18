@@ -1,7 +1,6 @@
 import {insert_error_cookie, allert} from './modules/cookies.js';
 
 function anim(){
-
     let animation = anime({
         targets: '.image',
         borderRadius: '35%',
@@ -52,6 +51,7 @@ $(function() {
                         animation.pause();
                         $('.stream').attr("src", response.url);
                         document.getElementById("depth_cam").value="On_depth";  
+                        undisable();
                     };
                 },
                 error: function(error) {
@@ -109,6 +109,7 @@ $(function() {
                         animation.pause();
                         $('.stream').attr("src", response.url);
                         document.getElementById("color_cam").value="On_color";
+                        undisable();
                     };
                 },
                 error: function(error) {
@@ -166,6 +167,7 @@ $(function() {
                         animation.pause();
                         $('.stream').attr("src", response.url);
                         document.getElementById("infra_cam").value="On_infra";
+                        undisable();
                     };
                 },
                 error: function(error) {
@@ -198,4 +200,23 @@ $(function() {
         };
     });
 
+    // AJAX
+    // Note:
+    //  If click on back button stop streaming -> garbage collector.
+    $(".back_button").click(function(){
+        $('.stream').off();
+        $('.stream').removeAttr("src");
+        $.ajax({        
+            url: '/show_cam_stream',
+            type: 'POST',
+            data: {value: "stop_cam"},
+            error: function(error) {
+                console.log(error);
+            }
+        });
+        setTimeout(function(){
+            window.location.href="/con_pan";
+        }, 300);
+    });
 })
+

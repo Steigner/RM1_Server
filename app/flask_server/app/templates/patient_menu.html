@@ -27,7 +27,8 @@
 		<button class="nav_button" id="QR_detection" value="Off_QR">QR code reader</button>
 		
 		<!-- 2. option search by typing -->
-		<button class="nav_button"onclick="window.location.href='{{ url_for( 'auth.patient_find') }}';">Find patient</button>
+		<button class="nav_button" id="patient_find"onclick="window.location.href='{{ url_for( 'auth.patient_find') }}';">Find patient</button>
+		
 		<div class="image">
 			<img class="stream">
 		</div>

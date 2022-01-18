@@ -16,27 +16,28 @@ class ReadQR(Camera):
     #   return none
     # Note: Stop streaming camera
     @classmethod
-    def stop(self):
-        self.pipeline.stop()
+    def stop(cls):
+        cls.pipeline.stop()
     
     # public classmethod:
     #   input: none
     #   return none
     # Note: Start streaming camera
     @classmethod
-    def start(self):
-        super(ReadQR, self).start()
+    def start(cls):
+        super(ReadQR, cls).start()
 
     # public classmethod:
     #   input: none
     #   return decoded barcode data
     # Note: This method is used for get data and post to route
     @classmethod
-    def output_data(self):
+    def output_data(cls):
         # !!!!!!!!!!!!!!!!!!!!!
         # exception for no data
-        data = self.data
-        return data[0][0].decode("utf-8")
+        # data = cls.data
+        data = cls.data
+        return data
 
     # public classmethod:
     #   input: none
@@ -44,8 +45,8 @@ class ReadQR(Camera):
     # Note: In this method we get color image, and on this image we decoded defined barcode,
     #   and store data to self.data. Also we using opencv to draw frame for detected barcode.
     @classmethod
-    def QR_code_reader(self):
-        frames = self.pipeline.wait_for_frames()
+    def QR_code_reader(cls):
+        frames = cls.pipeline.wait_for_frames()
         
         color_frame = frames.get_color_frame()
         color_image = np.asanyarray(color_frame.get_data())
@@ -60,10 +61,10 @@ class ReadQR(Camera):
                 (x, y, w, h) = barcode.rect
                 cv2.rectangle(color_image, (x, y), (x + w, y + h), (0, 0, 255), 2)
             
-            name = "QR-kod = loaded"
+            name = "QR-code loaded"
             cv2.putText(color_image, name, (354 - 20, 325 + 50), font, 0.75, (255, 255, 255), 1)
             
-            self.data = data
+            cls.data = data
         
         jpeg = cv2.imencode('.jpg', color_image)[1].tobytes()
         return jpeg

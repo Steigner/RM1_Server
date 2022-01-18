@@ -6,7 +6,7 @@ import json
 
 class Camera_Init(object):
     @classmethod
-    def find_device_that_supports_advanced_mode(self):
+    def find_device_that_supports_advanced_mode(cls):
         DS5_product_ids = ["0AD1", "0AD2", "0AD3", "0AD4", "0AD5", "0AF6", "0AFE", "0AFF", "0B00", "0B01", "0B03", "0B07","0B3A"]
         ctx = rs.context()
         ds5_dev = rs.device()
@@ -20,10 +20,10 @@ class Camera_Init(object):
         #raise Exception("No device that supports advanced mode was found")
     
     @classmethod
-    def inicialize(self):
-        dev = self.find_device_that_supports_advanced_mode()
+    def inicialize(cls):
+        dev = cls.find_device_that_supports_advanced_mode()
         
-        self.dev = dev
+        cls.dev = dev
 
         if dev == None:
             return "Camera status: not pluged-in compatible device"

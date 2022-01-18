@@ -13,29 +13,29 @@ class TakePC(Camera):
     #   return none
     # Note: Stop streaming camera
     @classmethod
-    def stop(self):
-        self.pipeline.stop()
+    def stop(cls):
+        cls.pipeline.stop()
     
     # public classmethod:
     #   input: none
     #   return none
     # Note: Start streaming camera
     @classmethod
-    def start(self):
-        super(TakePC, self).start_pc()
+    def start(cls):
+        super(TakePC, cls).start_pc()
     
     # !!public classmethod:
     #   input: none
     #   return none
     # Note: in progress!!
     @classmethod
-    def take_pointcloud(self):
+    def take_pointcloud(cls):
         path = "app/graph"
 
         c = 0
         while 1:
-            frames = self.pipeline.wait_for_frames()
-            frames.first(self.other_stream).as_video_frame()
+            frames = cls.pipeline.wait_for_frames()
+            frames.first(cls.other_stream).as_video_frame()
             
             c+=1
 
@@ -52,4 +52,4 @@ class TakePC(Camera):
 
                 break
         
-        # self.stop()
+        # cls.stop()

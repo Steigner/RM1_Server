@@ -15,30 +15,30 @@ class FaceDet(Camera):
     #   return none
     # Note: Stop streaming camera
     @classmethod
-    def stop(self):
-        self.pipeline.stop()
+    def stop(cls):
+        cls.pipeline.stop()
 
     # public classmethod:
     #   input: none
     #   return none
     # Note: Start streaming camera
     @classmethod
-    def start(self):
+    def start(cls):
         # allows us to access methods of the base class -> "Camera"
-        super(FaceDet, self).start()
-        self.__init_detection_model()
+        super(FaceDet, cls).start()
+        cls.__init_detection_model()
     
     # private classmethod:
     #   input: none
     #   return none
     # Note: inicialize opencv pretrained face detection models
     @classmethod
-    def __init_detection_model(self):
+    def __init_detection_model(cls):
         LBFmodel = "app/camera/settings/lbfmodel.yaml"
         haarcascade_clf = "app/camera/settings/haarcascade_frontalface_alt2.xml"
-        self.detector = cv2.CascadeClassifier(haarcascade_clf)
-        self.landmark_detector  = cv2.face.createFacemarkLBF()
-        self.landmark_detector.loadModel(LBFmodel)
+        cls.detector = cv2.CascadeClassifier(haarcascade_clf)
+        cls.landmark_detector  = cv2.face.createFacemarkLBF()
+        cls.landmark_detector.loadModel(LBFmodel)
 
     # private classmethod:
     #   input: color image [np.asarray]
@@ -46,7 +46,7 @@ class FaceDet(Camera):
     # Note: In this method is defined position of location for detection face.
     #   Main function is to handle if detected head landmarks is outside of inside defined zone.
     @classmethod
-    def __show(self, image):
+    def __show(cls, image):
         # defined zone
         x1 = 100
         y1 = 50
@@ -60,22 +60,22 @@ class FaceDet(Camera):
         image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # detect face 
-        faces = self.detector.detectMultiScale(image_gray)
+        faces = cls.detector.detectMultiScale(image_gray)
         
         # landmarks is not find
         cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
         
         # validation variable -> is use ass acces var
-        self.validation = False
+        cls.validation = False
 
         # get all landmark of array of finded face points 
         for (x, y, w, d) in faces:
-            _, landmarks = self.landmark_detector.fit(image_gray, faces)
+            _, landmarks = cls.landmark_detector.fit(image_gray, faces)
             
             # landmarks is in defined zone
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
             
-            self.validation = True
+            cls.validation = True
             
             # show all landrmarks points
             for landmark in landmarks:
@@ -95,7 +95,7 @@ class FaceDet(Camera):
                         # landmarks is out of defined zone
                         cv2.rectangle(image, (x1, y1), (x2, y2), (0, 0, 255), 2)       
                         
-                        self.validation = False
+                        cls.validation = False
 
         return image
 
@@ -158,10 +158,10 @@ class FaceDet(Camera):
     #   return color image [np.asarray]
     # Note: inicialize camera and return color image from camera
     @classmethod
-    def __image(self):
-        frames = self.pipeline.wait_for_frames()
+    def __image(cls):
+        frames = cls.pipeline.wait_for_frames()
 
-        aligned_frames = self.align.process(frames) 
+        aligned_frames = cls.align.process(frames) 
         color_frame = aligned_frames.get_color_frame()
         image = np.asarray(color_frame.get_data())
         
@@ -196,10 +196,10 @@ class FaceDet(Camera):
     #   return jpeg color modifed by __show() method [jpg - tobytes]
     # Note: get color image and put into __show() method, then return modified data.
     @classmethod
-    def set_position(self):            
-        image, aligned_frames = self.__image()
+    def set_position(cls):            
+        image, aligned_frames = cls.__image()
 
-        image_color = self.__show(image)
+        image_color = cls.__show(image)
         
         jpeg = cv2.imencode('.jpg', image_color)[1].tobytes()
 
@@ -209,5 +209,5 @@ class FaceDet(Camera):
     #   input: none
     #   return validation variable [bool]
     @classmethod
-    def get_val(self):
-        return self.validation
+    def get_val(cls):
+        return cls.validation
