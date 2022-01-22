@@ -13,12 +13,26 @@ function anim(){
     return animation
 }
 
+function disable(){
+    $("#QR_detection").prop('disabled', true);
+    $("#patient_find").prop('disabled', true);
+    $(".back_button").prop('disabled', true);
+    
+}
+
+function undisable(){
+    $("#QR_detection").prop('disabled', false);
+    $("#patient_find").prop('disabled', false);
+    $(".back_button").prop('disabled', false);
+}
+
 $(function() {
     var [_, _, width_devisor, _] = Size();
 
     $('#QR_detection').click(function(){
         var currentvalue = $("#QR_detection").val();
         let animation = anim();
+        disable();
 
         if(currentvalue == "Off_QR"){
             $(".image").css( "visibility", "visible" );
@@ -35,6 +49,7 @@ $(function() {
                     if(response == 'Camera is not pluged-in!'){
                         insert_error_cookie(response);
                         window.location.href="/home";
+                        undisable();
                     }
 
                     else{
@@ -43,6 +58,7 @@ $(function() {
                         $('.stream').attr("src", response.url);
                         document.getElementById("QR_detection").value="On_QR";  
                         $("#QR_detection").val("On_QR");
+                        undisable();
                     }
                 },
                 error: function(error) {

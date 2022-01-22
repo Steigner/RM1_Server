@@ -68,22 +68,12 @@ def home():
     
     # Weather.download_weather()
     weather, temperature, preasure, humidity = Weather.get_weather()
-
-    # if Counter.counter <= 1:
-    #    NostrillDet.init()
-    """
     try:
-        StreamCam.start()
-        StreamCam.stop()
-        
-        # TODO get exactly type of camera !! 
         info = Camera_Init().inicialize()
-        StoreCam.cam = Camera_Init().dev
+        
+    except TypeError:
+        info = "Camera status: device is not pluged-in"
     
-    except RuntimeError:
-    """
-    
-    info = "Camera status: not pluged-in compatible device"
     StoreCam.cam = info
 
     return render_template('home.html', ip = StoreIP.ip, count = Counter.counter, cam = info, weather = weather, temperature = temperature, preasure = preasure, humidity = humidity)
@@ -363,12 +353,16 @@ def face_scan():
         Point.point = NostrillDet.scan_nostrill()
         NostrillDet.stop()
 
+        """
+        Toto je zakomentovano!! 2022
+
         print(Point.point)
         time.sleep(3)
 
         TakePC.start()
         TakePC.take_pointcloud()
         TakePC.stop()
+        """
 
         return render_template('con_pan.html')
         

@@ -6,17 +6,13 @@ import pyrealsense2 as rs
 
 from app.camera.cam import Camera
 
-from keras.models import load_model
-
-from keras.preprocessing.image import load_img, img_to_array, array_to_img
-
 import matplotlib.pyplot as plt
 
 
 class NostrillDet(Camera):
     @classmethod
-    def init(cls):
-        cls.net = load_model('app/camera/settings/net_model3')
+    def __init_detection_model(cls):
+        cls.net = cv2.dnn.readNetFromONNX('app/camera/settings/nm_unet_1.onnx')
     
     @classmethod
     def stop(cls):
@@ -26,7 +22,7 @@ class NostrillDet(Camera):
     def start(cls):
         # allows us to access methods of the base class -> "Camera"
         super(NostrillDet, cls).start()
-        cls.init()
+        cls.__init_detection_model()
 
     @staticmethod
     def __mask_input(input_image, mask):
@@ -50,10 +46,12 @@ class NostrillDet(Camera):
 
         img_in = img
 
-        img = img_to_array(img)
-        img = np.expand_dims(img, axis = 0)
+        img = np.array([img]).astype('float64')
+        
+        # img = np.expand_dims(img, axis = 0)
 
-        t = cls.net.predict(img)
+        cls.net.setInput(img)
+        t = cls.net.forward()
 
         mask = np.argmax(t[0], axis = -1)
         mask = np.expand_dims(mask, axis = -1)
@@ -62,7 +60,6 @@ class NostrillDet(Camera):
 
         n_2 = np.where(mask == 2)
         
-
         try:
             centroide1 = (sum(n_1[0]) / len(n_1[0]), sum(n_1[1]) / len(n_1[1]))
             print("Center of right nostril: " + str(centroide1))
@@ -79,17 +76,13 @@ class NostrillDet(Camera):
 
             dx ,dy, dz = rs.rs2_deproject_pixel_to_point(color_intrin, [x,y], depth)
 
+            masked_img = cls.__mask_input(img_in, mask)
+                
+            plt.imshow(masked_img)
+            plt.scatter([centroide1[1], centroide2[1]], [centroide1[0], centroide2[0]], color = 'b')
+            plt.show()
+
             return [dx, dy, dz]
 
         except ZeroDivisionError:
             print("Nelze urcit!")
-    
-
-        # masked_img = cls.__mask_input(img_in, mask)
-        
-        
-        # plt.imshow(masked_img)
-        # plt.scatter([centroide1[1], centroide2[1]], [centroide1[0], centroide2[0]], color = 'b')
-        # plt.show()
-        
-        # cls.stop()

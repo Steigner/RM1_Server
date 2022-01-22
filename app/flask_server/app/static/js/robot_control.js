@@ -23,7 +23,7 @@ class RobotControl{
     rosnode_init(){  
         // ROS NODES
         // emergency stop node
-        this.stop = new ROSLIB.Topic({
+        this.switch = new ROSLIB.Topic({
             ros : this.ros,
             name : '/switch',
             messageType : 'std_msgs/String'
@@ -291,9 +291,34 @@ class RobotControl{
             data: "emergency_stop"       
         });
     
-        this.stop.publish(data);
-
+        this.switch.publish(data);
+        $('.rangeslider__handle').css("visibility","visible");
+        $('.right, .left').css("visibility","visible");
         alert("EMERGENCY BUTTON WAS PRESSED");
+    }
+
+    rg2_open(){
+        var data = new ROSLIB.Message({
+            data: "rg2_open"       
+        });
+    
+        this.switch.publish(data);
+    };
+
+    rg2_close(){
+        var data = new ROSLIB.Message({
+            data: "rg2_close"       
+        });
+    
+        this.switch.publish(data);
+    }
+
+    control_robot(){
+        var data = new ROSLIB.Message({
+            data: "manual_control"       
+        });
+    
+        this.switch.publish(data);
     }
 
     // public method:
@@ -302,6 +327,7 @@ class RobotControl{
     // Note: MAIN
     main(){
         this.rosnode_init();
+        this.control_robot();
         this.data_feed();
         this.velocity_control();
 
@@ -385,7 +411,6 @@ class FrontControl{
             }
         });
     }
-
 }
 
 // MAIN FUNCTION
@@ -413,6 +438,18 @@ $(function() {
 
     $("#sim").click(function() {
         control.cam_stop();
+    });
+
+    $("#open").click(function() {
+        robot.rg2_open();
+        $("#open").prop('disabled', true);
+        $("#close").prop('disabled', false);
+    });
+
+    $("#close").click(function() {
+        robot.rg2_close();
+        $("#open").prop('disabled', false);
+        $("#close").prop('disabled', true);
     });
 
     // prevent to open dialog windwo of touch 

@@ -16,12 +16,14 @@ function disable(){
     $("#infra_cam").prop('disabled', true);
     $("#color_cam").prop('disabled', true);
     $("#depth_cam").prop('disabled', true);
+    $(".back_button").prop('disabled', true);
 }
 
 function undisable(){
     $("#infra_cam").prop('disabled', false);
     $("#color_cam").prop('disabled', false);
     $("#depth_cam").prop('disabled', false);
+    $(".back_button").prop('disabled', false);
 }
 
 $(function() {
