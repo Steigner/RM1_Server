@@ -128,8 +128,6 @@
     right: calc(280px / var(--width-divisor));
 }
 
-#start_button.button_home:active, #connect_button.button_home:active, 
-#disconnect_button.button_home:active, #reload.button_home:active,
-#admin_menu.button_home:active, #keep:active{
+.button_home:active, #keep:active{
     opacity: 0.4;
 }

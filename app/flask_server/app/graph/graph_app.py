@@ -5,11 +5,32 @@ import numpy as np
 
 class Show_PointCloud(object):
     @classmethod
-    def load_pc(cls):
-        pcd_o = o3d.io.read_point_cloud("app/graph/point_cloud.ply")
-
-        # pcd_ = o3d.io.read_point_cloud("point_cloud.ply")        
+    def load_pc(cls, point):
+        pcd_o = o3d.io.read_point_cloud("app/graph/point_cloud.ply") 
+        # pcd_o = o3d.io.read_point_cloud("point_cloud.ply")        
         
+        # point = [0,0,0]
+        pcd_tree = o3d.geometry.KDTreeFlann(pcd_o)
+
+        top = 1
+        t = None
+
+        for i in range(len(pcd_o.points)):
+            pr = ((point[0] - pcd_o.points[i][0])**2 + (point[1] - pcd_o.points[i][1])**2 + (point[2] - pcd_o.points[i][2])**2)**(1/2)   
+            if pr < top:
+                top = pr
+                t = i
+
+        [k, idx, _] = pcd_tree.search_radius_vector_3d(pcd_o.points[t], 0.002)
+        ktree = np.asarray(pcd_o.points)[idx[1:], :]
+        ktree = np.append([pcd_o.points[t]], ktree, axis=0)
+        
+        """
+        pcd_o.colors[point] = [1, 0, 0]
+        np.asarray(pcd_o.colors)[idx[1:], :] = [0, 1, 0]
+        o3d.visualization.draw_geometries([pcd_o])
+        """
+
         """
         pcd_ = pcd_o.voxel_down_sample(voxel_size=0.01)
         
@@ -56,10 +77,8 @@ class Show_PointCloud(object):
         # set up color of point cloud for list input to plotly.js Scatter3D
         col = [f'rgb({pp_colours[i,0]}, {pp_colours[i,1]}, {pp_colours[i,2]})' for i in range(0,int(np.size(points)/3))]
 
-        return points[:, 0], points[:,1], points[:,2], col
+        return points[:, 0], points[:,1], points[:,2], col, ktree[:, 0], ktree[:, 1], ktree[:, 2]
 
-
-"""
 if __name__ == "__main__":
     Show_PointCloud().load_pc()
     
@@ -68,4 +87,3 @@ if __name__ == "__main__":
     # pcd_ = o3d.io.read_point_cloud("test.ply")
 
     # o3d.visualization.draw_geometries([mesh])
-"""

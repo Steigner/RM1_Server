@@ -17,13 +17,14 @@ function disable(){
     $("#QR_detection").prop('disabled', true);
     $("#patient_find").prop('disabled', true);
     $(".back_button").prop('disabled', true);
-    
+    $("#home").prop('disabled', true);
 }
 
 function undisable(){
     $("#QR_detection").prop('disabled', false);
     $("#patient_find").prop('disabled', false);
     $(".back_button").prop('disabled', false);
+    $("#home").prop('disabled', false);
 }
 
 $(function() {

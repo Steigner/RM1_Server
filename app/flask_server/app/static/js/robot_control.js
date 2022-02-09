@@ -288,13 +288,23 @@ class RobotControl{
     // IN PROGRESS
     emergency_stop(){
         var data = new ROSLIB.Message({
-            data: "emergency_stop"       
+            data: "emergency_stop"     
         });
     
         this.switch.publish(data);
+        
         $('.rangeslider__handle').css("visibility","visible");
         $('.right, .left').css("visibility","visible");
         alert("EMERGENCY BUTTON WAS PRESSED");
+    }
+
+    kill_process(){
+        console.log("killiung");
+        var data = new ROSLIB.Message({
+            data: "manual_control_stop"       
+        });
+    
+        this.switch.publish(data);
     }
 
     rg2_open(){
@@ -452,10 +462,18 @@ $(function() {
         $("#close").prop('disabled', true);
     });
 
+    $(".back_button").click(function() {
+        robot.kill_process();
+        
+        setTimeout(function(){
+            window.location.href="/menu";
+        }, 3000);
+    });
+
     // prevent to open dialog windwo of touch 
     window.oncontextmenu = function(event) {
         event.preventDefault();
         event.stopPropagation();
         return false;
-   };
+    };
 })

@@ -38,9 +38,7 @@ class FaceReco(Camera):
     # Note: inicialize photo and name for face recognition
     @classmethod
     def init_patient(cls, image, name):
-        # patient_image = face_recognition.load_image_file(BytesIO(image))
-        
-        patient_image = face_recognition.load_image_file("app/camera/me.jpeg")
+        patient_image = face_recognition.load_image_file(BytesIO(image))
         cls.known_face_encodings = [face_recognition.face_encodings(patient_image)[0]]
         cls.known_face_names = [name]
 

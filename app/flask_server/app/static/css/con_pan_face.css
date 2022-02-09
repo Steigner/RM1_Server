@@ -85,3 +85,7 @@
 
     margin-top: calc(5px / var(--height-divisor));
 }
+
+.next_button:active{
+    opacity: 0.4;
+}

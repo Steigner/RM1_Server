@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='css/con_pan_face.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/con_pan.css') }}">
 
 {% extends "layout.html" %}
 {% block content %}
@@ -28,15 +28,10 @@
 	<!-- MAIN PART -->
 	<div class="post_container">
 		
-		<!-- show camera stream 
-		<div class="image">
-			<img class="stream">
-		</div>
-		-->
-
 		<!-- next button -->
 		<div class="column">
-			<div id="scan" class="next_button">SCAN</div>
+			<button id="scan" class="menu_button">Scan</button>
+			<button id="test" class="menu_button">Test</button>
 		</div>
 
 	</div>

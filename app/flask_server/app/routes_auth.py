@@ -39,6 +39,8 @@ import datetime
 
 import time
 
+from flask import session, g
+
 # set 2. blueprint = auth 
 auth = Blueprint('auth', __name__)
 
@@ -274,12 +276,6 @@ def patient_data():
 
     return render_template('patient_data.html', patient = patient, obj = patient.photo, image = image)
 
-# this is maybe not neccesary, but someone says for different broswers
-@auth.route('/fresh')
-@fresh_login_required
-def fresh():
-    return '<h1>You have a fresh session!</h1>'
-
 # !!redirect page -> route sign out:
 # Note: 
 #   1. all back end variables init to originals values and disconnect all devices
@@ -293,3 +289,14 @@ def sign_out():
     Counter.counter = 0
     logout_user()
     return redirect(url_for('.sign_in'))
+
+@auth.teardown_request
+def teardown_request_func(error=None):
+    if error:
+        # Log the error
+        print(str(error))
+
+@auth.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404

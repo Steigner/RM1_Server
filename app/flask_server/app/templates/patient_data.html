@@ -41,7 +41,7 @@
 			</div>
 
 			<!-- jump to faceID -->
-			<button class="next_button"onclick="window.location.href='{{ url_for( 'app.faceID') }}';">FaceID</button>
+			<button id="face_id" class="next_button"onclick="window.location.href='{{ url_for( 'app.faceID') }}';">FaceID</button>
 		</div>
 
 		<!-- mid part -->
@@ -67,9 +67,20 @@
 		</div>
 
 		<!-- generate declaration button -->
-		<button id="gen_pdf"class="next_button"onclick="window.location.href='{{ url_for( 'auth.download') }}';">Generate PDF</button>
+		<button id="gen_pdf"class="next_button">Generate PDF</button>
+		<button id="select"class="next_button">Select</button>
 	
 	</div>
+
+	<script>
+		$("#gen_pdf").click(function() {
+		$(".loading_background, .loading_label, .wrapper").show();
+        setTimeout(function(){
+			$(".loading_background, .loading_label, .wrapper").hide();
+            window.location.href="/download";
+        }, 300);
+    });
+	</script>
 
 	<!-- script -> patient data manage -->
 	<script type="module" src="{{ url_for('static', filename = 'js/patient_data.js') }}"></script>

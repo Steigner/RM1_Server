@@ -69,8 +69,13 @@ def home():
     # Weather.download_weather()
     weather, temperature, preasure, humidity = Weather.get_weather()
     try:
-        info = Camera_Init().inicialize()
+
+        if Counter.counter == 1:
+            info = Camera_Init().inicialize(c = True)
         
+        else:
+            info = Camera_Init().inicialize(c = False)
+
     except TypeError:
         info = "Camera status: device is not pluged-in"
     
@@ -231,27 +236,14 @@ def authors():
 @login_required
 def dash():
     if request.method == 'POST':
-        points_x, points_y, points_z, colors  = Show_PointCloud.load_pc()
-        
-        # !!
+        points_x, points_y, points_z, colors, n_x, n_y, n_z  = Show_PointCloud.load_pc(Point.point)
+        Point.point = [n_x[0],n_y[0],n_z[0]]
+
         # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : Point.point[0], 'ny':Point.point[1], 'nz':Point.point[2]})
-        return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
+        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
+        return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : n_x.tolist(), 'ny' : n_y.tolist(), 'nz' : n_z.tolist()})
 
     return render_template('dash.html')
-
-"""
-# !!page -> route take pointcloud:
-# Note: 
-#   1. in progress 
-@app.route('/take_pointcloud', methods=['GET','POST'])
-@login_required
-def take_pointcloud():
-    TakePC.start()
-    TakePC.take_pointcloud()
-    TakePC.stop()
-
-    return render_template('home.html')
-"""
 
 # page -> route show camera stream:
 # Note: 
@@ -291,55 +283,56 @@ def show_cam_stream():
 @login_required
 def faceID():    
     if request.method == 'POST':
-        if request.form['value'] == 'stop_reco_cam':
-            time.sleep(0.5)
-            FaceReco.stop()
-        
-        if request.form['value'] == 'recognition':
-            # TODO
-            # database is local sqlite!!!
+        try:
+            if request.form['value'] == 'stop_reco_cam':
+                time.sleep(0.5)
+                FaceReco.stop()
             
-            # print(StoreID.id)
-            
-            # time.sleep(2)
+            if request.form['value'] == 'recognition':
+                # TODO
+                # database is local sqlite!!!
+                if StoreID.id:
+                    patient = Patient.query.filter_by(pid = StoreID.id).first()
+                    
+                    FaceReco.init_patient(patient.photo, str(patient.name + " " + patient.surname))
+                    
+                    time.sleep(1)
+                    
+                    FaceReco.start()
 
-            # patient = Patient.query.filter_by(pid = StoreID.id).first()
-            
-            # time.sleep(3)
-            
-            # FaceReco.init_patient(patient.photo, str(patient.name + " " + patient.surname))
-            
-            
-            FaceReco.init_patient("test", "test")
+                    url = url_for('.video_feed_facereco')
+                    return  jsonify({'url' : url})
+                
+                else:
+                    return jsonify("Patient is not init!")
 
-            time.sleep(3)
-            
-            FaceReco.start()
-
-            url = url_for('.video_feed_facereco')
-            return  jsonify({'url' : url})
+        except RuntimeError:
+            return jsonify("Camera is not pluged-in!")
 
     return render_template('con_pan_faceID.html')
 
 @app.route('/face_position', methods=['GET','POST'])
 @login_required
 def face_position():
-
     # if Validation.val == True:
         if request.method == 'POST':
-            if request.form['value'] == 'stop_det_cam':
-                time.sleep(0.5)
-                FaceDet.stop()
-            
-            if request.form['value'] == 'position':  
-                FaceDet.start()
-                time.sleep(5)
+            try:
+                if request.form['value'] == 'stop_det_cam':
+                    time.sleep(0.5)
+                    FaceDet.stop()
+                
+                if request.form['value'] == 'position':  
+                    FaceDet.start()
 
-                url = url_for('.video_feed_facedet')
-                return  jsonify({'url' : url})
+                    url = url_for('.video_feed_facedet')
+                    return  jsonify({'url' : url})
+
+            except RuntimeError:
+                return jsonify("Camera is not pluged-in!")
 
         return render_template('con_pan_face_pos.html')
 
+    # return error cookie
     # else:
     #    return render_template('con_pan.html')
 
@@ -349,33 +342,30 @@ def face_position():
 @login_required
 def face_scan():
     # if Validation.val == True:
-        NostrillDet.start()
-        Point.point = NostrillDet.scan_nostrill()
-        NostrillDet.stop()
-
-        """
-        Toto je zakomentovano!! 2022
-
-        print(Point.point)
-        time.sleep(3)
-
-        TakePC.start()
-        TakePC.take_pointcloud()
-        TakePC.stop()
-        """
-
-        return render_template('con_pan.html')
-        
-        """
         if request.method == 'POST':
-            if request.form['value'] == 'point':
+            if request.form['value'] == 'scan':
+
+                NostrillDet.start()
+                Point.point = NostrillDet.scan_nostrill()
+                NostrillDet.stop()
+
+                if Point.point == None:
+                    return jsonify("once_again")
                 
+                else:
+                    TakePC.start()
+                    TakePC.take_pointcloud()
+                    TakePC.stop()
+
+                    return jsonify("ok")
+
+            if request.form['value'] == 'test':
                 # print(Point.point)
                 # reconstruct axis
                 return jsonify({'point': [0.030752645805478096, -0.12229534238576889, 0.44669997692108154]})
 
         return render_template('con_pan_face_scan.html')
-        """
+        
     # else:
     #     return render_template('con_pan.html')
 
@@ -443,7 +433,15 @@ def patient_menu():
 def video_stream_QR():
     def generate():
         while 1:
-            frame = ReadQR.QR_code_reader()
+            try:
+                frame = ReadQR.QR_code_reader()
+            
+            except AttributeError:
+                break
+            
+            except RuntimeError:
+                break 
+            
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
@@ -455,8 +453,17 @@ def video_stream_QR():
 def video_feed_facereco():
     def generate():
         while 1:
-            frame = FaceReco.recognize()
-            Validation.val = FaceReco.get_val()
+            try:
+                frame = FaceReco.recognize()
+                Validation.val = FaceReco.get_val()
+                print(Validation.val)
+            
+            except AttributeError:
+                break
+            
+            except RuntimeError:
+                break
+
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
@@ -481,7 +488,6 @@ def video_feed_faceval():
 @app.route('/video_feed_facedet')
 @login_required
 def video_feed_facedet():
-    # TODO test atributeERROR for everything
     def generate():
         while 1:
             try:
@@ -490,7 +496,10 @@ def video_feed_facedet():
             except AttributeError:
                 break
             
-            Validation.val = FaceDet.get_val()
+            except RuntimeError:
+                break
+
+            # Validation.val = FaceDet.get_val()
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
 
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -502,12 +511,21 @@ def video_feed_facedet():
 @app.route('/video_stream_color')
 @login_required
 def video_stream_color():
+    # idea of secure this type of routes is use Token
     #if Token.token == True:
     def generate():
         while 1:
-            #start_time = time.time()
-            frame = StreamCam.get_frame(switch=0)
-            #print("FPS: ", 1.0 / (time.time() - start_time))
+            try:
+                #start_time = time.time()
+                frame = StreamCam.get_frame(switch=0)
+                #print("FPS: ", 1.0 / (time.time() - start_time))
+            
+            except AttributeError:
+                break
+            
+            except RuntimeError:
+                break
+            
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
     
@@ -519,9 +537,17 @@ def video_stream_color():
 def video_color():
     def generate():
         while 1:
-            #start_time = time.time()
-            frame = StreamColorCam().get_frame()
-            #print("FPS: ", 1.0 / (time.time() - start_time))
+            try:
+                #start_time = time.time()
+                frame = StreamColorCam().get_frame()
+                #print("FPS: ", 1.0 / (time.time() - start_time))
+            
+            except AttributeError:
+                break
+            
+            except RuntimeError:
+                break
+
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
@@ -534,7 +560,15 @@ def video_color():
 def video_stream_depth():
     def generate():
         while 1:
-            frame = StreamCam.get_frame(switch=1)
+            try:
+                frame = StreamCam.get_frame(switch=1)
+            
+            except AttributeError:
+                break
+            
+            except RuntimeError:
+                break
+
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
@@ -547,7 +581,15 @@ def video_stream_depth():
 def video_stream_infra():
     def generate():
         while 1:
-            frame = StreamCam.get_frame(switch=2)
+            try:
+                frame = StreamCam.get_frame(switch=2)
+            
+            except AttributeError:
+                break
+            
+            except RuntimeError:
+                break
+
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
@@ -568,3 +610,10 @@ def data_feed():
                     break
                     
         return Response(gen_data(), content_type='text/event-stream')
+
+    return render_template('404.html'), 404 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404

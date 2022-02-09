@@ -82,7 +82,11 @@ class NostrillDet(Camera):
             plt.scatter([centroide1[1], centroide2[1]], [centroide1[0], centroide2[0]], color = 'b')
             plt.show()
 
-            return [dx, dy, dz]
+            # becouse:
+            # x: [response.nz],
+            # y: [- response.ny],
+            # z: [- response.nz],
+            return [dx, -dy, -dz]
 
         except ZeroDivisionError:
             print("Nelze urcit!")

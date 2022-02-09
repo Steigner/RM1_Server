@@ -4,7 +4,7 @@
 {% block content %}
 
 	<!-- script -> face validation manage -->
-	<script type="text/javascript" src="{{ url_for('static', filename = 'js/cam_faceID.js') }}"></script>
+	<script type="module" src="{{ url_for('static', filename = 'js/cam_faceID.js') }}"></script>
 	
 	<!-- NAVIGATION MENU -->
 	<div class="info_panel">
@@ -32,7 +32,7 @@
 
 		<!-- next button -->
 		<div class="column">
-			<div id="face_det" class="next_button">Face detection</div>
+			<button id="face_det" class="next_button">Face detection</button>
 		</div>
 
 	</div>

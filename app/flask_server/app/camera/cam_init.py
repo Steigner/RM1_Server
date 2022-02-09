@@ -21,7 +21,7 @@ class Camera_Init(object):
                 return dev, info
                 
     @classmethod
-    def inicialize(cls):
+    def inicialize(cls, c = False):
         dev, info = cls.find_device_that_supports_advanced_mode()
         
         if dev == None:
@@ -41,9 +41,11 @@ class Camera_Init(object):
                     dev = find_device_that_supports_advanced_mode()
                     advnc_mode = rs.rs400_advanced_mode(dev)
                 
-                json_f = json.load(open("app/camera/settings/camera_settings.json"))
-                json_string= str(json_f).replace("'", '\"')
-                advnc_mode.load_json(json_string)
+                if c == True:
+                    json_f = json.load(open("app/camera/settings/camera_settings.json"))
+                    json_string= str(json_f).replace("'", '\"')
+                    advnc_mode.load_json(json_string)
+                    print("Camera is set up")
 
                 return "Camera status: " + info + " is pluged-in"
 

@@ -53,9 +53,17 @@
 
 #gen_pdf{
     margin-top: calc(20px / var(--height-divisor));
-    margin-left: calc(400px / var(--width-divisor));
+    margin-left: calc(360px / var(--width-divisor));
 
 }
+
+#select{
+    width: 85%;
+    margin-top: calc(20px / var(--height-divisor));
+    margin-left: calc(380px / var(--width-divisor));
+    background: red;
+}
+
 .next_button:active{
     opacity: 0.4;
 }

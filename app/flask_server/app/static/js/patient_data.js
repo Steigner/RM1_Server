@@ -1,8 +1,13 @@
-import {allert} from './modules/infos.js';
-import {delete_warning_cookie, insert_warning_cookie} from './modules/cookies.js';
+import {delete_warning_cookie, delete_error_cookie, insert_warning_cookie} from './modules/cookies.js';
 
 $(function(){
-    delete_warning_cookie("Patient")
-    insert_warning_cookie("Patient " + $("#name.data").text() + " " + $("#surname.data").text() + " was initialized!");
-    allert();
+    $("#face_id").prop('disabled', true);
+    
+    $('#select').click(function(){
+        delete_warning_cookie("Patient");
+        delete_error_cookie("Patient is not init!")
+        insert_warning_cookie("Patient " + $("#name.data").text() + " " + $("#surname.data").text() + " was initialized!");
+        $("#face_id").prop('disabled', false);
+    })
+
 });

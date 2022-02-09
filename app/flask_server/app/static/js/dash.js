@@ -50,21 +50,20 @@ $(function() {
             };
         
             var data2 = {
-                /*
-                x: [response.nz],
-                y: [- response.ny],
-                z: [- response.nz],
-                */
                 
-                x: [0.011995661072432995],
-                y: [0.06672774255275726],
-                z: [-0.3830000162124634],
+                //x: [response.nz],
+                //y: [- response.ny],
+                //z: [- response.nz],
                 
+                x: response.nx,
+                y: response.ny,
+                z: response.nz,
+
                 mode: "markers",
                 type: "scatter3d",
                 marker: {
                     color: "red",
-                    size: 5
+                    size: 1
                 }
             };
             

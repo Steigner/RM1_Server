@@ -1,10 +1,35 @@
 import {ROS_connect} from './modules/ROS_connect.js';
+import {insert_error_cookie, allert} from './modules/cookies.js';
 
-$(function() {
+function anim(){
+    let animation = anime({
+        targets: '.image',
+        borderRadius: '35%',
+        duration: 800,
+        easing: 'linear',
+        direction: 'alternate',
+        loop: true
+    });
+    return animation
+}
+
+function disable(){
+    $("#face_val.next_button").prop('disabled', true);
+    $(".back_button").prop('disabled', true);
     $("#up").prop("disabled", true);
     $("#down").prop("disabled", true);
-    //$(".back_button").prop("disabled", true);
-    $("#face_val.next_button").prop("disabled", true);
+}
+
+function undisable(){
+    $("#face_val.next_button").prop('disabled', false);
+    $(".back_button").prop('disabled', false);
+    $("#up").prop("disabled", false);
+    $("#down").prop("disabled", false);
+}
+
+$(function() {
+    disable();
+    let animation = anim();
 
     var ros = ROS_connect();
     
@@ -64,6 +89,13 @@ $(function() {
     $(".back_button").click(function(){
         $('.stream').off();
         $('.stream').removeAttr("src");
+        
+        var init = new ROSLIB.Message({
+            data: "init_stop"       
+        });
+    
+        menu.publish(init);
+
         $.ajax({        
             url: '/face_position',
             type: 'POST',
@@ -83,6 +115,13 @@ $(function() {
     $("#face_val.next_button").click(function(){
         $('.stream').off();
         $('.stream').removeAttr("src");
+        
+        var init = new ROSLIB.Message({
+            data: "init_stop"       
+        });
+    
+        menu.publish(init);
+
         $.ajax({        
             url: '/face_position',
             type: 'POST',
@@ -91,6 +130,7 @@ $(function() {
                 console.log(error);
             }
         });
+
         setTimeout(function(){
             window.location.href="/face_scan";
         }, 3000);
@@ -104,7 +144,16 @@ $(function() {
         type: 'POST',
         data: {value: "position"},
         success: function(response) {     
-            $('.stream').attr("src", response.url);
+            if(response == 'Camera is not pluged-in!'){
+                insert_error_cookie(response);
+                window.location.href="/home";
+            }
+            else{
+                animation.restart();
+                animation.pause();
+                $('.stream').attr("src", response.url);
+                undisable()
+            };
         },
         error: function(error) {
             console.log(error);

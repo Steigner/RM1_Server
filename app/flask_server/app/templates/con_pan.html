@@ -26,8 +26,16 @@
 		<button class="menu_button"onclick="window.location.href='{{ url_for( 'app.show_cam_stream') }}';">Show stream camera</button>
 		
 		<!-- 2. option got to process validation patient and ready -->
-		<button class="menu_button"onclick="window.location.href='{{ url_for( 'app.face_position') }}';">Face ID</button>
+		<button class="menu_button" id="face_id">Face ID</button>
 	
 	</div>
+
+	<script>
+		// Docela by se hodilo to mít v takto oddělených skriptech napříč všema HTML!!!
+		$("#face_id").click(function() {
+			$(".loading_background, .loading_label, .wrapper").show();
+			window.location.href="/face_position";
+		});
+	</script>
 
 {% endblock %}
