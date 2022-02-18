@@ -4,22 +4,22 @@
 {% block content %}
 	
 	<!-- library -> roslib current -->
-	<script src="{{ url_for('static', filename='js/lib/three.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	
 	<!-- library -> digital twin -->
-	<script src="{{ url_for('static', filename='js/lib/ColladaLoader.js') }}"></script>
+	<script src="https://static.robotwebtools.org/threejs/r89/ColladaLoader.js"></script>
 
 	<!-- library -> digital twin -->
-	<script src="{{ url_for('static', filename='js/lib/STLLoader.js') }}"></script>
+	<script src="https://static.robotwebtools.org/threejs/r89/STLLoader.js"></script>
 
 	<!-- library -> digital twin -->
-	<script src="{{ url_for('static', filename='js/lib/eventemitter2.min.js') }}"></script>
+	<script src="https://static.robotwebtools.org/EventEmitter2/0.4.14/eventemitter2.min.js"></script>
 
 	<!-- library -> ros.js -->
-	<script src="{{ url_for('static', filename='js/lib/roslib.min.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js" integrity="sha512-x2Owc9WayRcRj80Znkau58shVfXN2OIX+gQAlrx6KPugZBKrIC6AwgEWQQCI06p2Q8RB4ilxD+y+1BdNd+1fQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	<!-- library -> ros3D - digital twin -->
-	<script src="{{ url_for('static', filename='js/lib/ros3d.min.js') }}"></script>
+	<script src="https://static.robotwebtools.org/ros3djs/current/ros3d.min.js"></script>
 
 	<!-- script -> connect ros -->
 	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
@@ -168,7 +168,7 @@
 			<link rel="stylesheet" href="{{ url_for('static', filename='css/lib/rangeslider.min.css') }}">
 			
 			<!-- library -> rangeslider.js -->
-			<script src="{{ url_for('static', filename='js/lib/rangeslider.min.js') }}"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.js" integrity="sha512-BUlWdwDeJo24GIubM+z40xcj/pjw7RuULBkxOTc+0L9BaGwZPwiwtbiSVzv31qR7TWx7bs6OPTE5IyfLOorboQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 			
 			<!-- stylescript -> sliders -->
 			<link rel="stylesheet" href="{{ url_for('static', filename='css/range_slider.css') }}">

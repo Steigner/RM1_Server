@@ -10,7 +10,7 @@
 {% block content %}
 
     <!-- library -> jquery user interface -->
-    <script src="{{ url_for('static', filename='js/lib/jquery-ui.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- NAVIGATION MENU -->
     <div class="info_panel">
@@ -91,7 +91,7 @@
 
 
     <!-- library -> virtual keyboard -->
-    <script src="{{ url_for('static', filename='js/lib/simple-keyboard.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-keyboard/3.4.51/index.min.js" integrity="sha512-fGdqQT3hFZSPx/LhGRb6GKBnO9VRPSgim8R+kI6ZdnFEZqgSkxdAiqvbgGOsaWmUjs9fXds6a8HmyCmt1tmIhg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <!-- script -> customize virtual keyboard -->
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/vk_an.js') }}"></script>

@@ -34,7 +34,7 @@ class Camera(object):
     # hardware FPS parameters. Please be carefull with changing this parametres, becouse it will raise
     # error and camera may not work properly.
     @classmethod
-    def start(cls):
+    def start(cls, align_to_dept=False):
         cls.__init()
 
         cls.pipeline = rs.pipeline()
@@ -47,7 +47,12 @@ class Camera(object):
 
         cls.pipeline.start(config)
         
-        align_to = rs.stream.color
+        if align_to_dept:
+            align_to = rs.stream.depth
+        
+        else:
+            align_to = rs.stream.color
+
         cls.align = rs.align(align_to)
 
         cls.__warm_up()

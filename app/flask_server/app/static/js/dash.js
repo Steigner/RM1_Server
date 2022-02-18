@@ -35,7 +35,8 @@ $(function() {
 
             pcd.publish(data);
             */
-
+            
+            console.log(response.nx,)
             // Define Data
             var data1 = {
                 x: response.x,
@@ -50,14 +51,13 @@ $(function() {
             };
         
             var data2 = {
+                x: [response.nx],
+                y: [-response.ny],
+                z: [-response.nz],
                 
-                //x: [response.nz],
-                //y: [- response.ny],
-                //z: [- response.nz],
-                
-                x: response.nx,
-                y: response.ny,
-                z: response.nz,
+                //x: response.nx,
+                //y: response.ny,
+                //z: response.nz,
 
                 mode: "markers",
                 type: "scatter3d",

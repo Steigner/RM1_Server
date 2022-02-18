@@ -50,7 +50,7 @@ class FaceDet(Camera):
         # defined zone
         x1 = 100
         y1 = 50
-        x2 = 640 - 200
+        x2 = 640 - 100
         y2 = 640 - 200
 
         # appned landmarks points 

@@ -5,10 +5,44 @@ import numpy as np
 
 class Show_PointCloud(object):
     @classmethod
-    def load_pc(cls, point):
-        pcd_o = o3d.io.read_point_cloud("app/graph/point_cloud.ply") 
+    def load_pc(cls, point=None):
+        # pcd_o = o3d.io.read_point_cloud("app/graph/point_cloud.ply") 
         # pcd_o = o3d.io.read_point_cloud("point_cloud.ply")        
+
+        # color_raw = o3d.io.read_image("face.jpg")
+        # depth_raw = o3d.io.read_image("face.png")
         
+        color_raw = o3d.io.read_image("app/graph/face.jpg")
+        depth_raw = o3d.io.read_image("app/graph/face.png")
+
+        imge = np.asarray(color_raw)
+        imge[point[1], point[0]] = [255, 255, 255]
+
+        print(point[1],point[0])
+
+        color_raw = o3d.geometry.Image(imge)
+        
+        rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(color_raw, depth_raw, convert_rgb_to_intensity=False)
+
+        h = np.asarray(rgbd_image.depth)
+
+        pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
+            rgbd_image, o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
+        )
+        
+        k = np.asarray(pcd.colors)
+        
+        tup = np.where(
+            np.logical_and( k[:,0]*255 == 255 , k[:,1]*255 == 255, k[:,2]*255 == 255 )
+        )
+        
+        print(tup)
+        # print(pcd.points[tup[0][0]])
+
+        pcd_o = pcd
+        # o3d.visualization.draw_geometries([pcd])
+
+        """
         # point = [0,0,0]
         pcd_tree = o3d.geometry.KDTreeFlann(pcd_o)
 
@@ -24,7 +58,8 @@ class Show_PointCloud(object):
         [k, idx, _] = pcd_tree.search_radius_vector_3d(pcd_o.points[t], 0.002)
         ktree = np.asarray(pcd_o.points)[idx[1:], :]
         ktree = np.append([pcd_o.points[t]], ktree, axis=0)
-        
+        """
+
         """
         pcd_o.colors[point] = [1, 0, 0]
         np.asarray(pcd_o.colors)[idx[1:], :] = [0, 1, 0]
@@ -77,7 +112,8 @@ class Show_PointCloud(object):
         # set up color of point cloud for list input to plotly.js Scatter3D
         col = [f'rgb({pp_colours[i,0]}, {pp_colours[i,1]}, {pp_colours[i,2]})' for i in range(0,int(np.size(points)/3))]
 
-        return points[:, 0], points[:,1], points[:,2], col, ktree[:, 0], ktree[:, 1], ktree[:, 2]
+        return points[:, 0], points[:,1], points[:,2], col, pcd.points[tup[0][0]]
+
 
 if __name__ == "__main__":
     Show_PointCloud().load_pc()

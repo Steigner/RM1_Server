@@ -236,12 +236,17 @@ def authors():
 @login_required
 def dash():
     if request.method == 'POST':
-        points_x, points_y, points_z, colors, n_x, n_y, n_z  = Show_PointCloud.load_pc(Point.point)
-        Point.point = [n_x[0],n_y[0],n_z[0]]
+        # points_x, points_y, points_z, colors, n_x, n_y, n_z  = Show_PointCloud.load_pc(Point.point)
+        # Point.point = [0,0,0]
+        points_x, points_y, points_z, colors, point  = Show_PointCloud.load_pc(Point.point)
+        
+        Point.point = point
+
+        print(point)
 
         # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : Point.point[0], 'ny':Point.point[1], 'nz':Point.point[2]})
-        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
-        return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : n_x.tolist(), 'ny' : n_y.tolist(), 'nz' : n_z.tolist()})
+        return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
+        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : n_x.tolist(), 'ny' : n_y.tolist(), 'nz' : n_z.tolist()})
 
     return render_template('dash.html')
 
@@ -347,22 +352,23 @@ def face_scan():
 
                 NostrillDet.start()
                 Point.point = NostrillDet.scan_nostrill()
+                # print(Point().point)
                 NostrillDet.stop()
 
                 if Point.point == None:
                     return jsonify("once_again")
                 
                 else:
-                    TakePC.start()
-                    TakePC.take_pointcloud()
-                    TakePC.stop()
+                    # TakePC.start()
+                    # TakePC.take_pointcloud()
+                    # TakePC.stop()
 
                     return jsonify("ok")
 
             if request.form['value'] == 'test':
                 # print(Point.point)
                 # reconstruct axis
-                return jsonify({'point': [0.030752645805478096, -0.12229534238576889, 0.44669997692108154]})
+                return jsonify({'point': [Point().point[0], Point().point[1], Point().point[2]]})
 
         return render_template('con_pan_face_scan.html')
         
