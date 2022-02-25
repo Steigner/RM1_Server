@@ -143,6 +143,24 @@
 		<div id="sign_in" class="simple-keyboard">
 			<div class="dragable_place"></div>
 		</div> 
+		
+		<script>
+			let nav = window.navigator.onLine;
+			
+			if (!nav) {
+				alert("You are in offline mode!");
+				document.getElementById("submit").disabled = true
+				document.getElementById("email_input").disabled = true
+				document.getElementById("password_input").disabled = true
+				document.getElementById("sign_in").hidden = true
+			}
+			else{
+				document.getElementById("submit").disabled = false
+				document.getElementById("email_input").disabled = false
+				document.getElementById("password_input").disabled = false
+				document.getElementById("sign_in").hidden = false
+			}
+		</script>
 
 		<!-- script -> customize virtual keyboard -->
 		<script type="text/javascript" src="{{ url_for('static', filename = 'js/vk_an.js') }}"></script>

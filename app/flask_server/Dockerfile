@@ -18,7 +18,7 @@ RUN apt-get update \
     && apt-get -y install \
     cmake protobuf-compiler \
     libzbar0 \
-    python3-opencv
+#    python3-opencv
 
 # problem with this wkhtmltopdf!!
 RUN apt-get -y install wkhtmltopdf

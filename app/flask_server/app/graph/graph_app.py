@@ -5,106 +5,74 @@ import numpy as np
 
 class Show_PointCloud(object):
     @classmethod
-    def load_pc(cls, point=None):
-        # pcd_o = o3d.io.read_point_cloud("app/graph/point_cloud.ply") 
-        # pcd_o = o3d.io.read_point_cloud("point_cloud.ply")        
+    def load_pc(cls, point=None, sim=False):        
+        if sim == True:
+            pcd_o = o3d.io.read_point_cloud("app/graph/sim.pcd")
 
-        # color_raw = o3d.io.read_image("face.jpg")
-        # depth_raw = o3d.io.read_image("face.png")
-        
-        color_raw = o3d.io.read_image("app/graph/face.jpg")
-        depth_raw = o3d.io.read_image("app/graph/face.png")
+            points = np.asarray(pcd_o.points)
+            colours = np.asarray(pcd_o.colors)
 
-        imge = np.asarray(color_raw)
-        imge[point[1], point[0]] = [255, 255, 255]
+            cut = np.where( points[:,2] > 1 )
 
-        print(point[1],point[0])
+            points = np.delete(points, cut, axis=0)
+            colours = np.delete(colours, cut, axis=0)
 
-        color_raw = o3d.geometry.Image(imge)
-        
-        rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(color_raw, depth_raw, convert_rgb_to_intensity=False)
+            s_point = [0.025268396, 0.085912548, 0.50927734]
 
-        h = np.asarray(rgbd_image.depth)
+        else:
+            # color_raw = o3d.io.read_image("face.jpg")
+            # depth_raw = o3d.io.read_image("face.png")
+            point = [170,312]
+            
+            color_raw = o3d.io.read_image("app/graph/face.jpg")
+            depth_raw = o3d.io.read_image("app/graph/face.png")
 
-        pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
-            rgbd_image, o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
-        )
-        
-        k = np.asarray(pcd.colors)
-        
-        tup = np.where(
-            np.logical_and( k[:,0]*255 == 255 , k[:,1]*255 == 255, k[:,2]*255 == 255 )
-        )
-        
-        print(tup)
-        # print(pcd.points[tup[0][0]])
+            imge = np.asarray(color_raw)
+            imge[point[1], point[0]] = [255, 255, 255]
 
-        pcd_o = pcd
-        # o3d.visualization.draw_geometries([pcd])
+            print(point[1],point[0])
 
-        """
-        # point = [0,0,0]
-        pcd_tree = o3d.geometry.KDTreeFlann(pcd_o)
+            color_raw = o3d.geometry.Image(imge)
 
-        top = 1
-        t = None
+            rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(color_raw, depth_raw, convert_rgb_to_intensity=False)
 
-        for i in range(len(pcd_o.points)):
-            pr = ((point[0] - pcd_o.points[i][0])**2 + (point[1] - pcd_o.points[i][1])**2 + (point[2] - pcd_o.points[i][2])**2)**(1/2)   
-            if pr < top:
-                top = pr
-                t = i
+            h = np.asarray(rgbd_image.depth)
 
-        [k, idx, _] = pcd_tree.search_radius_vector_3d(pcd_o.points[t], 0.002)
-        ktree = np.asarray(pcd_o.points)[idx[1:], :]
-        ktree = np.append([pcd_o.points[t]], ktree, axis=0)
-        """
+            pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
+                rgbd_image, o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
+            )
 
-        """
-        pcd_o.colors[point] = [1, 0, 0]
-        np.asarray(pcd_o.colors)[idx[1:], :] = [0, 1, 0]
-        o3d.visualization.draw_geometries([pcd_o])
-        """
+            k = np.asarray(pcd.colors)
+            
+            tup = np.where(
+                np.logical_and( k[:,0]*255 == 255 , k[:,1]*255 == 255, k[:,2]*255 == 255 )
+            )
+            
+            # tup = [6038]
+            print(tup)
+            # print(pcd.points[tup[0][0]])
 
-        """
-        pcd_ = pcd_o.voxel_down_sample(voxel_size=0.01)
-        
-        pcd_.estimate_normals()
+            pcd_o = pcd
 
-        pcd = o3d.geometry.PointCloud()
-        pcd.points = o3d.utility.Vector3dVector(pcd_.points)
-        pcd.colors = o3d.utility.Vector3dVector(pcd_.colors)
-        pcd.normals = o3d.utility.Vector3dVector(np.asarray(pcd_.normals))
+            pcd.estimate_normals(
+                search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
 
-        distances = pcd.compute_nearest_neighbor_distance()
-        avg_dist = np.mean(distances)
-        radius = 1.25 * avg_dist   
+            # o3d.visualization.draw_geometries([pcd],point_show_normal=True)
 
-        mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_ball_pivoting(pcd, o3d.utility.DoubleVector([radius, radius * 2]))
-       
-        o3d.io.write_triangle_mesh("app/graph/share/test.stl", mesh)
-        """
-        
-        points = np.asarray(pcd_o.points)
-        colours = np.asarray(pcd_o.colors)
-        normals = np.asarray(pcd_o.normals)
+            points = np.asarray(pcd_o.points)
+            colours = np.asarray(pcd_o.colors)
+            normals = np.asarray(pcd_o.normals)
+            
+            print(normals[tup[0]][0], normals[tup[0]][1], normals[tup[0]][2])
 
-        """
-        # cut 
-        tup = np.where(
-            np.logical_or( points[:,2] < -0.3, points[:,1] < -0.1 )
-        )
-        
+            pcd = o3d.geometry.PointCloud()
+            pcd.points = o3d.utility.Vector3dVector(points)
+            pcd.colors = o3d.utility.Vector3dVector(colours)
+            pcd.normals = o3d.utility.Vector3dVector(normals)
 
-        p_points = np.delete(points, tup, axis=0)
-        p_colours = np.delete(colours, tup, axis=0)
-        p_normals = np.delete(normals, tup, axis=0)
-        """
-
-        pcd = o3d.geometry.PointCloud()
-        pcd.points = o3d.utility.Vector3dVector(points)
-        pcd.colors = o3d.utility.Vector3dVector(colours)
-        pcd.normals = o3d.utility.Vector3dVector(normals)
+            # s_point = pcd.points[tup[0][0]]
+            s_point = pcd.points[tup[0]]
+            # s_point = [0.025268396, 0.085912548, 0.50927734]
 
         # this is due to color in plotly graphs
         pp_colours = colours[:]*255.0
@@ -112,14 +80,7 @@ class Show_PointCloud(object):
         # set up color of point cloud for list input to plotly.js Scatter3D
         col = [f'rgb({pp_colours[i,0]}, {pp_colours[i,1]}, {pp_colours[i,2]})' for i in range(0,int(np.size(points)/3))]
 
-        return points[:, 0], points[:,1], points[:,2], col, pcd.points[tup[0][0]]
-
+        return points[:, 0], points[:,1], points[:,2], col, s_point
 
 if __name__ == "__main__":
     Show_PointCloud().load_pc()
-    
-    # mesh = o3d.io.read_triangle_mesh("test2.ply")
-
-    # pcd_ = o3d.io.read_point_cloud("test.ply")
-
-    # o3d.visualization.draw_geometries([mesh])

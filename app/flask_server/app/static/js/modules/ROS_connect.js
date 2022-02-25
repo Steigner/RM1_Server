@@ -25,7 +25,7 @@ export function ROS_connect() {
     
     // get ip adress from server where is ROS bridge
     // WARNING IN deploy use var ip!!
-    var ip = get_ip();
+    //var ip = get_ip();
     
     // First, we need to connect to our ROS bridge server setup earlier with the same port number.
     // there is var ip

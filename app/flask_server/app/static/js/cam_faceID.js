@@ -22,7 +22,6 @@ function undisable(){
     $(".back_button").prop('disabled', false);
 }
 
-
 $(function() {
     disable();
     let animation = anim();
@@ -92,4 +91,4 @@ $(function() {
             console.log(error);
         }
     });
-})
+});

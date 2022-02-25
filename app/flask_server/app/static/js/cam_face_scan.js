@@ -1,7 +1,7 @@
 import {ROS_connect} from './modules/ROS_connect.js';
 
 $(function() {
-    $("#scan").click(function() {
+    $("#scan").click(function() {        
         $(".loading_background, .loading_label, .wrapper").show();
         $.ajax({        
             url: '/face_scan',
@@ -21,7 +21,7 @@ $(function() {
     });
 
     $("#test").click(function() {
-        // loading 
+        // $(".loading_background, .loading_label, .wrapper").show();
         
         var ros = ROS_connect();
     
@@ -30,13 +30,13 @@ $(function() {
             name : '/switch',
             messageType : 'std_msgs/String'
         });
-    
+
         var init = new ROSLIB.Message({
             data: "nostrill"       
         });
     
         menu.publish(init);
-    
+        
         $.ajax({        
             url: '/face_scan',
             type: 'POST',
@@ -56,10 +56,11 @@ $(function() {
                 console.log(error);
             }
         });
-
+        
     });
 })
 
+// ---------------------------------------------------------------------------------------
 
 /*
 var ros = ROS_connect();

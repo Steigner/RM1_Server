@@ -46,25 +46,47 @@ $(function() {
     });
 
     var init = new ROSLIB.Message({
-        data: "init"       
+        data: "rotate_mot"       
     });
 
-    // And finally, publish.
-    menu.publish(init);
-    
-    var listener = new ROSLIB.Topic({
-        ros : ros,
-        name : '/info',
-        messageType : 'std_msgs/String'
-    });
-    
-    listener.subscribe(function(message) {
-        console.log('Received message on ' + message.data);
-        listener.unsubscribe();
-        $("#up").prop("disabled", false);
-        $("#down").prop("disabled", false);
-        //$(".back_button").prop("disabled", false);
-        $("#face_val.next_button").prop("disabled", false);
+    // AJAX
+    // Note:
+    //  Start streaming video on response url.
+    $.ajax({        
+        url: '/face_position',
+        type: 'POST',
+        data: {value: "position"},
+        success: function(response) {     
+            if(response == 'Camera is not pluged-in!'){
+                insert_error_cookie(response);
+                window.location.href="/home";
+            }
+            else{
+                animation.restart();
+                animation.pause();
+                $('.stream').attr("src", response.url);
+                undisable();
+                menu.publish(init);
+                
+                var listener = new ROSLIB.Topic({
+                    ros : ros,
+                    name : '/info',
+                    messageType : 'std_msgs/String'
+                });
+                
+                listener.subscribe(function(message) {
+                    console.log('Received message on ' + message.data);
+                    listener.unsubscribe();
+                    $("#up").prop("disabled", false);
+                    $("#down").prop("disabled", false);
+                    //$(".back_button").prop("disabled", false);
+                    $("#face_val.next_button").prop("disabled", false);
+                });
+            };
+        },
+        error: function(error) {
+            console.log(error);
+        }
     });
     
     $("#up").click(function(){
@@ -91,7 +113,7 @@ $(function() {
         $('.stream').removeAttr("src");
         
         var init = new ROSLIB.Message({
-            data: "init_stop"       
+            data: "rotate_mot_stop"       
         });
     
         menu.publish(init);
@@ -117,7 +139,7 @@ $(function() {
         $('.stream').removeAttr("src");
         
         var init = new ROSLIB.Message({
-            data: "init_stop"       
+            data: "rotate_mot_stop"       
         });
     
         menu.publish(init);
@@ -134,29 +156,5 @@ $(function() {
         setTimeout(function(){
             window.location.href="/face_scan";
         }, 3000);
-    });
-
-    // AJAX
-    // Note:
-    //  Start streaming video on response url.
-    $.ajax({        
-        url: '/face_position',
-        type: 'POST',
-        data: {value: "position"},
-        success: function(response) {     
-            if(response == 'Camera is not pluged-in!'){
-                insert_error_cookie(response);
-                window.location.href="/home";
-            }
-            else{
-                animation.restart();
-                animation.pause();
-                $('.stream').attr("src", response.url);
-                undisable()
-            };
-        },
-        error: function(error) {
-            console.log(error);
-        }
     });
 })

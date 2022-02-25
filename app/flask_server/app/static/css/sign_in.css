@@ -184,6 +184,10 @@ body::after {
     z-index: -1;
 }
 
+:disabled {
+    opacity: 0.2;
+}
+
 /* ------------ SVG'S ----------------- */
 
 /* -------- APP LOGO --------- */ 

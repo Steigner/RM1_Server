@@ -1,6 +1,3 @@
-# TODO
-# In part where is play button -> cls.s 
-
 # library -> python socket communication
 import socket
 

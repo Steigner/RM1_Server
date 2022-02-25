@@ -1,23 +1,41 @@
 import {ROS_connect} from './modules/ROS_connect.js';
 
 $(function() {
-    var ros = ROS_connect();
-    
-    var cmdVel = new ROSLIB.Topic({
-        ros : ros,
-        name : '/switch',
-        messageType : 'std_msgs/String'
-    });
+    $("#disconnect_button").click(function(){
+        $(".loading_background, .loading_label, .wrapper").show();
+        
+        var ros = ROS_connect();
+        
+        var info = new ROSLIB.Topic({
+            ros : ros,
+            name : '/switch',
+            messageType : 'std_msgs/String'
+        });
 
-    var twist = new ROSLIB.Message({
-        data: "disconnect"       
-    });
+        var listener = new ROSLIB.Topic({
+            ros : ros,
+            name : '/rosout_agg',
+            messageType : 'rosgraph_msgs/Log'
+        });
 
-    // And finally, publish.
-    cmdVel.publish(twist);
-    
-    // wait on connection, then disconnect!!
-    window.setTimeout(function(){  
-        window.location.href="/home";
-    }, 1000);
+        var pub = new ROSLIB.Message({
+            data: "disconnect"       
+        });
+
+        ros.on('connection', function() {
+            console.log("Connected and publishing");
+            info.publish(pub);
+
+        
+            listener.subscribe(function(message) {
+                console.log(message.msg);
+                if (message.msg.includes('Controller Spawner error while taking down controllers: transport error completing')) { 
+                    window.setTimeout(function(){  
+                        $(".loading_background, .loading_label, .wrapper").hide();
+                        window.location.href="/home";
+                    }, 3000);
+                }
+            });
+        });
+    });
 });

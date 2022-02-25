@@ -1,8 +1,15 @@
+<!DOCTYPE html>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/con_pan.css') }}">
 
 {% extends "layout.html" %}
 {% block content %}
 	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js" integrity="sha512-x2Owc9WayRcRj80Znkau58shVfXN2OIX+gQAlrx6KPugZBKrIC6AwgEWQQCI06p2Q8RB4ilxD+y+1BdNd+1fQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
+
+	<script type="module" src="{{ url_for('static', filename = 'js/con_pan.js') }}"></script>
+
 	<!-- NAVIGATION MENU -->
 	<div class="info_panel">
 
@@ -23,19 +30,15 @@
 	<div class="post_container">
 		
 		<!-- 1. option to show camera stream -->
-		<button class="menu_button"onclick="window.location.href='{{ url_for( 'app.show_cam_stream') }}';">Show stream camera</button>
+		<button class="menu_button" id="stream_cam">Show stream camera</button>
 		
 		<!-- 2. option got to process validation patient and ready -->
 		<button class="menu_button" id="face_id">Face ID</button>
+
+		<button class="menu_button" id="test_process">Test process</button>
 	
 	</div>
 
-	<script>
-		// Docela by se hodilo to mít v takto oddělených skriptech napříč všema HTML!!!
-		$("#face_id").click(function() {
-			$(".loading_background, .loading_label, .wrapper").show();
-			window.location.href="/face_position";
-		});
-	</script>
-
 {% endblock %}
+
+</html>

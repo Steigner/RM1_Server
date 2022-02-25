@@ -99,60 +99,6 @@ class FaceDet(Camera):
 
         return image
 
-    """
-    # tohle nebude potreba jelikoz je to stare na porovnavani pozice xichtu !!!
-    # 
-    # !!private classmethod:
-    #   input: color image [np.asarray], landmarks [np.array]
-    #   return image with opencv changes [np.array]
-    # Note: In this method we checking if user not move with his head.
-    #   Basic approach of comparing saved array of landmarks to new detected landmarks. 
-    #   In progress!!
-    @classmethod
-    def __validation_position(self, land, image):
-        # opencv font
-        font = cv2.FONT_HERSHEY_DUPLEX
-
-        # need to be color image converted to gray scale        
-        image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-        # detect face 
-        faces = self.detector.detectMultiScale(image_gray)
-        
-        # show saved landmarks
-        for x, y in land[0]:
-            cv2.circle(image,(int(x), int(y)), 1, ((0, 255, 0)),5)
-        
-        tup, tup2 = [], []
-        
-        # show new detected landmarks
-        for (x, y, w, d) in faces:
-            _, landmarks = self.landmark_detector.fit(image_gray, faces)
-            for landmark in landmarks:
-                tup2 = np.array(landmark[0])
-                for x,y in landmark[0]:
-                    # due to compatibility to opencv version 5.2.1
-                    cv2.circle(image, (int(x), int(y)), 1, (0, 0, 139), 2)     
-
-        # compare landrmarks
-        if np.size(tup2) > 0:
-            tup = np.array(land[0]) 
-
-            for i in range(len(land)):          
-                dist = np.linalg.norm(tup[i]-tup2[i])            
-                
-                if dist > 5:
-                    text = str("Wrong!")
-                    
-                else:
-                    text = str("OK!")
-        else:
-            text = str("Dont find pattern")
-        
-        cv2.putText(image, text, (20,50), font, 0.75, (255, 255, 255), 1)
-        return image
-    """
-
     # private classmethod:
     #   input: none
     #   return color image [np.asarray]
@@ -166,30 +112,6 @@ class FaceDet(Camera):
         image = np.asarray(color_frame.get_data())
         
         return image, aligned_frames
-
-    """
-    should be deleted!!
-    
-    @classmethod
-    def __computed_point(self, land, aligned_frames):
-        depth_frame = aligned_frames.get_depth_frame()
-        
-        aligned_color_frame = aligned_frames.get_color_frame()
-        
-        color_intrin = aligned_color_frame.profile.as_video_stream_profile().intrinsics
-        
-        depth_image = np.asanyarray(depth_frame.get_data())
-        color_image = np.asanyarray(aligned_color_frame.get_data())
-        
-        x, y = land[0], land[1] 
-
-        depth = depth_frame.get_distance(x, y)
-        
-        dx ,dy, dz = rs.rs2_deproject_pixel_to_point(color_intrin, [x,y], depth)
-        # print(dx,dy,dz)
-        
-        return [dx, dy, dz]
-    """
 
     # public classmethod:
     #   input: none

@@ -7,13 +7,10 @@ $(function() {
         type: 'POST',
         
         success: function(response) {  
-            /* possible sending point cloud to ROS
             var points = [];
 
-            console.log();
-
             for (let i = 0; i < response.x.length; i++) {
-                const dict = {x : response.x[i], y : response.y[i], z : response.z[i]}
+                const dict = {x : -response.x[i], y : -response.y[i], z : response.z[i]}
                 points.push(dict);
             };
 
@@ -25,18 +22,31 @@ $(function() {
                 messageType : 'sensor_msgs/PointCloud'
             });
 
-            var data = new ROSLIB.Message(
-            {
-                header: {frame_id : "map"},
-                points: points,               
-            },
-            
-            );
+            var data = new ROSLIB.Message({
+                header: {frame_id : "camera_link"},
+                points: points,   
+            },);
 
             pcd.publish(data);
-            */
+
+            var pcd2 = new ROSLIB.Topic({
+                ros : ros,
+                name : '/pcd2',
+                messageType : 'sensor_msgs/PointCloud'
+            });
+
+            points = [];
+
+            const dict = {x : -response.nx, y : -response.ny, z : response.nz}
+            points.push(dict);
+
+            var data2 = new ROSLIB.Message({
+                header: {frame_id : "camera_link"},
+                points: points, 
+            },);
+
+            pcd2.publish(data2);
             
-            console.log(response.nx,)
             // Define Data
             var data1 = {
                 x: response.x,
@@ -52,18 +62,14 @@ $(function() {
         
             var data2 = {
                 x: [response.nx],
-                y: [-response.ny],
-                z: [-response.nz],
+                y: [response.ny],
+                z: [response.nz],
                 
-                //x: response.nx,
-                //y: response.ny,
-                //z: response.nz,
-
                 mode: "markers",
                 type: "scatter3d",
                 marker: {
                     color: "red",
-                    size: 1
+                    size: 2
                 }
             };
             

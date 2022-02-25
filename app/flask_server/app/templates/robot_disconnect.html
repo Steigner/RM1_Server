@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
+{% extends "layout.html" %}
+{% block content %}
+	
     <script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js" integrity="sha512-x2Owc9WayRcRj80Znkau58shVfXN2OIX+gQAlrx6KPugZBKrIC6AwgEWQQCI06p2Q8RB4ilxD+y+1BdNd+1fQA==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename = 'js/robot_disconnect.js') }}"></script>
+
+{% endblock %}
 </html>

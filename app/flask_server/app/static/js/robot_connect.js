@@ -102,12 +102,13 @@ $(function() {
             $.ajax({
                 url: '/robot_connect',
                 type: 'POST',
+                async : true,
                 data: {value: value},
             });
             
             $(".loading_background, .loading_label, .wrapper").show();
 
-            window.setTimeout(function(){   
+            window.setTimeout(function(){ 
                 var ros = ROS_connect();
                 
                 // twist change!!
@@ -120,9 +121,12 @@ $(function() {
                 var twist = new ROSLIB.Message({
                     data: value       
                 });
-            
-                // And finally, publish.
-                cmdVel.publish(twist);
+                
+                ros.on('connection', function() {
+                    console.log("Connected and publishing");
+                    cmdVel.publish(twist);
+
+                console.log(twist);
 
                 //----------------------------------------------------------
                 var listener = new ROSLIB.Topic({
@@ -139,6 +143,7 @@ $(function() {
                         $.ajax({
                             url: '/play_button',
                             type: 'POST',
+                            async : true,
                         });
                         
                         window.setTimeout(function(){  
@@ -146,62 +151,19 @@ $(function() {
                             window.location.href="/home";
                         }, 3000);
                     }
-
+                    else if(message.msg.includes('MoveGroup context initialization complete')){
+                        window.setTimeout(function(){  
+                            $(".loading_background, .loading_label, .wrapper").hide();
+                            window.location.href="/home";
+                        }, 3000);
+                    }
                 });
+            });
                 
             }, 2000);
-
         }
-        
         else{
-
-            if(value == "sim"){
-                alert("U pi tsa")
-                
-                $(".loading_background, .loading_label, .wrapper").show();
-    
-                window.setTimeout(function(){   
-                    var ros = ROS_connect();
-                    
-                    // twist change!!
-                    var cmdVel = new ROSLIB.Topic({
-                        ros : ros,
-                        name : '/switch',
-                        messageType : 'std_msgs/String'
-                    });
-                
-                    var twist = new ROSLIB.Message({
-                        data: value       
-                    });
-                
-                    // And finally, publish.
-                    cmdVel.publish(twist);
-    
-                    //----------------------------------------------------------
-                    var listener = new ROSLIB.Topic({
-                        ros : ros,
-                        name : '/rosout_agg',
-                        messageType : 'rosgraph_msgs/Log'
-                    });
-        
-                    listener.subscribe(function(message) {
-                        console.log(message.msg)
-                        
-                        if (message.msg.includes('MoveGroup context initialization complete')) { 
-                              
-                            window.setTimeout(function(){  
-                                $(".loading_background, .loading_label, .wrapper").hide();
-                                window.location.href="/home";
-                            }, 3000);
-                        }
-    
-                    });
-                    
-                }, 2000);    
-            }
-            else{
-                alert("U dont put valid IP adress!!")
-            };
+            alert("U dont put valid IP adress!!")
         };           
     });
 });

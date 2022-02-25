@@ -28,6 +28,7 @@ class Weather(object):
         # split it and get as string
         weather = ' '.join(str(e) for e in weather)
 
+        # !! !!
         # clear csv file after data is readed
         # f = open('app/weather/weather.csv', "w+")
         # f.close()
@@ -36,3 +37,4 @@ class Weather(object):
 
 # Testing purposes -> weather.csv should be blank
 # Partly cloudy 1026hPa 76% +8°C
+# Sunny 1011hPa 42% +8°C

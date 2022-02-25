@@ -68,6 +68,7 @@ def home():
     
     # Weather.download_weather()
     weather, temperature, preasure, humidity = Weather.get_weather()
+
     try:
 
         if Counter.counter == 1:
@@ -236,17 +237,14 @@ def authors():
 @login_required
 def dash():
     if request.method == 'POST':
-        # points_x, points_y, points_z, colors, n_x, n_y, n_z  = Show_PointCloud.load_pc(Point.point)
-        # Point.point = [0,0,0]
-        points_x, points_y, points_z, colors, point  = Show_PointCloud.load_pc(Point.point)
-        
-        Point.point = point
+        # points_x, points_y, points_z, colors = Show_PointCloud.load_pc(Point.point, sim=True)
 
+        points_x, points_y, points_z, colors, point  = Show_PointCloud.load_pc(Point.point, sim=False)
+        Point.point = point
         print(point)
 
-        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : Point.point[0], 'ny':Point.point[1], 'nz':Point.point[2]})
-        return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
-        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : n_x.tolist(), 'ny' : n_y.tolist(), 'nz' : n_z.tolist()})
+        return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : Point.point[0], 'ny':Point.point[1], 'nz':Point.point[2]})
+        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
 
     return render_template('dash.html')
 
@@ -341,8 +339,6 @@ def face_position():
     # else:
     #    return render_template('con_pan.html')
 
-
-# !! TADY BUDE SCAN NOSTRILL -> POINT CLOUD -> GET POINT OF NOSTRILL !!
 @app.route('/face_scan', methods=['GET','POST'])
 @login_required
 def face_scan():
@@ -472,21 +468,6 @@ def video_feed_facereco():
 
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-"""
-# yield -> route video stream face validation:
-# Note: 
-#   1. Stream color image with face validation position and store validation.
-@app.route('/video_feed_faceval')
-@login_required
-def video_feed_faceval():
-    def generate():
-        while 1:
-            frame = FaceDet.set_postion_face()
-            Validation.val = FaceDet.get_val()
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
-"""
 
 # yield -> route video stream face detector:
 # Note: 

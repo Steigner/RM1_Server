@@ -43,7 +43,7 @@ class ReadQR(Camera):
     #   input: none
     #   return jpeg color image [jpg - tobytes]
     # Note: In this method we get color image, and on this image we decoded defined barcode,
-    #   and store data to self.data. Also we using opencv to draw frame for detected barcode.
+    #   and store data to cls.data. Also we using opencv to draw frame for detected barcode.
     @classmethod
     def QR_code_reader(cls):
         frames = cls.pipeline.wait_for_frames()

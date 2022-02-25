@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js" integrity="sha512-x2Owc9WayRcRj80Znkau58shVfXN2OIX+gQAlrx6KPugZBKrIC6AwgEWQQCI06p2Q8RB4ilxD+y+1BdNd+1fQA==" crossorigin="anonymous"></script>
 
 {% extends "layout.html" %}
 {% block content %}
@@ -19,7 +22,7 @@
     <button class="button_home" id="connect_button"onclick="window.location.href='{{ url_for( 'app.robot_connect') }}';">Connect Robot</button>
 
     <!-- disconnect robot button -->
-    <button class="button_home" id="disconnect_button"onclick="window.location.href='{{ url_for( 'app.robot_disconnect') }}';">Disconnect Robot</button>
+    <button class="button_home" id="disconnect_button">Disconnect Robot</button>
 
     <!-- reload button -->
     <button class="button_home" id="reload"onclick="window.location.href='{{ url_for( 'app.reload') }}';">Reload</button>
@@ -57,6 +60,7 @@
         }, 4000);
     </script>
 
+    <!-- 
     {% if ip == "none" %}
         <script>
             $("#disconnect_button.button_home").prop("disabled", true);
@@ -68,17 +72,10 @@
             $("#connect_button.button_home").prop("disabled", true);
         </script>
     {% endif %}
-    
-    <script>
-		let nav = window.navigator.onLine;
-		
-		if (!nav) {
-			alert("U are in offline mode some features may not be accessible!");
-            $("#keep").prop("disabled", true);
-		}
-        else{
-            $("#keep").prop("disabled", false);
-        }
-	</script>
+    -->
+    <script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename = 'js/robot_disconnect.js') }}"></script>
 
 {% endblock %}
+
+</html>

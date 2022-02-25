@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/patient_data.css') }}">
 
 {% extends "layout.html" %}
@@ -41,7 +42,7 @@
 			</div>
 
 			<!-- jump to faceID -->
-			<button id="face_id" class="next_button"onclick="window.location.href='{{ url_for( 'app.faceID') }}';">FaceID</button>
+			<button id="face_id" class="next_button"onclick="window.location.href='{{ url_for( 'app.con_pan') }}';">FaceID</button>
 		</div>
 
 		<!-- mid part -->
@@ -85,3 +86,5 @@
 	<!-- script -> patient data manage -->
 	<script type="module" src="{{ url_for('static', filename = 'js/patient_data.js') }}"></script>
 {% endblock %}
+
+</html>
