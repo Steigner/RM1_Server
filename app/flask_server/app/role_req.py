@@ -1,7 +1,7 @@
-# library -> standard python libary - wraps 
+# library -> standard python libary - wraps
 from functools import wraps
 
-# library -> flask login - get currenct user fresh logged in 
+# library -> flask login - get currenct user fresh logged in
 from flask_login import current_user
 
 # public function:
@@ -15,4 +15,5 @@ def admin_required(f):
             return f(*args, **kwargs)
         else:
             return "<h1>You need to be an admin to view this page.<h1>"
+
     return wrap

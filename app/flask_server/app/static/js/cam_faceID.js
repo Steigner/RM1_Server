@@ -1,4 +1,4 @@
-import {insert_error_cookie, allert} from './modules/cookies.js';
+import {insert_error_cookie} from './modules/cookies.js';
 
 function anim(){
     let animation = anime({

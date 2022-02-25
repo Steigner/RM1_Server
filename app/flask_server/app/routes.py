@@ -1,7 +1,16 @@
 # library -> flask
-from flask import Blueprint, Response, request, url_for, redirect, render_template, session, jsonify
+from flask import (
+    Blueprint,
+    Response,
+    request,
+    url_for,
+    redirect,
+    render_template,
+    session,
+    jsonify,
+)
 
-# library -> protect routes from no-authorized acces by wrapper  
+# library -> protect routes from no-authorized acces by wrapper
 from flask_login import login_required
 
 # script -> database model of patient database(ibm db2)
@@ -43,414 +52,464 @@ from base64 import b64encode
 # library -> time manage
 import time
 
+# script -> processing identification of nostril from depth and color
 from .camera.func_nostrill_det import NostrillDet
 
+# script -> get current basic weather information
 from .weather.weather import Weather
 
-# set 1. blueprint = app 
-app = Blueprint('app', __name__)
+# set 1. blueprint = app
+app = Blueprint("app", __name__)
 
 # custom 401 handler
 @app.errorhandler(401)
 def custom_401(error):
-    return render_template('401.html')
+    return render_template("401.html")
+
 
 # page -> route home:
-# Note: 
+# Note:
 #   1. In this route is initialized camera if is pluged-in, if is not,
-#   user has to make sure that camera is physically pluged-in and click on reload button, 
+#   user has to make sure that camera is physically pluged-in and click on reload button,
 #   also we store this fact.
 #   2. Counter for how many times is reload this page.
-@app.route('/home')
+@app.route("/home")
 @login_required
-def home(): 
+def home():
     Counter.counter += 1
-    
+
+    # TODO
     # Weather.download_weather()
-    weather, temperature, preasure, humidity = Weather.get_weather()
+    # Weather, temperature, preasure, humidity = Weather.get_weather()
 
     try:
-
         if Counter.counter == 1:
-            info = Camera_Init().inicialize(c = True)
-        
+            info = Camera_Init().inicialize(c=True)
+
         else:
-            info = Camera_Init().inicialize(c = False)
+            info = Camera_Init().inicialize(c=False)
 
     except TypeError:
         info = "Camera status: device is not pluged-in"
-    
+
     StoreCam.cam = info
 
-    return render_template('home.html', ip = StoreIP.ip, count = Counter.counter, cam = info, weather = weather, temperature = temperature, preasure = preasure, humidity = humidity)
+    # return render_template('home.html', ip = StoreIP.ip, count = Counter.counter, cam = info, weather = weather, temperature = temperature, preasure = preasure, humidity = humidity)
+    return render_template("home.html", ip=StoreIP.ip, count=Counter.counter, cam=info)
+
 
 # ajax -> route ip adress:
-# Note: 
+# Note:
 #   1. This route is called by ajax from js module ROS connect, main purpose of this route is
 #   get self ip adress of server.
-@app.route('/ip_adress', methods=['POST', 'GET'])
+@app.route("/ip_adress", methods=["POST", "GET"])
 @login_required
 def ip_adress():
-    if request.method == 'POST':
-        # due to safety ... if request data such 
-        return jsonify(get_ip())
+    if request.method == "POST":
+        if request.form["value"] == "ip":
+            return jsonify(get_ip())
 
-    return redirect(url_for('app.home'))
+        else:
+            return jsonify("No ip")
+
+    return redirect(url_for("app.home"))
+
 
 # redirect page -> route reload:
-# Note: 
+# Note:
 #   1. Purpose of this route is to just reload home route for detect and init camera.
-@app.route('/reload')
+@app.route("/reload")
 @login_required
 def reload():
-    # TODO: !!!!
-    # if cam is pluged in delete cookies about error cameras!
-    return redirect(url_for('app.home'))
+    return redirect(url_for("app.home"))
+
 
 # page -> route robot connect:
-# Note: 
+# Note:
 #   1. This route is used for connecting to ROS Websocket via roslib.js(more specified in js script),
-#   also for connect to robot via python socket communication. 
+#   also for connect to robot via python socket communication.
 #   2. Main purpose is store ip-adress of robot and connect.
 #   3. Ajax for start connect.
-@app.route('/robot_connect', methods=['POST', 'GET'])
+@app.route("/robot_connect", methods=["POST", "GET"])
 @login_required
 def robot_connect():
-    if request.method == 'POST':
-        if request.form['value']:
-            message = request.form['value']
+    if request.method == "POST":
+        if request.form["value"]:
+            message = request.form["value"]
             StoreIP.ip = message
             Robot_info.connect(message)
 
-    return render_template('robot_connect.html')
+    return render_template("robot_connect.html")
+
 
 # ajax -> route play button:
-# Note: 
+# Note:
 #   1. Ajax called route for automate process of hit button play
 #   on universal robots polyscope software.
-@app.route('/play_button', methods=['POST', 'GET'])
+@app.route("/play_button", methods=["POST", "GET"])
 @login_required
 def play_button():
-    if request.method == 'POST':
+    if request.method == "POST":
         Robot_info.play_button()
-    
-    return render_template('robot_connect.html')
+
+    return render_template("robot_connect.html")
+
 
 # !!redirect page -> route disconnect:
-# Note: 
-#   1. in progress 
-@app.route('/robot_disconnect', methods=['POST', 'GET'])
+# Note:
+#   1. in progress
+@app.route("/robot_disconnect", methods=["POST", "GET"])
 @login_required
 def robot_disconnect():
     # there will be disconnection
     StoreIP.ip = "none"
 
-    return render_template('robot_disconnect.html')
+    return render_template("robot_disconnect.html")
+
 
 # page -> route menu:
-# Note: 
+# Note:
 #   1. Menu route for menu page.
-@app.route('/menu')
+@app.route("/menu")
 @login_required
 def menu():
-    return render_template('menu.html', ip = StoreIP.ip, cam = StoreCam.cam)
+    return render_template("menu.html", ip=StoreIP.ip, cam=StoreCam.cam)
+
 
 # page -> route control panel:
-# Note: 
+# Note:
 #   1. Control panel menu page.
-@app.route('/con_pan')
+@app.route("/con_pan")
 @login_required
 def con_pan():
-    return render_template('con_pan.html')
+    return render_template("con_pan.html")
+
 
 # page -> route robot control:
-# Note: 
+# Note:
 #   1. Robot control page.
-@app.route('/robot_control', methods=['POST', 'GET'])
+@app.route("/robot_control", methods=["POST", "GET"])
 @login_required
 def robot_control():
-    if request.method == 'POST':
+    if request.method == "POST":
         try:
-            if request.form['value'] == 'cam':
+            if request.form["value"] == "cam":
                 StreamColorCam.start()
-                url = url_for('.video_color')
-                return jsonify({'url' : url})
-                
-            if request.form['value'] == 'stop_cam':
+                url = url_for(".video_color")
+                return jsonify({"url": url})
+
+            if request.form["value"] == "stop_cam":
                 time.sleep(0.5)
                 StreamColorCam.stop()
                 return jsonify("Stop")
-        
+
         except RuntimeError:
             return jsonify("Camera is not pluged-in!")
 
-    return render_template('robot_control.html')
+    return render_template("robot_control.html")
+
 
 # ========================================================
 # WARNING: Robot_info.connect => need to be deleted!
 # page -> route robot inspection:
-# Note: 
+# Note:
 #   1. This route connect to robot via socket, and feeding defined datas to client.
 #   2. Data are yield from data feed route.
 #   3. Use ajax for start and stop yielding.
-@app.route('/robot_inspection', methods=['POST', 'GET'])
+@app.route("/robot_inspection", methods=["POST", "GET"])
 @login_required
 def robot_inspection():
     # for localhost simulation => self ip adress need to be added
-    #Robot_info.connect("192.168.20.105")
+    # Robot_info.connect("192.168.20.105")
+    # TODO:
     Robot_info.connect("127.0.0.1")
 
-    if request.method == 'POST':
-        if request.form['value'] == 'data_feed':
+    if request.method == "POST":
+        if request.form["value"] == "data_feed":
             try:
                 Robot_info.test_connection()
 
-                url = url_for('.data_feed')
+                url = url_for(".data_feed")
                 return jsonify(url)
 
             except Exception:
                 return jsonify("Robot is not connected!")
-    
-    return render_template('robot_inspection.html')
+
+    return render_template("robot_inspection.html")
+
 
 # page -> route documentation:
-# Note: 
+# Note:
 #   1. Documentation page.
-@app.route('/documentation')
+@app.route("/documentation")
 @login_required
 def documentation():
-    return render_template('documentation.html')
+    return render_template("documentation.html")
+
 
 # page -> route authors:
-# Note: 
+# Note:
 #   1. Authors page.
-@app.route('/authors')
+@app.route("/authors")
 @login_required
-def authors():    
-    return render_template('authors.html')
+def authors():
+    return render_template("authors.html")
+
 
 # page -> route dash:
-# Note: 
+# Note:
 #   1. After ajax call, do post processing of took point clouds, then return to client,
 #   x, y, z coordinates and color of points.
-@app.route('/dash', methods=['POST', 'GET'])
+@app.route("/dash", methods=["POST", "GET"])
 @login_required
 def dash():
-    if request.method == 'POST':
+    if request.method == "POST":
         # points_x, points_y, points_z, colors = Show_PointCloud.load_pc(Point.point, sim=True)
 
-        points_x, points_y, points_z, colors, point  = Show_PointCloud.load_pc(Point.point, sim=False)
+        points_x, points_y, points_z, colors, point = Show_PointCloud.load_pc(
+            Point.point, sim=True
+        )
         Point.point = point
         print(point)
 
-        return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors, 'nx' : Point.point[0], 'ny':Point.point[1], 'nz':Point.point[2]})
-        # return jsonify({'x' : points_x.tolist(), 'y' : points_y.tolist(), 'z' : points_z.tolist(), 'c' : colors})
+        return jsonify(
+            {
+                "x": points_x.tolist(),
+                "y": points_y.tolist(),
+                "z": points_z.tolist(),
+                "c": colors,
+                "nx": Point.point[0],
+                "ny": Point.point[1],
+                "nz": Point.point[2],
+            }
+        )
 
-    return render_template('dash.html')
+    return render_template("dash.html")
+
 
 # page -> route show camera stream:
-# Note: 
+# Note:
 #   1. Depend of clinet option catch ajax call and stream defined image:
 #   color - depth - infra
-@app.route('/show_cam_stream', methods=['GET','POST'])
+@app.route("/show_cam_stream", methods=["GET", "POST"])
 @login_required
 def show_cam_stream():
-    if request.method == 'POST':
+    if request.method == "POST":
         try:
-            if request.form['value'] == 'depth_cam':
+            if request.form["value"] == "depth_cam":
                 StreamCam.start()
-                url = url_for('.video_stream_depth')
-                return jsonify({'url' : url})
-            
-            if request.form['value'] == 'color_cam':
-                StreamCam.start()
-                url = url_for('.video_stream_color')
-                return jsonify({'url' : url})
-                
-            if request.form['value'] == 'infra_cam':
-                StreamCam.start()
-                url = url_for('.video_stream_infra')
-                return jsonify({'url' : url})
+                url = url_for(".video_stream_depth")
+                return jsonify({"url": url})
 
-            if request.form['value'] == 'stop_cam':
+            if request.form["value"] == "color_cam":
+                StreamCam.start()
+                url = url_for(".video_stream_color")
+                return jsonify({"url": url})
+
+            if request.form["value"] == "infra_cam":
+                StreamCam.start()
+                url = url_for(".video_stream_infra")
+                return jsonify({"url": url})
+
+            if request.form["value"] == "stop_cam":
                 time.sleep(0.5)
                 StreamCam.stop()
                 return jsonify("Stop")
-        
+
         except RuntimeError:
             return jsonify("Camera is not pluged-in!")
 
-    return render_template('con_pan_show_cam.html')
+    return render_template("con_pan_show_cam.html")
 
-@app.route('/faceID', methods=['GET','POST'])
+
+@app.route("/faceID", methods=["GET", "POST"])
 @login_required
-def faceID():    
-    if request.method == 'POST':
+def faceID():
+    if request.method == "POST":
         try:
-            if request.form['value'] == 'stop_reco_cam':
+            if request.form["value"] == "stop_reco_cam":
                 time.sleep(0.5)
                 FaceReco.stop()
-            
-            if request.form['value'] == 'recognition':
+
+            if request.form["value"] == "recognition":
                 # TODO
                 # database is local sqlite!!!
                 if StoreID.id:
-                    patient = Patient.query.filter_by(pid = StoreID.id).first()
-                    
-                    FaceReco.init_patient(patient.photo, str(patient.name + " " + patient.surname))
-                    
+                    patient = Patient.query.filter_by(pid=StoreID.id).first()
+
+                    FaceReco.init_patient(
+                        patient.photo, str(patient.name + " " + patient.surname)
+                    )
+
                     time.sleep(1)
-                    
+
                     FaceReco.start()
 
-                    url = url_for('.video_feed_facereco')
-                    return  jsonify({'url' : url})
-                
+                    url = url_for(".video_feed_facereco")
+                    return jsonify({"url": url})
+
                 else:
                     return jsonify("Patient is not init!")
 
         except RuntimeError:
             return jsonify("Camera is not pluged-in!")
 
-    return render_template('con_pan_faceID.html')
+    return render_template("con_pan_faceID.html")
 
-@app.route('/face_position', methods=['GET','POST'])
+
+@app.route("/face_position", methods=["GET", "POST"])
 @login_required
 def face_position():
     # if Validation.val == True:
-        if request.method == 'POST':
-            try:
-                if request.form['value'] == 'stop_det_cam':
-                    time.sleep(0.5)
-                    FaceDet.stop()
-                
-                if request.form['value'] == 'position':  
-                    FaceDet.start()
+    if request.method == "POST":
+        try:
+            if request.form["value"] == "stop_det_cam":
+                time.sleep(0.5)
+                FaceDet.stop()
 
-                    url = url_for('.video_feed_facedet')
-                    return  jsonify({'url' : url})
+            if request.form["value"] == "position":
+                FaceDet.start()
+
+                url = url_for(".video_feed_facedet")
+                return jsonify({"url": url})
+
+        except RuntimeError:
+            return jsonify("Camera is not pluged-in!")
+
+    return render_template("con_pan_face_pos.html")
+
+
+# return error cookie
+# else:
+#    return render_template('con_pan.html')
+
+
+@app.route("/face_scan", methods=["GET", "POST"])
+@login_required
+def face_scan():
+    # if Validation.val == True:
+    if request.method == "POST":
+        if request.form["value"] == "scan":
+            try:
+                NostrillDet.start()
+                Point.point = NostrillDet.scan_nostrill()
+                time.sleep(0.5)
+                NostrillDet.stop()
 
             except RuntimeError:
                 return jsonify("Camera is not pluged-in!")
 
-        return render_template('con_pan_face_pos.html')
+            if Point.point == None:
+                return jsonify("once_again")
 
-    # return error cookie
-    # else:
-    #    return render_template('con_pan.html')
+            else:
+                _, _, _, _, point = Show_PointCloud.load_pc(Point.point, sim=False)
+                Point.point = point
 
-@app.route('/face_scan', methods=['GET','POST'])
-@login_required
-def face_scan():
-    # if Validation.val == True:
-        if request.method == 'POST':
-            if request.form['value'] == 'scan':
+                return jsonify("ok")
 
-                NostrillDet.start()
-                Point.point = NostrillDet.scan_nostrill()
-                # print(Point().point)
-                NostrillDet.stop()
+        if request.form["value"] == "test":
+            if Point.point:
+                return jsonify(
+                    {"point": [Point().point[0], Point().point[1], Point().point[2]]}
+                )
 
-                if Point.point == None:
-                    return jsonify("once_again")
-                
-                else:
-                    # TakePC.start()
-                    # TakePC.take_pointcloud()
-                    # TakePC.stop()
+            else:
+                return jsonify("nok")
 
-                    return jsonify("ok")
+    return render_template("con_pan_face_scan.html")
 
-            if request.form['value'] == 'test':
-                # print(Point.point)
-                # reconstruct axis
-                return jsonify({'point': [Point().point[0], Point().point[1], Point().point[2]]})
 
-        return render_template('con_pan_face_scan.html')
-        
-    # else:
-    #     return render_template('con_pan.html')
+# else:
+#     return render_template('con_pan.html')
 
 # page -> route patient data:
-# Note: 
+# Note:
 #   1. After stop qr detector find patient in patients database by personal identification number,
-#   and show all datas from patients database include encoded image 
+#   and show all datas from patients database include encoded image
 #   2. Closely related to patient menu
 #   3. Same render page in auth blueprint part.
-@app.route('/store_data_qr', methods=['GET','POST'])
+@app.route("/store_data_qr", methods=["GET", "POST"])
 @login_required
 def store_data_qr():
-    if request.method == 'POST':
-        if request.form['value'] == 'store_qr_cam':
+    if request.method == "POST":
+        if request.form["value"] == "store_qr_cam":
             data = ReadQR.output_data()
-            
+
             if data:
                 data = data[0][0].decode("utf-8")
                 StoreID.id = data
-                
-    return render_template('patient_menu.html', cam = StoreCam.cam)
 
-@app.route('/patient_data_qr') 
+    return render_template("patient_menu.html", cam=StoreCam.cam)
+
+
+@app.route("/patient_data_qr")
 @login_required
-def patient_data_qr():  
+def patient_data_qr():
     data = StoreID.id
-    patient = Patient.query.filter_by(pid = data).first()
+    patient = Patient.query.filter_by(pid=data).first()
     print(patient)
     if patient:
         image = b64encode(patient.photo).decode("utf-8")
-        return render_template('patient_data.html', patient = patient, obj = patient.photo, image = image)
-    
+        return render_template(
+            "patient_data.html", patient=patient, obj=patient.photo, image=image
+        )
+
     else:
-        return render_template('patients_searched.html', patient = None)
+        return render_template("patients_searched.html", patient=None)
+
 
 # page -> route patient menu:
-# Note: 
+# Note:
 #   1. In this route we can start QR detector from color image camera, or client may redirect to
 #   patient_find route in auth blueprint.
 #   2. Color image is yield from video_stream_QR route.
 #   3. Closely related to patient data qr route
-@app.route('/patient_menu', methods=['GET','POST'])
+@app.route("/patient_menu", methods=["GET", "POST"])
 @login_required
 def patient_menu():
-    if request.method == 'POST':
+    if request.method == "POST":
         try:
-            if request.form['value'] == 'QR_detection':
+            if request.form["value"] == "QR_detection":
                 ReadQR.start()
-                url = url_for('.video_stream_QR')
-                return jsonify({'url' : url})
-            
-            if request.form['value'] == 'stop_qr_cam':
+                url = url_for(".video_stream_QR")
+                return jsonify({"url": url})
+
+            if request.form["value"] == "stop_qr_cam":
                 ReadQR.stop()
-        
+
         except RuntimeError:
             return jsonify("Camera is not pluged-in!")
-    
-    return render_template('patient_menu.html', cam = StoreCam.cam)
+
+    return render_template("patient_menu.html", cam=StoreCam.cam)
+
 
 # yield -> route video stream QR detector:
-# Note: 
+# Note:
 #   1. Stream color image with qr code detector.
-@app.route('/video_stream_QR')
+@app.route("/video_stream_QR")
 @login_required
 def video_stream_QR():
     def generate():
         while 1:
             try:
                 frame = ReadQR.QR_code_reader()
-            
+
             except AttributeError:
                 break
-            
+
             except RuntimeError:
-                break 
-            
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+                break
+
+            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
+    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 # yield -> route video stream face recognition(FaceID):
-# Note: 
+# Note:
 #   1. Stream color image with face recognition and store validation.
-@app.route('/video_feed_facereco')
+@app.route("/video_feed_facereco")
 @login_required
 def video_feed_facereco():
     def generate():
@@ -459,148 +518,161 @@ def video_feed_facereco():
                 frame = FaceReco.recognize()
                 Validation.val = FaceReco.get_val()
                 print(Validation.val)
-            
+
             except AttributeError:
                 break
-            
+
             except RuntimeError:
                 break
 
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
+    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 # yield -> route video stream face detector:
-# Note: 
+# Note:
 #   1. Stream color image with face detection of position and store validation.
-@app.route('/video_feed_facedet')
+@app.route("/video_feed_facedet")
 @login_required
 def video_feed_facedet():
     def generate():
         while 1:
             try:
                 frame = FaceDet.set_position()
-            
+
             except AttributeError:
                 break
-            
+
             except RuntimeError:
                 break
 
             # Validation.val = FaceDet.get_val()
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
+            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
 
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 # yield -> route video stream color:
-# Note: 
+# Note:
 #   1. Stream pure color image.
 #   2. If you change switch, you just switch to another mode streaming.
-@app.route('/video_stream_color')
+@app.route("/video_stream_color")
 @login_required
 def video_stream_color():
     # idea of secure this type of routes is use Token
-    #if Token.token == True:
+    # if Token.token == True:
     def generate():
         while 1:
             try:
-                #start_time = time.time()
+                # start_time = time.time()
                 frame = StreamCam.get_frame(switch=0)
-                #print("FPS: ", 1.0 / (time.time() - start_time))
-            
+                # print("FPS: ", 1.0 / (time.time() - start_time))
+
             except AttributeError:
                 break
-            
+
             except RuntimeError:
                 break
-            
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    
-    #else:
+
+            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
+    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
+    # else:
     #    return redirect(url_for('app.home'))
 
-@app.route('/video_color')
+
+@app.route("/video_color")
 @login_required
 def video_color():
     def generate():
         while 1:
             try:
-                #start_time = time.time()
+                # start_time = time.time()
                 frame = StreamColorCam().get_frame()
-                #print("FPS: ", 1.0 / (time.time() - start_time))
-            
+                # print("FPS: ", 1.0 / (time.time() - start_time))
+
             except AttributeError:
                 break
-            
+
             except RuntimeError:
                 break
 
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
+    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 # yield -> route video stream depth:
-# Note: 
+# Note:
 #   1. Stream pure depth image.
 #   2. If you change switch, you just switch to another mode streaming.
-@app.route('/video_stream_depth')
+@app.route("/video_stream_depth")
 @login_required
 def video_stream_depth():
     def generate():
         while 1:
             try:
                 frame = StreamCam.get_frame(switch=1)
-            
+
             except AttributeError:
                 break
-            
+
             except RuntimeError:
                 break
 
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
+    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 # yield -> route video stream infra:
-# Note: 
+# Note:
 #   1. Stream pure infra image.
 #   2. If you change switch, you just switch to another mode streaming.
-@app.route('/video_stream_infra')
+@app.route("/video_stream_infra")
 @login_required
 def video_stream_infra():
     def generate():
         while 1:
             try:
                 frame = StreamCam.get_frame(switch=2)
-            
+
             except AttributeError:
                 break
-            
+
             except RuntimeError:
                 break
 
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
+    return Response(generate(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 # yield -> route data feed from robot:
-# Note: 
+# Note:
 #   1. Stream data for charts into client.
-@app.route('/data_feed')
+@app.route("/data_feed")
 @login_required
 def data_feed():
-    if request.headers.get('accept') == 'text/event-stream':
+    if request.headers.get("accept") == "text/event-stream":
+
         def gen_data():
             while 1:
                 try:
                     data = Robot_info.get_data()
                     yield ("data: {}\n\n").format(data)
-                
+
                 except Exception:
                     break
-                    
-        return Response(gen_data(), content_type='text/event-stream')
 
-    return render_template('404.html'), 404 
+        return Response(gen_data(), content_type="text/event-stream")
+
+    return render_template("404.html"), 404
+
 
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
-    return render_template('404.html'), 404
+    return render_template("404.html"), 404

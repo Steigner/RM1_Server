@@ -73,16 +73,6 @@
 	
 	</div>
 
-	<script>
-		$("#gen_pdf").click(function() {
-		$(".loading_background, .loading_label, .wrapper").show();
-        setTimeout(function(){
-			$(".loading_background, .loading_label, .wrapper").hide();
-            window.location.href="/download";
-        }, 300);
-    });
-	</script>
-
 	<!-- script -> patient data manage -->
 	<script type="module" src="{{ url_for('static', filename = 'js/patient_data.js') }}"></script>
 {% endblock %}

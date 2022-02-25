@@ -148,13 +148,68 @@ $(function() {
                         
                         window.setTimeout(function(){  
                             $(".loading_background, .loading_label, .wrapper").hide();
-                            window.location.href="/home";
+                            alert("Be careful, the process will begin! Robot starts to move.")
+                            $(".loading_background, .loading_label, .wrapper").show();
+                
+                            var ros = ROS_connect();
+                            var menu = new ROSLIB.Topic({
+                                ros : ros,
+                                name : '/switch',
+                                messageType : 'std_msgs/String'
+                            });
+                        
+                            var init = new ROSLIB.Message({
+                                data: "init_mot"       
+                            });
+                            
+                            menu.publish(init);
+                            
+                            var listener = new ROSLIB.Topic({
+                                ros : ros,
+                                name : '/info',
+                                messageType : 'std_msgs/String'
+                            });
+                            
+                            listener.subscribe(function(message) {
+                                alert("Prepare for patient!")
+                                listener.unsubscribe();
+                                $(".loading_background, .loading_label, .wrapper").hide();
+                                window.location.href="/home";
+                            });
                         }, 3000);
                     }
+                    
                     else if(message.msg.includes('MoveGroup context initialization complete')){
                         window.setTimeout(function(){  
-                            $(".loading_background, .loading_label, .wrapper").hide();
-                            window.location.href="/home";
+                            $(".loading_background, .loading_label, .wrapper").hide();     
+                            alert("Be careful, the process will begin! Robot starts to move.")
+                            $(".loading_background, .loading_label, .wrapper").show();
+                
+                            var ros = ROS_connect();
+                            var menu = new ROSLIB.Topic({
+                                ros : ros,
+                                name : '/switch',
+                                messageType : 'std_msgs/String'
+                            });
+                        
+                            var init = new ROSLIB.Message({
+                                data: "init_mot"       
+                            });
+                            
+                            menu.publish(init);
+                            
+                            var listener = new ROSLIB.Topic({
+                                ros : ros,
+                                name : '/info',
+                                messageType : 'std_msgs/String'
+                            });
+                            
+                            listener.subscribe(function(message) {
+                                console.log('Received message on ' + message.data);
+                                listener.unsubscribe();
+                                $(".loading_background, .loading_label, .wrapper").hide();
+                                window.location.href="/home";
+                            });
                         }, 3000);
                     }
                 });

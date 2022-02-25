@@ -13,6 +13,7 @@ from io import BytesIO
 # script -> inicialized camera setting
 from app.camera.cam import Camera
 
+
 class FaceReco(Camera):
     # public classmethod:
     #   input: none
@@ -21,7 +22,7 @@ class FaceReco(Camera):
     @classmethod
     def stop(cls):
         cls.pipeline.stop()
-    
+
     # public classmethod:
     #   input: none
     #   return none
@@ -29,7 +30,7 @@ class FaceReco(Camera):
     @classmethod
     def start(cls):
         # allows us to access methods of the base class -> "Camera"
-        super(FaceReco,cls).start()
+        super(FaceReco, cls).start()
         cls.validation = False
 
     # public classmethod:
@@ -45,35 +46,41 @@ class FaceReco(Camera):
     # public classmethod:
     #   input: none
     #   return modifed color image [jpg - tobytes]
-    # Note: 
-    @classmethod    
+    # Note:
+    @classmethod
     def recognize(cls):
         frames = cls.pipeline.wait_for_frames()
-        
+
         # validation variable -> is use ass acces var
         cls.validation = False
 
-        #color_frame = frames.first(rs.stream.color)
-        aligned_frames = cls.align.process(frames) 
+        # color_frame = frames.first(rs.stream.color)
+        aligned_frames = cls.align.process(frames)
         color_frame = aligned_frames.get_color_frame()
         Color_image = np.asarray(color_frame.get_data())
 
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_small_frame = Color_image[:, :, ::-1]
-        
+
         # Find all the faces and face enqcodings in the frame of video
         face_locations = face_recognition.face_locations(rgb_small_frame)
-        face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
+        face_encodings = face_recognition.face_encodings(
+            rgb_small_frame, face_locations
+        )
 
         # Loop through each face in this frame of video
         for (x, y, w, d), face_encoding in zip(face_locations, face_encodings):
-            
+
             # See if the face is a match for the known face(s)
-            matches = face_recognition.compare_faces(cls.known_face_encodings, face_encoding)
+            matches = face_recognition.compare_faces(
+                cls.known_face_encodings, face_encoding
+            )
             name = "Unautorized Person"
 
             # known face with the smallest distance to the new face
-            face_distances = face_recognition.face_distance(cls.known_face_encodings, face_encoding)
+            face_distances = face_recognition.face_distance(
+                cls.known_face_encodings, face_encoding
+            )
             best_match_index = np.argmin(face_distances)
 
             # if match with photo with streaming image
@@ -82,13 +89,17 @@ class FaceReco(Camera):
                 cls.validation = True
 
             # Draw a box around the face
-            cv2.rectangle(Color_image, (d - 20 , x - 20), (y + 20, w + 20), (0, 0, 255), 2)
+            cv2.rectangle(
+                Color_image, (d - 20, x - 20), (y + 20, w + 20), (0, 0, 255), 2
+            )
 
             # Draw Name
             font = cv2.FONT_HERSHEY_DUPLEX
-            cv2.putText(Color_image, name, (d - 20, w + 50), font, 0.75, (255, 255, 255), 1)
-        
-        jpeg = cv2.imencode('.jpg', Color_image)[1].tobytes()
+            cv2.putText(
+                Color_image, name, (d - 20, w + 50), font, 0.75, (255, 255, 255), 1
+            )
+
+        jpeg = cv2.imencode(".jpg", Color_image)[1].tobytes()
         return jpeg
 
     # public classmethod:

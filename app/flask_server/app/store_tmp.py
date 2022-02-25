@@ -6,42 +6,49 @@
 # store id for search patient in database
 class StoreID:
     id = 0
+
     def __init__(self):
         pass
-# store IP adress, for acces to data's from robot 
+
+
+# store IP adress, for acces to data's from robot
 class StoreIP:
     ip = "none"
+
     def __init__(self):
         pass
+
 
 # store Camera plugin
 class StoreCam:
     cam = "none"
+
     def __init__(self):
         pass
+
 
 # store Validation for identification in FaceID
 class Validation:
     # toto by melo by byt ofiko false
-    #val = False
+    # val = False
     val = True
+
     def __init__(self):
         pass
+
 
 # store counter, just for how many times, is reload menu route
 # Note: No neccesary
 class Counter:
     counter = 0
+
     def __init__(self):
         pass
 
-# ??
+
+# Point to save searched point in 3D reconstruction
 class Point:
     point = []
-    def __init__(self):
-        pass
 
-class Token:
-    token = False
     def __init__(self):
         pass

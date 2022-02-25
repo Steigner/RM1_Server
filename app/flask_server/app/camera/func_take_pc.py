@@ -7,6 +7,7 @@ import numpy as np
 # script -> inicialized camera setting
 from app.camera.cam import Camera
 
+
 class TakePC(Camera):
     # public classmethod:
     #   input: none
@@ -15,7 +16,7 @@ class TakePC(Camera):
     @classmethod
     def stop(cls):
         cls.pipeline.stop()
-    
+
     # public classmethod:
     #   input: none
     #   return none
@@ -23,7 +24,7 @@ class TakePC(Camera):
     @classmethod
     def start(cls):
         super(TakePC, cls).start_pc()
-    
+
     # !!public classmethod:
     #   input: none
     #   return none
@@ -36,12 +37,12 @@ class TakePC(Camera):
         while 1:
             frames = cls.pipeline.wait_for_frames()
             frames.first(cls.other_stream).as_video_frame()
-            
-            c+=1
+
+            c += 1
 
             if c == 20:
-                ply = rs.save_to_ply(path + '/point_cloud.ply')
-                
+                ply = rs.save_to_ply(path + "/point_cloud.ply")
+
                 ply.set_option(rs.save_to_ply.option_ply_binary, False)
                 ply.set_option(rs.save_to_ply.option_ply_normals, True)
 
@@ -51,5 +52,5 @@ class TakePC(Camera):
                 ply.process(frames)
 
                 break
-        
+
         # cls.stop()

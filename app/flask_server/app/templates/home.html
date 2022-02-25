@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js" integrity="sha512-x2Owc9WayRcRj80Znkau58shVfXN2OIX+gQAlrx6KPugZBKrIC6AwgEWQQCI06p2Q8RB4ilxD+y+1BdNd+1fQA==" crossorigin="anonymous"></script>
 
@@ -44,10 +43,20 @@
 
     <div id="connect" class="title">Robot connected on ip-adress: {{ ip }}</div>
 
-    {% if cam == "Camera status: device is pluged-in" %}
-        <div id="camera" class="title">{{ cam }}</div>
-    {% else %}
-        <div id="camera" class="title">{{ cam }}</div>
+    <div id="camera" class="title">{{ cam }}</div>
+
+    {% if cam != "Camera status: device is not pluged-in" %}
+        <script type="module">
+            import {delete_warning_cookie, delete_error_cookie, insert_warning_cookie} from './static/js/modules/cookies.js';
+            delete_error_cookie("Camera is not pluged-in!");
+        </script>
+    {% endif %}
+
+    {% if ip != "none" %}
+        <script type="module">
+            import {delete_warning_cookie, delete_error_cookie, insert_warning_cookie} from './static/js/modules/cookies.js';
+            delete_error_cookie("Robot is not connected!");
+        </script>
     {% endif %}
 
     <!-- !! in progress fast dec. of scripts -->

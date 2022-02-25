@@ -4,7 +4,8 @@ import pyrealsense2 as rs
 # library -> time manage
 import time
 
-class Camera(object): 
+
+class Camera(object):
     # private classmethod:
     #   input: none
     #   return none
@@ -30,7 +31,7 @@ class Camera(object):
     # public classmethod:
     #   input: none
     #   return none
-    # Note: init camera, enable streaming modes, by most optional resolution and 
+    # Note: init camera, enable streaming modes, by most optional resolution and
     # hardware FPS parameters. Please be carefull with changing this parametres, becouse it will raise
     # error and camera may not work properly.
     @classmethod
@@ -38,25 +39,25 @@ class Camera(object):
         cls.__init()
 
         cls.pipeline = rs.pipeline()
-        cls.infared_stream = rs.stream.infrared 
-        
+        cls.infared_stream = rs.stream.infrared
+
         config = rs.config()
         config.enable_stream(cls.infared_stream, 640, 480, rs.format.y8, 60)
         config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 60)
-        config.enable_stream(rs.stream.color, 640,480, rs.format.bgr8, 60)
+        config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
 
         cls.pipeline.start(config)
-        
+
         if align_to_dept:
             align_to = rs.stream.depth
-        
+
         else:
             align_to = rs.stream.color
 
         cls.align = rs.align(align_to)
 
         cls.__warm_up()
-    
+
     @classmethod
     def start_color(cls):
         cls.pipeline = rs.pipeline()
@@ -69,7 +70,7 @@ class Camera(object):
     # public classmethod:
     #   input: none
     #   return none
-    # Note: init camera for taking point clouds, enable streaming modes, by most optional resolution and 
+    # Note: init camera for taking point clouds, enable streaming modes, by most optional resolution and
     # hardware FPS parameters. Please be carefull with changing this parametres, becouse it will raise
     # error and camera may not work properly.
     @classmethod

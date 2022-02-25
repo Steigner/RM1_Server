@@ -9,6 +9,7 @@ from app.camera.cam import Camera
 
 import pyrealsense2 as rs
 
+
 class FaceDet(Camera):
     # public classmethod:
     #   input: none
@@ -27,7 +28,7 @@ class FaceDet(Camera):
         # allows us to access methods of the base class -> "Camera"
         super(FaceDet, cls).start()
         cls.__init_detection_model()
-    
+
     # private classmethod:
     #   input: none
     #   return none
@@ -37,7 +38,7 @@ class FaceDet(Camera):
         LBFmodel = "app/camera/settings/lbfmodel.yaml"
         haarcascade_clf = "app/camera/settings/haarcascade_frontalface_alt2.xml"
         cls.detector = cv2.CascadeClassifier(haarcascade_clf)
-        cls.landmark_detector  = cv2.face.createFacemarkLBF()
+        cls.landmark_detector = cv2.face.createFacemarkLBF()
         cls.landmark_detector.loadModel(LBFmodel)
 
     # private classmethod:
@@ -53,48 +54,54 @@ class FaceDet(Camera):
         x2 = 640 - 100
         y2 = 640 - 200
 
-        # appned landmarks points 
+        # appned landmarks points
         land = []
-        
+
         # need to be color image converted to gray scale
         image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        # detect face 
+        # detect face
         faces = cls.detector.detectMultiScale(image_gray)
-        
+
         # landmarks is not find
         cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
-        
+
         # validation variable -> is use ass acces var
         cls.validation = False
 
-        # get all landmark of array of finded face points 
+        # get all landmark of array of finded face points
         for (x, y, w, d) in faces:
             _, landmarks = cls.landmark_detector.fit(image_gray, faces)
-            
+
             # landmarks is in defined zone
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            
+
             cls.validation = True
-            
+
             # show all landrmarks points
             for landmark in landmarks:
                 # land = landmark
-                
-                # land = [int(landmark[0][33][0]), int(landmark[0][33][1])]
-                
-                cv2.circle(image, (int(landmark[0][33][0]), int(landmark[0][33][1])), 4, (255, 0, 0), 4)
 
-                for x,y in landmark[0]:
-                    # (B-G-R)--thicknes 
+                # land = [int(landmark[0][33][0]), int(landmark[0][33][1])]
+
+                cv2.circle(
+                    image,
+                    (int(landmark[0][33][0]), int(landmark[0][33][1])),
+                    4,
+                    (255, 0, 0),
+                    4,
+                )
+
+                for x, y in landmark[0]:
+                    # (B-G-R)--thicknes
                     # due to compatibility to opencv version 5.2.1
                     cv2.circle(image, (int(x), int(y)), 1, (0, 0, 139), 2)
-                    
-                    # if is face landmarks out of range    
-                    if x > x2 or y > y2 or x < x1 or y <y1:
+
+                    # if is face landmarks out of range
+                    if x > x2 or y > y2 or x < x1 or y < y1:
                         # landmarks is out of defined zone
-                        cv2.rectangle(image, (x1, y1), (x2, y2), (0, 0, 255), 2)       
-                        
+                        cv2.rectangle(image, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
                         cls.validation = False
 
         return image
@@ -107,10 +114,10 @@ class FaceDet(Camera):
     def __image(cls):
         frames = cls.pipeline.wait_for_frames()
 
-        aligned_frames = cls.align.process(frames) 
+        aligned_frames = cls.align.process(frames)
         color_frame = aligned_frames.get_color_frame()
         image = np.asarray(color_frame.get_data())
-        
+
         return image, aligned_frames
 
     # public classmethod:
@@ -118,12 +125,12 @@ class FaceDet(Camera):
     #   return jpeg color modifed by __show() method [jpg - tobytes]
     # Note: get color image and put into __show() method, then return modified data.
     @classmethod
-    def set_position(cls):            
+    def set_position(cls):
         image, aligned_frames = cls.__image()
 
         image_color = cls.__show(image)
-        
-        jpeg = cv2.imencode('.jpg', image_color)[1].tobytes()
+
+        jpeg = cv2.imencode(".jpg", image_color)[1].tobytes()
 
         return jpeg
 

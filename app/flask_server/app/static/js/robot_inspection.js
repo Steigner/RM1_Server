@@ -3,7 +3,6 @@ import {Size} from './modules/size.js';
 
 import {insert_error_cookie, allert} from './modules/cookies.js';
 
-
 class RobotInspection{
     constructor(){
         this.add_info_input()
