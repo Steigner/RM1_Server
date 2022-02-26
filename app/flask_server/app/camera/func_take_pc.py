@@ -1,9 +1,6 @@
 # library -> python wrapper for intel realsense camera
 import pyrealsense2 as rs
 
-# library -> numpy data manage
-import numpy as np
-
 # script -> inicialized camera setting
 from app.camera.cam import Camera
 

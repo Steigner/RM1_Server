@@ -25,6 +25,7 @@ numpy = "^1.22.1"
 opencv-python = "^4.5.5"
 opencv-contrib-python = "^4.5.5"
 black = "^22.1.0"
+flake8 = "^4.0.1"
 
 [tool.poetry.dev-dependencies]
 

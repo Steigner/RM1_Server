@@ -1,23 +1,23 @@
-.menu{
+.menu {
     display: flex;
     justify-content: center;
     width: 100%;
     height: 50%;
 }
 
-#first_line.menu{
+#first_line.menu {
     align-items: flex-end;
 }
 
-#second_line.menu{
+#second_line.menu {
     align-items: flex-start;
 }
 
-.input{
+.input {
     margin: calc(5px / var(--width-divisor));
     width: calc(365px / var(--width-divisor));
     height: calc(280px / var(--height-divisor));
-    background: #F2F2F2;
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
     border-radius: calc(13px / var(--width-divisor));
     -moz-border-radius: calc(13px / var(--width-divisor));
@@ -34,20 +34,24 @@
     -moz-appearance: none;
 }
 
-.control_panel_logos{
+.control_panel_logos {
     width: calc(125px / var(--width-divisor));
     height: calc(95px / var(--height-divisor));
 }
 
-.title{
+.title {
     margin-bottom: calc(25px / var(--height-divisor));
     font-family: var(--font);
     font-size: calc(40px / var(--height-divisor));
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-#documentation.input:active, #patient_data.input:active, #robot_inspection.input:active,
-#manual_control_robot.input:active, #face_model.input:active, #control_panel.input:active{
+#documentation.input:active,
+#patient_data.input:active,
+#robot_inspection.input:active,
+#manual_control_robot.input:active,
+#face_model.input:active,
+#control_panel.input:active {
     opacity: 0.4;
 }

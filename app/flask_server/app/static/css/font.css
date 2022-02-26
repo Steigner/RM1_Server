@@ -2,7 +2,8 @@
     font-family: 'Myriad Pro Light';
     font-style: normal;
     font-weight: normal;
-    src: local('Myriad Pro Light'), url('fonts-woff/MyriadPro-Light.woff') format('woff');
+    src: local('Myriad Pro Light'),
+        url('fonts-woff/MyriadPro-Light.woff') format('woff');
 }
 
 :root {

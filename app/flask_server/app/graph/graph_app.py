@@ -1,5 +1,3 @@
-# --------------------- In progress !! -----------------------
-
 import open3d as o3d
 import numpy as np
 
@@ -7,7 +5,7 @@ import numpy as np
 class Show_PointCloud(object):
     @classmethod
     def load_pc(cls, point=None, sim=False):
-        if sim == True:
+        if sim is True:
             pcd_o = o3d.io.read_point_cloud("app/graph/sim.pcd")
 
             points = np.asarray(pcd_o.points)
@@ -39,8 +37,6 @@ class Show_PointCloud(object):
                 color_raw, depth_raw, convert_rgb_to_intensity=False
             )
 
-            h = np.asarray(rgbd_image.depth)
-
             pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
                 rgbd_image,
                 o3d.camera.PinholeCameraIntrinsic(
@@ -52,7 +48,9 @@ class Show_PointCloud(object):
 
             tup = np.where(
                 np.logical_and(
-                    k[:, 0] * 255 == 255, k[:, 1] * 255 == 255, k[:, 2] * 255 == 255
+                    k[:, 0] * 255 == 255,
+                    k[:, 1] * 255 == 255,
+                    k[:, 2] * 255 == 255,
                 )
             )
 

@@ -1,3 +1,4 @@
+// calculate the size of the screen
 export function Size() {
 	var width = window.screen.width;
 	var height = window.screen.height;

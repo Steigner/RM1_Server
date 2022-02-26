@@ -1,101 +1,108 @@
-import {ROS_connect} from './modules/ROS_connect.js';
+import { ROS_connect } from './modules/ROS_connect.js';
 
-$(function() {
-    setTimeout(function(){$(".loading_background, .loading_label, .wrapper").show()},100);
-    $.ajax({        
+$(function () {
+    setTimeout(function () {
+        $('.loading_background, .loading_label, .wrapper').show();
+    }, 100);
+
+    $.ajax({
         url: '/dash',
         type: 'POST',
-        
-        success: function(response) {  
+
+        success: function (response) {
             var points = [];
 
             for (let i = 0; i < response.x.length; i++) {
-                const dict = {x : -response.x[i], y : -response.y[i], z : response.z[i]}
+                const dict = {
+                    x: -response.x[i],
+                    y: -response.y[i],
+                    z: response.z[i],
+                };
                 points.push(dict);
-            };
+            }
 
             var ros = ROS_connect();
 
             var pcd = new ROSLIB.Topic({
-                ros : ros,
-                name : '/pcd',
-                messageType : 'sensor_msgs/PointCloud'
+                ros: ros,
+                name: '/pcd',
+                messageType: 'sensor_msgs/PointCloud',
             });
 
             var data = new ROSLIB.Message({
-                header: {frame_id : "camera_link"},
-                points: points,   
-            },);
+                header: { frame_id: 'camera_link' },
+                points: points,
+            });
 
             pcd.publish(data);
 
             var pcd2 = new ROSLIB.Topic({
-                ros : ros,
-                name : '/pcd2',
-                messageType : 'sensor_msgs/PointCloud'
+                ros: ros,
+                name: '/pcd2',
+                messageType: 'sensor_msgs/PointCloud',
             });
 
             points = [];
 
-            const dict = {x : -response.nx, y : -response.ny, z : response.nz}
+            const dict = { x: -response.nx, y: -response.ny, z: response.nz };
             points.push(dict);
 
             var data2 = new ROSLIB.Message({
-                header: {frame_id : "camera_link"},
-                points: points, 
-            },);
+                header: { frame_id: 'camera_link' },
+                points: points,
+            });
 
             pcd2.publish(data2);
-            
+
             // Define Data
             var data1 = {
                 x: response.x,
                 y: response.y,
                 z: response.z,
-                mode: "markers",
-                type: "scatter3d",
+                mode: 'markers',
+                type: 'scatter3d',
                 marker: {
                     color: response.c,
-                    size: 1
-                }
+                    size: 1,
+                },
             };
-        
+
             var data2 = {
                 x: [response.nx],
                 y: [response.ny],
                 z: [response.nz],
-                
-                mode: "markers",
-                type: "scatter3d",
+
+                mode: 'markers',
+                type: 'scatter3d',
                 marker: {
-                    color: "red",
-                    size: 2
-                }
+                    color: 'red',
+                    size: 2,
+                },
             };
-            
-            var datal = [data1,data2];
+
+            var datal = [data1, data2];
 
             var layout = {
                 scene: {
                     xaxis: {
-                        'visible': false,
-                        'showgrid': false,
-                        'showticklabels': false,
-                        'zeroline': false,
+                        visible: false,
+                        showgrid: false,
+                        showticklabels: false,
+                        zeroline: false,
                     },
 
                     yaxis: {
-                        'visible': false,
-                        'showgrid': false,
-                        'showticklabels': false,
-                        'zeroline': false,
+                        visible: false,
+                        showgrid: false,
+                        showticklabels: false,
+                        zeroline: false,
                     },
 
                     zaxis: {
-                        'visible': false,
-                        'showgrid': false,
-                        'showticklabels': false,
-                        'zeroline': false,
+                        visible: false,
+                        showgrid: false,
+                        showticklabels: false,
+                        zeroline: false,
                     },
                 },
 
@@ -103,24 +110,24 @@ $(function() {
                     l: 0,
                     r: 0,
                     b: 0,
-                    t: 0
+                    t: 0,
                 },
 
                 modebar: {
-                    'orientation': 'v',
-                    'bgcolor': 'rgba(242, 242, 242, 1)',
-                    'color': 'rgb(33, 105, 124)',
-                    'scale': 10
+                    orientation: 'v',
+                    bgcolor: 'rgba(242, 242, 242, 1)',
+                    color: 'rgb(33, 105, 124)',
+                    scale: 10,
                 },
 
                 paper_bgcolor: 'rgba(0,0,0,0)',
             };
-            
-            
-            Plotly.newPlot("point_cloud", datal, layout, {displayModeBar: true}).then(function() { 
-                $(".loading_background, .loading_label, .wrapper").hide();
+
+            Plotly.newPlot('point_cloud', datal, layout, {
+                displayModeBar: true,
+            }).then(function () {
+                $('.loading_background, .loading_label, .wrapper').hide();
             });
-            
 
             /*
             // get point -> move to defined point !!
@@ -132,8 +139,8 @@ $(function() {
             */
         },
 
-        error: function(error) {
+        error: function (error) {
             console.log(error);
-        }
+        },
     });
 });

@@ -2,11 +2,9 @@ import cv2
 
 import numpy as np
 
-import pyrealsense2 as rs
-
 from app.camera.cam import Camera
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 class NostrillDet(Camera):
@@ -54,7 +52,7 @@ class NostrillDet(Camera):
 
         cv2.imwrite("app/graph/face.png", depth_image)
 
-        img_in = img
+        # img_in = img
 
         img = np.array([img]).astype("float64")
 
@@ -79,9 +77,9 @@ class NostrillDet(Camera):
             x = int(centroide1[1])
             y = int(centroide1[0])
 
+            """
             masked_img = cls.__mask_input(img_in, mask)
 
-            """
             plt.imshow(masked_img)
             plt.scatter([centroide1[1], centroide2[1]], [centroide1[0], centroide2[0]], color = 'b')
             plt.show()
@@ -94,44 +92,4 @@ class NostrillDet(Camera):
             return [x, y]
 
         except ZeroDivisionError:
-            print("Nelze urcit!")
-
-        # --------------------------------------------------------------------------------------------------------------------
-
-        """
-        !! OLD
-        try:
-            centroide1 = (sum(n_1[0]) / len(n_1[0]), sum(n_1[1]) / len(n_1[1]))
-            print("Center of right nostril: " + str(centroide1))
-
-            centroide2 = (sum(n_2[0]) / len(n_2[0]), sum(n_2[1]) / len(n_2[1]))
-            print("Center of left nostril: " + str(centroide2))
-        
-            x = int(centroide1[1])
-            y = int(centroide1[0])
-
-            color_intrin = color_frame.profile.as_video_stream_profile().intrinsics
-            
-            depth = depth_frame.get_distance(x, y)
-
-            dx, dy, dz = rs.rs2_deproject_pixel_to_point(color_intrin, [x,y], depth)
-
-            masked_img = cls.__mask_input(img_in, mask)
-                
-            plt.imshow(masked_img)
-            plt.scatter([centroide1[1], centroide2[1]], [centroide1[0], centroide2[0]], color = 'b')
-            plt.show()
-
-            plt.imshow(depth_image)
-            plt.scatter([centroide1[1], centroide2[1]], [centroide1[0], centroide2[0]], color = 'b')
-            plt.show()
-
-            # becouse:
-            # x: [response.nz],
-            # y: [- response.ny],
-            # z: [- response.nz],
-            return [dx, dy, dz]
-
-        except ZeroDivisionError:
-            print("Nelze urcit!")
-        """
+            print("Cannot be detected!")

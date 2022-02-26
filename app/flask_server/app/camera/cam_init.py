@@ -1,5 +1,3 @@
-# --------------------- In progress !! -----------------------
-
 import pyrealsense2 as rs
 import time
 import json
@@ -24,7 +22,6 @@ class Camera_Init(object):
             "0B3A",
         ]
         ctx = rs.context()
-        ds5_dev = rs.device()
         devices = ctx.query_devices()
         info = []
 
@@ -42,13 +39,12 @@ class Camera_Init(object):
     def inicialize(cls, c=False):
         dev, info = cls.find_device_that_supports_advanced_mode()
 
-        if dev == None:
+        if dev is None:
             return "Camera status: not pluged-in compatible device"
 
         else:
             try:
                 advnc_mode = rs.rs400_advanced_mode(dev)
-                # info_1 = str("Advanced mode is enabled!")
 
                 # Loop until we successfully enable advanced mode
                 while not advnc_mode.is_enabled():
@@ -56,10 +52,9 @@ class Camera_Init(object):
                     # At this point the device will disconnect and re-connect.
                     time.sleep(5)
                     # The 'dev' object will become invalid and we need to initialize it again
-                    dev = find_device_that_supports_advanced_mode()
                     advnc_mode = rs.rs400_advanced_mode(dev)
 
-                if c == True:
+                if c is True:
                     json_f = json.load(open("app/camera/settings/camera_settings.json"))
                     json_string = str(json_f).replace("'", '"')
                     advnc_mode.load_json(json_string)

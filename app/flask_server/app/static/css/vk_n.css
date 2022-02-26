@@ -1,4 +1,4 @@
-@import "vk.css";
+@import 'vk.css';
 
 #con_rob.simple-keyboard {
     max-width: calc(150px / var(--width-divisor));
@@ -6,7 +6,7 @@
     left: calc(500px / var(--width-divisor));
 }
 
-#numerical.dragable_place{
+#numerical.dragable_place {
     width: calc(130px / var(--width-divisor));
     height: calc(50px / var(--height-divisor));
 }

@@ -9,9 +9,9 @@ const delay = duration / numberOfEls;
 
 let tl = anime.timeline({
     duration: delay,
-    complete: function() { 
-        tl.restart(); 
-    }
+    complete: function () {
+        tl.restart();
+    },
 });
 
 // create alll 60 element in circle
@@ -25,31 +25,34 @@ function createEl(i) {
 
     el.classList.add('el');
     // define color
-    el.style.backgroundColor = 	'hsl(193, 26%, 62%)';
+    el.style.backgroundColor = 'hsl(193, 26%, 62%)';
 
-    el.style.transform = 'rotate(' + rotate + 'deg) translateY(' + translateY + '%)';
+    el.style.transform =
+        'rotate(' + rotate + 'deg) translateY(' + translateY + '%)';
     tl.add({
-        begin: function() {
+        begin: function () {
             anime({
                 targets: el,
                 backgroundColor: ['hsl(193, 26%, 62%)', 'hsl(193, 58%, 31%)'],
-                rotate: [rotate + 'deg', rotate + 10 +'deg'],
+                rotate: [rotate + 'deg', rotate + 10 + 'deg'],
                 translateY: [translateY + '%', translateY + 10 + '%'],
                 scale: [1, 1.25],
                 easing: 'easeInOutSine',
                 direction: 'alternate',
-                duration: duration * .1
+                duration: duration * 0.1,
             });
-        }
+        },
     });
     wrapperEl.appendChild(el);
-};
+}
 
 for (let i = 0; i < numberOfEls; i++) createEl(i);
 
-$(".loading_background, .loading_label, .wrapper").show();
+$('.loading_background, .loading_label, .wrapper').show();
 
-$(window).on("load", function () { 
-    setTimeout(function(){$(".loading_background, .loading_label, .wrapper").hide()},100);
+$(window).on('load', function () {
+    setTimeout(function () {
+        $('.loading_background, .loading_label, .wrapper').hide();
+    }, 100);
     //$(".loading_background, .loading_label, .wrapper").hide();
-})
+});

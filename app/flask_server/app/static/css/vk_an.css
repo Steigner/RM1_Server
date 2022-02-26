@@ -1,4 +1,4 @@
-@import "vk.css";
+@import 'vk.css';
 
 #sign_in.simple-keyboard {
     max-width: calc(600px / var(--width-divisor));
@@ -6,7 +6,7 @@
     left: calc(330px / var(--width-divisor));
 }
 
-#find_patient.simple-keyboard{
+#find_patient.simple-keyboard {
     position: absolute;
     top: calc(400px / var(--height-divisor));
     max-width: calc(600px / var(--width-divisor));

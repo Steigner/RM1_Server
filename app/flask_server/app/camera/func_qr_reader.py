@@ -64,7 +64,13 @@ class ReadQR(Camera):
 
             name = "QR-code loaded"
             cv2.putText(
-                color_image, name, (354 - 20, 325 + 50), font, 0.75, (255, 255, 255), 1
+                color_image,
+                name,
+                (354 - 20, 325 + 50),
+                font,
+                0.75,
+                (255, 255, 255),
+                1,
             )
 
             cls.data = data

@@ -1,27 +1,29 @@
-.simple-keyboard{
+.simple-keyboard {
     position: absolute;
     border: calc(5px / var(--width-divisor)) solid;
     color: #85acb7;
     border-radius: calc(27px / var(--width-divisor));
 }
 
-.simple-keyboard.NumKey, .simple-keyboard.AlfanumKey{
+.simple-keyboard.NumKey,
+.simple-keyboard.AlfanumKey {
     background-color: #85acb7;
 }
 
-.simple-keyboard.NumKey .hg-button, .simple-keyboard.AlfanumKey .hg-button {
+.simple-keyboard.NumKey .hg-button,
+.simple-keyboard.AlfanumKey .hg-button {
     font-family: var(--font);
     font-size: calc(15px / var(--height-divisor));
     display: flex;
     justify-content: center;
     align-items: center;
-    background:  #F2F2F2;
-    color: #21697C;
+    background: #f2f2f2;
+    color: #21697c;
 }
 
-.dragable_place{
+.dragable_place {
     background-color: #85acb7;
-    color: #21697C;
+    color: #21697c;
     color: rgba(33, 105, 124, 1);
     position: relative;
     width: calc(580px / var(--width-divisor));

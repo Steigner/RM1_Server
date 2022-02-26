@@ -12,7 +12,7 @@ from flask import (
 )
 
 # library -> protect routes from no-authorized acces by wrapper
-from flask_login import fresh_login_required, login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user
 
 # library -> manage (hashed) password
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -47,9 +47,6 @@ import pdfkit
 # library -> time / date
 import datetime
 
-import time
-
-from flask import session, g
 
 # set 2. blueprint = auth
 auth = Blueprint("auth", __name__)

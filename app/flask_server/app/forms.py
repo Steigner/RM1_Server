@@ -15,6 +15,7 @@ from wtforms.validators import (
 # script -> database model of users database(sqlite)
 from .models import User
 
+
 # Form class:
 #   input: FlaskForm
 #   return: none
@@ -31,7 +32,11 @@ class RegistrationForm(FlaskForm):
     )
     password2 = PasswordField(
         "repeat password",
-        validators=[DataRequired(), Length(min=4, max=40), EqualTo("password")],
+        validators=[
+            DataRequired(),
+            Length(min=4, max=40),
+            EqualTo("password"),
+        ],
     )
 
     register = SubmitField("Register")

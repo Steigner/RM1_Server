@@ -8,8 +8,6 @@
 
 	<script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
 
-	<script type="module" src="{{ url_for('static', filename = 'js/con_pan.js') }}"></script>
-
 	<!-- NAVIGATION MENU -->
 	<div class="info_panel">
 
@@ -35,6 +33,19 @@
 		<!-- 2. option got to process validation patient and ready -->
 		<button class="menu_button" id="face_id">Face ID</button>	
 	</div>
+
+	<script>
+		$(function() {
+			$("#stream_cam").click(function(){
+				window.location.href="/show_cam_stream"
+			});
+
+			$("#face_id").click(function() {
+				$(".loading_background, .loading_label, .wrapper").show();
+				window.location.href="/faceID";
+			});
+		});
+	</script>
 
 {% endblock %}
 

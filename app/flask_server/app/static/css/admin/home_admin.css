@@ -1,75 +1,76 @@
-.container{
+.container {
     overflow: scroll;
 }
 
-.title{
+.title {
     margin-top: calc(50px / var(--height-divisor));
     text-align: flex-start;
-    
+
     max-width: calc(1150px / var(--width-divisor));
-    
+
     font-size: calc(30px / var(--height-divisor));
     font-family: var(--font);
 
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-.input{
-    color: #21697C;
+.input {
+    color: #21697c;
     color: rgb(33, 105, 124);
     font-size: calc(15px / var(--height-divisor));
     font-family: var(--font);
 }
 
-.label{
+.label {
     font-size: calc(20px / var(--height-divisor));
     font-family: var(--font);
 
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-#users{
+#users {
     font-family: var(--font);
     border-collapse: collapse;
     width: 100%;
 }
-  
-#users td, #users th{
+
+#users td,
+#users th {
     padding: 10px;
 }
-  
-#users tr:nth-child(even){
-    background-color: #E6E6E6;
+
+#users tr:nth-child(even) {
+    background-color: #e6e6e6;
     background-color: rgb(230, 230, 230);
 }
-  
-#users tr:hover{
+
+#users tr:hover {
     background-color: rgb(33, 105, 124);
-    background-color: #21697C;
-    color: #E6E6E6;
+    background-color: #21697c;
+    color: #e6e6e6;
     color: rgb(230, 230, 230);
     opacity: 0.8;
 }
-  
-#users th{
+
+#users th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #21697C;
+    background-color: #21697c;
     background-color: rgb(33, 105, 124);
-    color: #E6E6E6;
+    color: #e6e6e6;
     color: rgb(230, 230, 230);
 }
 
-.button_auth{
+.button_auth {
     margin-top: 10px;
     border: 0;
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,9 +78,9 @@
     font-family: var(--font);
     font-size: calc(15px / var(--height-divisor));
 
-    color: #E6E6E6;
+    color: #e6e6e6;
     color: rgb(230, 230, 230);
-    background: #21697C;
+    background: #21697c;
     background: rgba(33, 105, 124, 1);
 
     width: calc(100px / var(--width-divisor));
@@ -89,6 +90,6 @@
     -webkit-border-radius: calc(30px / var(--width-divisor));
 }
 
-.button_auth:active{
+.button_auth:active {
     opacity: 0.4;
 }

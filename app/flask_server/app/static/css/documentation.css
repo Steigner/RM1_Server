@@ -1,6 +1,6 @@
-@import "menu_nav.css";
+@import 'menu_nav.css';
 
-.pdf{
+.pdf {
     display: flex;
     position: sticky;
     margin-top: 1%;

@@ -1,207 +1,388 @@
 <!DOCTYPE html>
 <html lang="en-US">
-	<head>
-		<meta charset="UTF-8">
-		<title>Robo Medicinae I.</title>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Robo Medicinae I.</title>
 
-		<!-- favicon -->
-		<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
+        <!-- favicon -->
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="{{ url_for('static', filename='favicon.ico') }}"
+        />
 
-		<!-- stylescript -> background -->
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+        <!-- stylescript -> background -->
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/background.css') }}"
+        />
 
-		<!-- stylescript -> layout -->
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+        <!-- stylescript -> layout -->
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/layout.css') }}"
+        />
 
-		<!-- stylescript -> loading -->
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/loading.css') }}">
+        <!-- stylescript -> loading -->
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/loading.css') }}"
+        />
 
-		<!-- library -> jquery 3.6 -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- library -> jquery 3.6 -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
 
-		<!-- library -> anime 3.2.1 -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- library -> anime 3.2.1 -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+            integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+
+        <!-- script -> size/resize/scale -->
+        <script
+            type="module"
+            src="{{ url_for('static', filename='js/modules/size.js') }}"
+        ></script>
+
+        <!-- script -> date/time manage -->
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename = 'js/date_time.js') }}"
+        ></script>
+
+        <!-- script -> cookies manage -->
+        <script
+            type="module"
+            src="{{ url_for('static', filename='js/modules/cookies.js') }}"
+        ></script>
+
+        <!-- script -> battery status -->
+        <script
+            type="module"
+            src="{{ url_for('static', filename = 'js/battery.js') }}"
+        ></script>
+
+        <!-- info -> loading -->
+        <div class="loading_background">
+            <div class="loading_label">loading</div>
+            <div class="wrapper"></div>
+        </div>
+
+        <!-- script -> loading -->
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename = 'js/loading.js') }}"
+        ></script>
+
+        <!-- COOKIE array JS -->
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    </head>
+    <body>
+        <script>
+            let nav = window.navigator.onLine;
+
+            if (!nav) {
+                alert(
+                    'U are in offline mode some features may not be accessible!'
+                );
+                window.location.href = '/sign_out';
+            }
+        </script>
+
+        <!-- TOP PANEL -->
+        <div class="panel" id="top_panel">
+            <!-- info -> date -->
+            <div class="text" id="date"></div>
+
+            <!-- info -> time -->
+            <div class="text" id="time"></div>
+
+            <!-- info -> battery is not supported -->
+            <div class="text" id="battery"></div>
+
+            <!-- info -> battery level -->
+            <div class="battery_level"></div>
+
+            <!-- supported battery -> logo -->
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 49.52 19.27"
+                class="battery"
+            >
+                <defs></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2">
+                    <g id="Layer_1" data-name="Layer 1">
+                        <rect
+                            class="cls-3l"
+                            x="0.56"
+                            y="0.56"
+                            width="44.68"
+                            height="18.14"
+                            rx="1.88"
+                        />
+                        <rect
+                            class="cls-4l"
+                            x="46.89"
+                            y="6.71"
+                            width="2.64"
+                            height="5.85"
+                            rx="0.37"
+                        />
+                    </g>
+                </g>
+            </svg>
+
+            <!-- battery charging -> logo -->
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 49.52 23.21"
+                class="battery_charging"
+            >
+                <defs></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2">
+                    <g id="Layer_1" data-name="Layer 1">
+                        <rect
+                            class="cls-15l"
+                            x="0.56"
+                            y="2.56"
+                            width="44.68"
+                            height="18.14"
+                            rx="1.88"
+                        />
+                        <rect
+                            class="cls-25l"
+                            x="46.89"
+                            y="8.7"
+                            width="2.64"
+                            height="5.85"
+                            rx="0.37"
+                        />
+                        <path
+                            class="cls-35l"
+                            d="M26.65.63,18.16,13a.2.2,0,0,0,.17.31H22a.52.52,0,0,1,.5.67L20,22.33a.29.29,0,0,0,.5.26l9.61-11.92a.2.2,0,0,0-.15-.33H26a.51.51,0,0,1-.51-.62L27.16.85A.28.28,0,0,0,26.65.63Z"
+                        />
+                    </g>
+                </g>
+            </svg>
+
+            <!-- un-supported battery -> logo -->
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 27.95 27.95"
+                class="not_supported_logo"
+            >
+                <defs></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2">
+                    <g id="Layer_1" data-name="Layer 1">
+                        <circle
+                            class="cls-16l"
+                            cx="13.97"
+                            cy="13.97"
+                            r="13.35"
+                        />
+                        <circle
+                            class="cls-26l"
+                            cx="13.97"
+                            cy="20.87"
+                            r="1.43"
+                        />
+                        <line
+                            class="cls-36l"
+                            x1="13.97"
+                            y1="16.84"
+                            x2="13.97"
+                            y2="5.65"
+                        />
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+        <!-- MAIN PART WHICH WILL BE DEFINED IN NEXT PAGES -->
+        <div class="container">{% block content %} {% endblock %}</div>
+
+        <!-- If is open bottom panel cover everything -->
+        <div class="cover"></div>
+        <div class="placeholder"></div>
+
+        <!-- Due to animation, rolll button is defined outside of grid in botttom panel -->
+        <button class="button" id="roll_button">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 26.23 27.73"
+                class="roll_logo"
+            >
+                <defs></defs>
+                <g id="Vrstva_2" data-name="Vrstva 2">
+                    <g id="Layer_1" data-name="Layer 1">
+                        <polygon
+                            class="cls-1l"
+                            points="10.27 13.87 10.27 26.53 5.39 20.2 0.52 13.87 5.39 7.53 10.27 1.2 10.27 13.87"
+                        />
+                        <polygon
+                            class="cls-2l"
+                            points="15.96 13.87 15.96 1.2 20.84 7.53 25.72 13.87 20.84 20.2 15.96 26.53 15.96 13.87"
+                        />
+                    </g>
+                </g>
+            </svg>
+        </button>
+
+        <!-- BOTTOM PANEL -->
+        <div class="panel" id="bottom_panel">
+            <div></div>
+
+            <!-- error button -->
+            <button class="info_button" id="error">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16.86 17.81"
+                    class="error_logo"
+                >
+                    <defs></defs>
+                    <g id="Vrstva_2" data-name="Vrstva 2">
+                        <g id="Layer_1" data-name="Layer 1">
+                            <line
+                                class="cls-12l"
+                                x1="1.42"
+                                y1="1.34"
+                                x2="15.52"
+                                y2="16.47"
+                            />
+                            <line
+                                class="cls-12l"
+                                x1="1.34"
+                                y1="16.39"
+                                x2="15.52"
+                                y2="1.34"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            </button>
+
+            <!-- info -> number of errors -->
+            <div class="info_num" id="num_errors">
+                <div class="text" id="num_errors">0</div>
+            </div>
+
+            <!-- warning button -->
+            <button class="info_button" id="warning">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 3.46 21.4"
+                    class="warning_logo"
+                >
+                    <defs></defs>
+                    <g id="Vrstva_2" data-name="Vrstva 2">
+                        <g id="Layer_1" data-name="Layer 1">
+                            <circle
+                                class="cls-13l"
+                                cx="1.73"
+                                cy="19.67"
+                                r="1.73"
+                            />
+                            <line
+                                class="cls-23l"
+                                x1="1.73"
+                                y1="14.8"
+                                x2="1.73"
+                                y2="1.26"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            </button>
+
+            <!-- info -> number of warnings -->
+            <div class="info_num" id="num_warnings">
+                <div class="text" id="num_warnings" data-value="0">0</div>
+            </div>
+
+            <!-- home button -->
+            <button
+                class="button"
+                id="home"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 36.25 35.84"
+                    class="home_logo"
+                >
+                    <defs></defs>
+                    <g id="Vrstva_2" data-name="Vrstva 2">
+                        <g id="Layer_1" data-name="Layer 1">
+                            <path
+                                class="cls-14l"
+                                d="M5.64,20.22V32.4A2.44,2.44,0,0,0,7.92,35H28.13a2.44,2.44,0,0,0,2.29-2.58V20.22a.07.07,0,0,1,.07-.08h4.39a.61.61,0,0,0,.36-1l-6.19-6.68V3.87a.73.73,0,0,0-.68-.77h-4.5a.74.74,0,0,0-.68.77V6.11L18.49,1a.48.48,0,0,0-.72,0L1,19.12a.61.61,0,0,0,.36,1H5.57A.07.07,0,0,1,5.64,20.22Z"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            </button>
+
+            <!-- sign out button -->
+            <button
+                class="button"
+                id="sign_out"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 27.5 24.99"
+                    class="signout_logo"
+                >
+                    <defs></defs>
+                    <g id="Vrstva_2" data-name="Vrstva 2">
+                        <g id="Layer_1" data-name="Layer 1">
+                            <path
+                                class="cls-11l"
+                                d="M.81.81H14.43c.77,0,1.4.4,1.4.9V9.19"
+                            />
+                            <path
+                                class="cls-11l"
+                                d="M15.83,15.75v7.17c0,.7-.88,1.26-2,1.26H.81"
+                            />
+                            <line
+                                class="cls-21l"
+                                x1="10.32"
+                                y1="12.45"
+                                x2="26.35"
+                                y2="12.45"
+                            />
+                            <path
+                                class="cls-31l"
+                                d="M19.79,17.06a.48.48,0,0,1,.15-.66l6.19-3.95L19.94,8.51a.48.48,0,1,1,.51-.81l6.83,4.35a.48.48,0,0,1,0,.81l-6.83,4.35a.47.47,0,0,1-.25.07A.49.49,0,0,1,19.79,17.06Z"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            </button>
+        </div>
+
+        <!-- script -> layout functions -->
+        <script
+            type="module"
+            src="{{ url_for('static', filename = 'js/layout.js') }}"
+        ></script>
 		
-		<!-- script -> size/resize/scale -->
-		<script type="module" src="{{ url_for('static', filename='js/modules/size.js') }}"></script>
-
-		<!-- script -> date/time manage -->
-		<script type="text/javascript" src="{{ url_for('static', filename = 'js/date_time.js') }}"></script>
-
-		<!-- script -> cookies manage -->
-		<script type="module" src="{{ url_for('static', filename='js/modules/cookies.js') }}"></script>
-		
-		<!-- script -> battery status -->
-		<script type="module" src="{{ url_for('static', filename = 'js/battery.js') }}"></script>
-
-		<!-- info -> loading -->
-		<div class="loading_background">
-			<div class="loading_label">loading</div>
-			<div class="wrapper"></div>
-		</div>
-
-		<!-- script -> loading -->
-		<script type="text/javascript" src="{{ url_for('static', filename = 'js/loading.js') }}"></script>
-		
-		<!-- COOKIE array JS -->
-		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-	</head>
-	<body>
 		<script>
-			let nav = window.navigator.onLine;
-			
-			if (!nav) {
-				alert("U are in offline mode some features may not be accessible!");
-				window.location.href="/sign_out"
-			}
+			$(function() {
+				$("#sign_out").click(function(){
+					window.location.href="/sign_out"
+				});
+
+				$("#home").click(function() {
+					$(".loading_background, .loading_label, .wrapper").show();
+					window.location.href="/home";
+				});
+			});
 		</script>
-
-		<!-- TOP PANEL -->
-		<div class="panel" id="top_panel">
-
-			<!-- info -> date -->
-			<div class="text" id="date"></div>
-
-			<!-- info -> time -->
-			<div class="text" id="time"></div>
-
-			<!-- info -> battery is not supported -->
-			<div class="text" id="battery"></div>
-			
-			<!-- info -> battery level -->
-			<div class="battery_level"></div>
-			
-			<!-- supported battery -> logo -->  
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.52 19.27" class="battery">
-				<defs></defs>
-				<g id="Vrstva_2" data-name="Vrstva 2">
-				<g id="Layer_1" data-name="Layer 1">
-					<rect class="cls-3l" x="0.56" y="0.56" width="44.68" height="18.14" rx="1.88"/>
-					<rect class="cls-4l" x="46.89" y="6.71" width="2.64" height="5.85" rx="0.37"/>
-				</g>
-				</g>
-			</svg>
-
-			<!-- battery charging -> logo -->  
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.52 23.21" class="battery_charging">
-				<defs></defs>
-				<g id="Vrstva_2" data-name="Vrstva 2">
-				<g id="Layer_1" data-name="Layer 1">
-					<rect class="cls-15l" x="0.56" y="2.56" width="44.68" height="18.14" rx="1.88"/>
-					<rect class="cls-25l" x="46.89" y="8.7" width="2.64" height="5.85" rx="0.37"/>
-					<path class="cls-35l" d="M26.65.63,18.16,13a.2.2,0,0,0,.17.31H22a.52.52,0,0,1,.5.67L20,22.33a.29.29,0,0,0,.5.26l9.61-11.92a.2.2,0,0,0-.15-.33H26a.51.51,0,0,1-.51-.62L27.16.85A.28.28,0,0,0,26.65.63Z"/>
-				</g>
-				</g>
-			</svg>
-
-			<!-- un-supported battery -> logo -->  
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.95 27.95" class="not_supported_logo">
-				<defs></defs>
-				<g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1">
-					<circle class="cls-16l" cx="13.97" cy="13.97" r="13.35"/>
-					<circle class="cls-26l" cx="13.97" cy="20.87" r="1.43"/>
-					<line class="cls-36l" x1="13.97" y1="16.84" x2="13.97" y2="5.65"/>
-				</g>
-				</g>
-			</svg>
-
-		</div>
-		
-		<!-- MAIN PART WHICH WILL BE DEFINED IN NEXT PAGES -->
-		<div class="container">
-
-			{% block content %}
-			
-			{% endblock %}
-
-		</div>
-		
-		<!-- If is open bottom panel cover everything -->
-		<div class="cover"></div>
-		<div class="placeholder"></div>
-
-		<!-- Due to animation, rolll button is defined outside of grid in botttom panel -->
-		<button class="button" id="roll_button">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.23 27.73" class="roll_logo"><defs></defs>
-				<g id="Vrstva_2" data-name="Vrstva 2">
-					<g id="Layer_1" data-name="Layer 1">
-					<polygon class="cls-1l" points="10.27 13.87 10.27 26.53 5.39 20.2 0.52 13.87 5.39 7.53 10.27 1.2 10.27 13.87"/>
-					<polygon class="cls-2l" points="15.96 13.87 15.96 1.2 20.84 7.53 25.72 13.87 20.84 20.2 15.96 26.53 15.96 13.87"/>
-					</g>
-				</g>
-			</svg>
-		</button>
-
-		<!-- BOTTOM PANEL -->
-		<div class="panel" id="bottom_panel">
-			<div></div>
-			
-			<!-- error button -->
-			<button class="info_button" id="error">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.86 17.81" class="error_logo">
-					<defs>
-					</defs>
-					<g id="Vrstva_2" data-name="Vrstva 2">
-					<g id="Layer_1" data-name="Layer 1">
-						<line class="cls-12l" x1="1.42" y1="1.34" x2="15.52" y2="16.47"/>
-						<line class="cls-12l" x1="1.34" y1="16.39" x2="15.52" y2="1.34"/>
-					</g>
-					</g>
-				</svg>
-			</button>
-
-			<!-- info -> number of errors -->
-			<div class="info_num" id="num_errors">
-				<div class="text" id='num_errors'>0</div>
-			</div>
-
-			<!-- warning button -->
-			<button class="info_button" id="warning">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3.46 21.4" class="warning_logo">
-					<defs></defs>
-					<g id="Vrstva_2" data-name="Vrstva 2">
-						<g id="Layer_1" data-name="Layer 1">
-						<circle class="cls-13l" cx="1.73" cy="19.67" r="1.73"/>
-						<line class="cls-23l" x1="1.73" y1="14.8" x2="1.73" y2="1.26"/>
-						</g>
-					</g>
-				</svg>
-			</button>
-
-			<!-- info -> number of warnings -->
-			<div class="info_num" id="num_warnings">
-				<div class="text" id="num_warnings" data-value=0>0</div>
-			</div>
-
-			<!-- home button -->
-			<button class="button" id="home"onclick="window.location.href='{{ url_for( 'app.home') }}';">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.25 35.84" class="home_logo">
-					<defs></defs>
-					<g id="Vrstva_2" data-name="Vrstva 2">
-						<g id="Layer_1" data-name="Layer 1">
-						<path class="cls-14l" d="M5.64,20.22V32.4A2.44,2.44,0,0,0,7.92,35H28.13a2.44,2.44,0,0,0,2.29-2.58V20.22a.07.07,0,0,1,.07-.08h4.39a.61.61,0,0,0,.36-1l-6.19-6.68V3.87a.73.73,0,0,0-.68-.77h-4.5a.74.74,0,0,0-.68.77V6.11L18.49,1a.48.48,0,0,0-.72,0L1,19.12a.61.61,0,0,0,.36,1H5.57A.07.07,0,0,1,5.64,20.22Z"/>
-						</g>
-					</g>
-				</svg>
-			</button>
-			
-			<!-- sign out button -->
-			<button class="button" id="sign_out"onclick="window.location.href='{{ url_for( 'auth.sign_out') }}';">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.5 24.99" class="signout_logo">
-					<defs></defs>
-						<g id="Vrstva_2" data-name="Vrstva 2"><g id="Layer_1" data-name="Layer 1">
-						<path class="cls-11l" d="M.81.81H14.43c.77,0,1.4.4,1.4.9V9.19"/>
-						<path class="cls-11l" d="M15.83,15.75v7.17c0,.7-.88,1.26-2,1.26H.81"/>
-						<line class="cls-21l" x1="10.32" y1="12.45" x2="26.35" y2="12.45"/>
-						<path class="cls-31l" d="M19.79,17.06a.48.48,0,0,1,.15-.66l6.19-3.95L19.94,8.51a.48.48,0,1,1,.51-.81l6.83,4.35a.48.48,0,0,1,0,.81l-6.83,4.35a.47.47,0,0,1-.25.07A.49.49,0,0,1,19.79,17.06Z"/>
-						</g>
-					</g>
-				</svg>
-			</button>
-
-		</div>  
-
-		<!-- script -> layout functions -->
-		<script type="module" src="{{ url_for('static', filename = 'js/layout.js') }}"></script>
-	</body>
+    </body>
 </html>

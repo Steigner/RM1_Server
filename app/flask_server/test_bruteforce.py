@@ -8,9 +8,9 @@ from time import sleep
 
 from re import fullmatch
 
-"""
-INFO FOR CRACKING MUST BE CRSF FALSE!! in WTF forms 
-"""
+
+# INFO FOR CRACKING MUST BE CRSF FALSE!! in WTF forms
+# This script is tested by auto generated comment - Quod AI Code
 
 
 class TestBruteForce(object):
@@ -32,6 +32,12 @@ class TestBruteForce(object):
         self.__info()
 
     def __info(self):
+        """
+        print some info about the brute force script
+        Args:
+            - self
+        """
+
         print("---------------------------------------")
         print("[INFO] Simple Brute Force Script")
         print("[INFO] Author: Martin Juricek")
@@ -40,9 +46,21 @@ class TestBruteForce(object):
         print("---------------------------------------")
 
     def __generatePass(self, char):
+        """
+        generate a password of the given char
+        Args:
+            - self, char
+        """
+
         yield from product(*([char] * int(self.combination)))
 
     def __process_vis(self):
+        """
+        process visualized
+        Args:
+            - self
+        """
+
         bar = """
                                 Starting Cracking!
 
@@ -56,21 +74,29 @@ class TestBruteForce(object):
             sleep(0.02)
 
     def __check(self, url, email):
+        """
+        check the validity of a url and email
+        Args:
+            - self, url, email
+        """
+
         regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
 
         if fullmatch(regex, email):
             print(self.coutv + "[INFO] String is a valid email" + self.cend)
 
         else:
-            print(self.cout + "[WARNING] String is not valid email" + self.cend)
+            print(
+                self.cout + "[WARNING] String is not valid email" + self.cend
+            )
             sys.exit()
 
         # test if is valid URL
         try:
-            response = requests.get(url)
+            requests.get(url)
             print(self.coutv + "[INFO] String is a valid URL" + self.cend)
 
-        except requests.ConnectionError as exception:
+        except requests.ConnectionError:
             print(
                 self.cout
                 + "[WARNING] String is not valid URL or server isn't active"
@@ -79,6 +105,12 @@ class TestBruteForce(object):
             sys.exit()
 
     def crack(self):
+        """
+        bruteforce cracks passwords
+        Args:
+            - self
+        """
+
         url = self.__url
         email = self.__email
 
@@ -113,9 +145,18 @@ class TestBruteForce(object):
             print(self.cout + "\n[WARNING] Stoping Cracking!" + self.cend)
             sys.exit()
 
-        print(self.cout + "\n[WARNING] Password is not in password list." + self.cend)
+        print(
+            self.cout
+            + "\n[WARNING] Password is not in password list."
+            + self.cend
+        )
 
     def gen_password(self):
+        """
+        generate a password file for bruteforce
+        Args:
+            - self
+        """
 
         # special = '!"#$%&\'()*+,-. /:;?@[]^_`{|}~'
         # numeric = '0123456789'
@@ -131,6 +172,12 @@ class TestBruteForce(object):
         f.close()
 
     def set_input(self):
+        """
+        set input url and email
+        Args:
+            - self
+        """
+
         try:
             print("[INFO]   Server adress")
             self.__url = input("[INPUT]  Url: ")
@@ -138,7 +185,7 @@ class TestBruteForce(object):
             print("[INFO]   Account email")
             self.__email = input("[INPUT]  Email: ")
 
-        except Exception as exception:
+        except Exception:
             sys.exit()
 
         except KeyboardInterrupt:

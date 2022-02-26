@@ -6,7 +6,6 @@ from flask import (
     url_for,
     redirect,
     render_template,
-    session,
     jsonify,
 )
 
@@ -38,7 +37,7 @@ from .camera.func_take_pc import TakePC
 from .robot.get_data import Robot_info
 
 # script -> store variables in back-end
-from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation, Point, Token
+from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation, Point
 
 # script -> detect server ip-adress(self ip adress)
 from .self_ipadress import get_ip
@@ -60,6 +59,7 @@ from .weather.weather import Weather
 
 # set 1. blueprint = app
 app = Blueprint("app", __name__)
+
 
 # custom 401 handler
 @app.errorhandler(401)
@@ -338,7 +338,8 @@ def faceID():
                     patient = Patient.query.filter_by(pid=StoreID.id).first()
 
                     FaceReco.init_patient(
-                        patient.photo, str(patient.name + " " + patient.surname)
+                        patient.photo,
+                        str(patient.name + " " + patient.surname),
                     )
 
                     time.sleep(1)
@@ -399,7 +400,7 @@ def face_scan():
             except RuntimeError:
                 return jsonify("Camera is not pluged-in!")
 
-            if Point.point == None:
+            if Point.point is None:
                 return jsonify("once_again")
 
             else:
@@ -411,7 +412,13 @@ def face_scan():
         if request.form["value"] == "test":
             if Point.point:
                 return jsonify(
-                    {"point": [Point().point[0], Point().point[1], Point().point[2]]}
+                    {
+                        "point": [
+                            Point().point[0],
+                            Point().point[1],
+                            Point().point[2],
+                        ]
+                    }
                 )
 
             else:
@@ -452,7 +459,10 @@ def patient_data_qr():
     if patient:
         image = b64encode(patient.photo).decode("utf-8")
         return render_template(
-            "patient_data.html", patient=patient, obj=patient.photo, image=image
+            "patient_data.html",
+            patient=patient,
+            obj=patient.photo,
+            image=image,
         )
 
     else:

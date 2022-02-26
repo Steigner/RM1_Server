@@ -1,6 +1,7 @@
 # library -> python socket communication
 import socket
 
+
 # public function:
 #   input: none
 #   return: IP adress of server, similar to type in terminal: hostname -I

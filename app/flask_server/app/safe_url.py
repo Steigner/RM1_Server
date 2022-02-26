@@ -4,6 +4,7 @@ from urllib.parse import urlparse, urljoin
 # library -> flask - request
 from flask import request
 
+
 # public function:
 #   input: target url
 #   return: tested url -> if url is valid

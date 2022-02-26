@@ -1,26 +1,27 @@
-@import "size.css";
-@import "font.css";
+@import 'size.css';
+@import 'font.css';
 
 /* inputs placeholder, opacity = 0.4*/
-::placeholder{
+::placeholder {
     opacity: 0.4;
-    color: #21697C;
+    color: #21697c;
     color: rgba(33, 105, 124, 1);
 }
 
 /* Set up inputs and background around them */
-input{
+input {
     font-family: var(--font);
     font-size: calc(20px / var(--height-divisor));
-    color: #21697C;
+    color: #21697c;
     color: rgba(33, 105, 124, 1);
 }
 
-.email, .password{    
+.email,
+.password {
     align-items: center;
     display: flex;
 
-    background: #F2F2F2;
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
 
     width: calc(640px / var(--width-divisor));
@@ -31,28 +32,29 @@ input{
     -webkit-border-radius: calc(27px / var(--width-divisor));
 }
 
-.password{
+.password {
     position: absolute;
     left: calc(320px / var(--width-divisor));
     top: calc(580px / var(--height-divisor));
 }
 
-.email{
+.email {
     position: absolute;
     left: calc(320px / var(--width-divisor));
     top: calc(500px / var(--height-divisor));
 }
 
-#email_input, #password_input{
-    color: #21697C;
+#email_input,
+#password_input {
+    color: #21697c;
     color: rgba(33, 105, 124, 1);
 
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     border: 0px solid #eee;
-    
-    background: #F2F2F2;
+
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
 
     width: calc(500px / var(--width-divisor));
@@ -61,20 +63,21 @@ input{
 }
 
 /* Inputs logos */
-.email_logo{
+.email_logo {
     width: calc(40px / var(--width-divisor));
     height: calc(28px / var(--height-divisor));
     margin-left: calc(30px / var(--width-divisor));
 }
 
-.password_logo{
+.password_logo {
     width: calc(40px / var(--width-divisor));
     height: calc(35px / var(--height-divisor));
     margin-left: calc(30px / var(--width-divisor));
 }
 
 /* set up button -> no default layot */
-.submit_button, .keyboard{
+.submit_button,
+.keyboard {
     border: 0;
     outline: none;
     -webkit-appearance: none;
@@ -82,8 +85,8 @@ input{
     background: none;
 }
 
-/* SET UP KEYBOARD*/ 
-.keyboard{
+/* SET UP KEYBOARD*/
+.keyboard {
     position: absolute;
     width: calc(70px / var(--width-divisor));
     height: calc(45px / var(--height-divisor));
@@ -91,27 +94,27 @@ input{
     top: calc(875px / var(--height-divisor));
 }
 
-.keyboard_logo{
+.keyboard_logo {
     width: 100%;
     height: 100%;
 }
 
-/* SIGN IN BUTTON */ 
-.submit_button{
-    color: #F2F2F2;
+/* SIGN IN BUTTON */
+.submit_button {
+    color: #f2f2f2;
     color: rgba(242, 242, 242, 1);
 
-    background: #21697C;
+    background: #21697c;
     background: rgba(33, 105, 124, 1);
-    
+
     position: absolute;
-    
+
     left: calc(785px / var(--width-divisor));
-    top:  calc(662px / var(--height-divisor));
-    
+    top: calc(662px / var(--height-divisor));
+
     width: calc(173px / var(--width-divisor));
     height: calc(54px / var(--height-divisor));
-    
+
     border-radius: calc(27px / var(--width-divisor));
     -moz-border-radius: calc(27px / var(--width-divisor));
     -webkit-border-radius: calc(27px / var(--width-divisor));
@@ -125,10 +128,10 @@ input{
     
     justify-content: center;
 
-*/ 
-.name_place{
+*/
+.name_place {
     position: absolute;
-    
+
     display: grid;
     align-items: center;
     grid-template-columns: 25% 25% 60%;
@@ -141,39 +144,38 @@ input{
 }
 
 /* Set parts of title */
-.name, .name2{
+.name,
+.name2 {
     font-family: var(--font-light);
     font-size: calc(100px / var(--height-divisor));
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-
-.name{
+.name {
     justify-self: right;
 }
 
-
-.name2{
+.name2 {
     justify-self: left;
 }
 
-
-.logo{
+.logo {
     justify-self: center;
     width: calc(110px / var(--width-divisor));
     height: calc(190px / var(--height-divisor));
 }
 
-/* If clicked button(keyboard, signin) => change opacity  */ 
-.keyboard:active, .submit_button:active{
+/* If clicked button(keyboard, signin) => change opacity  */
+.keyboard:active,
+.submit_button:active {
     opacity: 0.4;
 }
 
 /* Set up for background -> opacity = 0.25 */
 body::after {
-    content: "";
-    background-color: #F2F2F2;
+    content: '';
+    background-color: #f2f2f2;
     background-color: rgba(242, 242, 242, 1);
     opacity: 0.25;
     top: 0;
@@ -190,47 +192,48 @@ body::after {
 
 /* ------------ SVG'S ----------------- */
 
-/* -------- APP LOGO --------- */ 
-.cls-1{
-    fill:#f2f2f2;
+/* -------- APP LOGO --------- */
+.cls-1 {
+    fill: #f2f2f2;
 }
 
-.cls-2{
-    fill:none;opacity:0.5;
+.cls-2 {
+    fill: none;
+    opacity: 0.5;
 }
 
-.cls-3{
-    fill:#85acb7;
+.cls-3 {
+    fill: #85acb7;
 }
 
-.cls-4{
-    fill:#21697c;
+.cls-4 {
+    fill: #21697c;
 }
 
-/* -------- EMAIL LOGO --------- */ 
-.cls-5{
-    fill:none;
-    stroke:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:1.6px;
+/* -------- EMAIL LOGO --------- */
+.cls-5 {
+    fill: none;
+    stroke: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: 1.6px;
 }
 
-/* -------- PASSWORD LOGO --------- */ 
-.cls-6{
-    fill:none;
-    stroke:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:1.6px;
+/* -------- PASSWORD LOGO --------- */
+.cls-6 {
+    fill: none;
+    stroke: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: 1.6px;
 }
 
-/* -------- KEYBOARD LOGO --------- */ 
-.cls-7{
-    fill:#21697c;
+/* -------- KEYBOARD LOGO --------- */
+.cls-7 {
+    fill: #21697c;
 }
 
-.cls-8{
-    fill:none;
-    stroke:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:2.5px;
+.cls-8 {
+    fill: none;
+    stroke: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: 2.5px;
 }

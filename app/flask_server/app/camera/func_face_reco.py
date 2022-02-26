@@ -96,7 +96,13 @@ class FaceReco(Camera):
             # Draw Name
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(
-                Color_image, name, (d - 20, w + 50), font, 0.75, (255, 255, 255), 1
+                Color_image,
+                name,
+                (d - 20, w + 50),
+                font,
+                0.75,
+                (255, 255, 255),
+                1,
             )
 
         jpeg = cv2.imencode(".jpg", Color_image)[1].tobytes()

@@ -1,43 +1,43 @@
-@import "font.css";
+@import 'font.css';
 
-body{
+body {
     width: 21cm;
     height: 29.7cm;
-    margin: 5mm 5mm 5mm 25mm; 
+    margin: 5mm 5mm 5mm 25mm;
     /* change the margins as you want them to be. */
-} 
+}
 
-.name_place{
+.name_place {
     display: flex;
     justify-content: center;
 }
 
-.name{
+.name {
     font-family: var(--font-light);
     font-size: 50px;
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
     margin-top: 100px;
     margin-left: 50px;
 }
 
-.image{
+.image {
     display: flex;
     justify-content: center;
     position: sticky;
     margin-top: 50px;
 }
 
-.patient{
+.patient {
     display: flex;
     justify-content: center;
     font-family: var(--font-light);
     font-size: 35px;
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-.logo{
+.logo {
     display: flex;
     position: absolute;
     margin-left: 150px;
@@ -46,15 +46,14 @@ body{
     height: 190px;
 }
 
-.column{
+.column {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.output{
-
-    background: #F2F2F2;
+.output {
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
 
     border-radius: 10px;
@@ -69,11 +68,11 @@ body{
     display: flex;
     align-items: center;
 
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-.label{
+.label {
     width: 60%;
 
     margin-top: 30px;
@@ -81,34 +80,34 @@ body{
     font-family: var(--font-light);
     font-size: 25px;
 
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-.declaration{
+.declaration {
     margin-top: 40px;
     display: flex;
     font-family: var(--font-light);
     font-size: 25px;
     justify-content: center;
 
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
-.cls-1{
-    fill:#f2f2f2;
+.cls-1 {
+    fill: #f2f2f2;
 }
 
-.cls-2{
-    fill:none;opacity:0.5;
+.cls-2 {
+    fill: none;
+    opacity: 0.5;
 }
 
-.cls-3{
-    fill:#85acb7;
+.cls-3 {
+    fill: #85acb7;
 }
 
-.cls-4{
-    fill:#21697c;
+.cls-4 {
+    fill: #21697c;
 }
-

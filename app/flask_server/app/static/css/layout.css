@@ -1,17 +1,17 @@
-@import "size.css";
-@import "font.css";
+@import 'size.css';
+@import 'font.css';
 
 /* set up text for infos */
-.text{
+.text {
     font-family: var(--font);
     font-size: calc(30px / var(--height-divisor));
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
 }
 
 /* pre-set panels */
-.panel{
-    background: #F2F2F2;
+.panel {
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
 
     border-radius: calc(14px / var(--width-divisor));
@@ -20,7 +20,7 @@
 }
 
 /* TOP PANEL */
-#top_panel.panel{
+#top_panel.panel {
     display: grid;
     grid-template-columns: 33% 33% 26% 8%;
     align-items: center;
@@ -33,21 +33,21 @@
     height: calc(50px / var(--height-divisor));
 }
 
-#date.text{
+#date.text {
     justify-self: flex-start;
-    margin-left: calc(20px / var(--width-divisor));;
+    margin-left: calc(20px / var(--width-divisor));
 }
 
-#time.text{
+#time.text {
     justify-self: center;
 }
 
-#battery.text{
+#battery.text {
     justify-self: flex-end;
 }
 
 /* info logos of charging / not charging device */
-.battery{
+.battery {
     visibility: hidden;
     position: absolute;
     width: calc(40px / var(--width-divisor));
@@ -55,11 +55,11 @@
     right: calc(30px / var(--width-divisor));
 }
 
-.battery_level{
+.battery_level {
     visibility: hidden;
-    background: #21697C;
+    background: #21697c;
     background: rgba(33, 105, 124, 1);
-    position: absolute ;
+    position: absolute;
     left: calc(1083px / var(--width-divisor));
     width: calc(5px / var(--width-divisor));
     height: calc(14px / var(--height-divisor));
@@ -69,11 +69,11 @@
 }
 
 /* BOTTON PANEL */
-#bottom_panel.panel{
-    position: absolute ;
-    
+#bottom_panel.panel {
+    position: absolute;
+
     display: grid;
-    grid-template-columns: 5% 5% 2.5% 5% 2.5% 40% 40% ;
+    grid-template-columns: 5% 5% 2.5% 5% 2.5% 40% 40%;
     align-items: center;
 
     left: calc(70px / var(--width-divisor));
@@ -82,57 +82,58 @@
     height: calc(70px / var(--height-divisor));
 }
 
-.button, .info_button{
+.button,
+.info_button {
     border: 0;
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 }
 
-.button{
+.button {
     border-radius: calc(10px / var(--width-divisor));
-    -moz-border-radius: calc(10px / var(--width-divisor));;
+    -moz-border-radius: calc(10px / var(--width-divisor));
     -webkit-border-radius: calc(10px / var(--width-divisor));
-    background: #21697C;
+    background: #21697c;
     background: rgba(33, 105, 124, 1);
 }
 
-.info_button{
-    background: #21697C;
+.info_button {
+    background: #21697c;
     background: rgba(33, 105, 124, 1);
 
     width: calc(35px / var(--width-divisor));
     height: calc(35px / var(--width-divisor));
     border-radius: calc(35px / var(--width-divisor));
-    -moz-border-radius: calc(35px / var(--width-divisor));;
+    -moz-border-radius: calc(35px / var(--width-divisor));
     -webkit-border-radius: calc(35px / var(--width-divisor));
 }
 
-#error.info_button{
+#error.info_button {
     justify-self: flex-end;
 }
 
-#warning.info_button{
+#warning.info_button {
     justify-self: flex-end;
 }
 
-.error_logo{
+.error_logo {
     width: calc(15px / var(--width-divisor));
     height: calc(15px / var(--height-divisor));
 }
 
-.warning_logo{
+.warning_logo {
     width: calc(3px / var(--width-divisor));
     height: calc(20px / var(--height-divisor));
 }
 
-.info_num{
+.info_num {
     border-style: Solid;
-    
-    border-color: #21697C;
+
+    border-color: #21697c;
     border-color: rgba(33, 105, 124, 1);
-    
-    background-color: #F2F2F2;
+
+    background-color: #f2f2f2;
     background-color: rgba(242, 242, 242, 1);
 
     border-width: calc(1.5px / var(--width-divisor));
@@ -144,11 +145,11 @@
     -webkit-border-radius: 50%;
 }
 
-#num_errors.text{
+#num_errors.text {
     font-size: calc(12px / var(--width-divisor));
 }
 
-#num_errors.info_num{
+#num_errors.info_num {
     display: flex;
     justify-self: flex-start;
     align-self: flex-start;
@@ -158,11 +159,11 @@
     align-content: center;
 }
 
-#num_warnings.text{
+#num_warnings.text {
     font-size: calc(12px / var(--width-divisor));
 }
 
-#num_warnings.info_num{
+#num_warnings.info_num {
     display: flex;
     justify-self: flex-start;
     align-self: flex-start;
@@ -172,20 +173,22 @@
     align-content: center;
 }
 
-#home.button, #sign_out.button{
+#home.button,
+#sign_out.button {
     justify-self: flex-end;
     margin-right: calc(80px / var(--width-divisor));
     width: calc(60px / var(--width-divisor));
     height: calc(50px / var(--height-divisor));
 }
 
-.home_logo, .signout_logo{
+.home_logo,
+.signout_logo {
     width: calc(35px / var(--width-divisor));
     height: calc(35px / var(--height-divisor));
 }
 
-/* roll out logo, is defined separete, out of grid due to animation */ 
-#roll_button.button{
+/* roll out logo, is defined separete, out of grid due to animation */
+#roll_button.button {
     align-self: center;
     justify-self: center;
 
@@ -194,20 +197,20 @@
     top: calc(880px / var(--height-divisor));
     left: calc(80px / var(--width-divisor));
 
-    background: #F2F2F2;
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
 
     width: calc(40px / var(--width-divisor));
     height: calc(35px / var(--height-divisor));
 }
 
-.roll_logo{
+.roll_logo {
     width: calc(30px / var(--width-divisor));
     height: calc(30px / var(--height-divisor));
-}   
+}
 
 /* CHANGE */
-.battery_charging{
+.battery_charging {
     visibility: hidden;
     position: absolute;
     width: calc(40px / var(--width-divisor));
@@ -215,30 +218,31 @@
     right: calc(30px / var(--width-divisor));
 }
 
-.not_supported_logo{
+.not_supported_logo {
     visibility: hidden;
     justify-self: center;
-    
+
     width: calc(30px / var(--width-divisor));
     height: calc(30px / var(--height-divisor));
 }
 
-/* if is rollout bootom panel cover everything */ 
-.cover{
-    background: #FFFFFF;
+/* if is rollout bootom panel cover everything */
+.cover {
+    background: #ffffff;
     background: rgba(255, 255, 255, 1);
     opacity: 0.9;
-    position: absolute ;
+    position: absolute;
     left: 0px;
     top: 0px;
-    filter: alpha(opacity=90) progid:DXImageTransform.Microsoft.Alpha(opacity=90) ;
+    filter: alpha(opacity=90) progid:
+        DXImageTransform.Microsoft.Alpha(opacity=90);
 }
 
-/* container for another parts */ 
-.container{
+/* container for another parts */
+.container {
     position: absolute;
     top: calc(90px / var(--height-divisor));
-    left:  calc(70px / var(--width-divisor));
+    left: calc(70px / var(--width-divisor));
     width: calc(1150px / var(--width-divisor));
     height: calc(765px / var(--height-divisor));
 }
@@ -247,24 +251,26 @@
     opacity: 0.2;
 }
 
-.info_button:active, #home.button:active, #sign_out.button:active{
+.info_button:active,
+#home.button:active,
+#sign_out.button:active {
     opacity: 0.4;
 }
 
-.placeholder{
+.placeholder {
     display: inline-flex;
     flex-direction: column-reverse;
-    
+
     margin-top: calc(90px / var(--height-divisor));
-    margin-left:  calc(70px / var(--width-divisor));
+    margin-left: calc(70px / var(--width-divisor));
 
     height: calc(765px / var(--height-divisor));
     width: calc(575px / var(--width-divisor));
-    
+
     overflow-x: auto;
 }
 
-.toast{
+.toast {
     display: flex;
     position: sticky;
 
@@ -274,140 +280,140 @@
     height: calc(50px / var(--height-divisor));
     margin-bottom: calc(10px / var(--height-divisor));
 
-    color: #F2F2F2;
+    color: #f2f2f2;
     color: rgba(242, 242, 242, 1);
 
     font-family: var(--font);
     font-size: calc(30px / var(--height-divisor));
 
-    background: #21697C;
+    background: #21697c;
     background: rgb(33, 105, 124);
 
     border-radius: calc(10px / var(--width-divisor));
-    -moz-border-radius: calc(10px / var(--width-divisor));;
+    -moz-border-radius: calc(10px / var(--width-divisor));
     -webkit-border-radius: calc(10px / var(--width-divisor));
 }
 
 /*------------roll_logo-----------*/
-.cls-1l{
-    fill:none;
-    stroke:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:calc(1px / var(--width-divisor));
+.cls-1l {
+    fill: none;
+    stroke: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: calc(1px / var(--width-divisor));
 }
 
-.cls-2l{
-    fill:none;
-    stroke:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:calc(1px / var(--width-divisor));
+.cls-2l {
+    fill: none;
+    stroke: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: calc(1px / var(--width-divisor));
 }
 /*-------------------------------*/
 
 /*------------sign out logo-----------*/
 .cls-11l,
-.cls-21l{
-    fill:none;
-    stroke:#f2f2f2;
+.cls-21l {
+    fill: none;
+    stroke: #f2f2f2;
 }
 
-.cls-11l{
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    stroke-width:calc(1.65px / var(--width-divisor));
+.cls-11l {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: calc(1.65px / var(--width-divisor));
 }
 
-.cls-21l{
-    stroke-miterlimit:10;
+.cls-21l {
+    stroke-miterlimit: 10;
     stroke-width: calc(0.85px / var(--width-divisor));
 }
 
-.cls-31l{
-    fill:#f2f2f2;
+.cls-31l {
+    fill: #f2f2f2;
 }
 /*-------------------------------*/
 
 /*------------error logo-----------*/
-.cls-12l{
-    fill:none;
-    stroke:#f2f2f2;
-    stroke-linecap:round;
-    stroke-miterlimit:10;
+.cls-12l {
+    fill: none;
+    stroke: #f2f2f2;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
     stroke-width: calc(2.6px / var(--width-divisor));
 }
 /*-------------------------------*/
 
 /*------------warning_logo-----------*/
-.cls-13l{
-    fill:#f2f2f2;
+.cls-13l {
+    fill: #f2f2f2;
 }
 
-.cls-23l{
-    fill:none;
-    stroke:#f2f2f2;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    stroke-width:calc(2.55px / var(--width-divisor));
+.cls-23l {
+    fill: none;
+    stroke: #f2f2f2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: calc(2.55px / var(--width-divisor));
 }
 /*-------------------------------*/
 
 /*------------home logo-----------*/
-.cls-14l{
-    fill:none;
-    stroke:#f2f2f2;
-    stroke-miterlimit:10;
-    stroke-width:calc(1.75px / var(--width-divisor));
+.cls-14l {
+    fill: none;
+    stroke: #f2f2f2;
+    stroke-miterlimit: 10;
+    stroke-width: calc(1.75px / var(--width-divisor));
 }
 /*-------------------------------*/
 
 /*------------battery_charging-----------*/
-.cls-15l{
-    fill:none;
-    stroke-width:calc(1.15px / var(--width-divisor));
+.cls-15l {
+    fill: none;
+    stroke-width: calc(1.15px / var(--width-divisor));
 }
 .cls-15l,
-.cls-35l{
-    stroke:#21697c;
-    stroke-miterlimit:10;
+.cls-35l {
+    stroke: #21697c;
+    stroke-miterlimit: 10;
 }
-.cls-25l{
-    fill:#21697c;
+.cls-25l {
+    fill: #21697c;
 }
-.cls-35l{
-    fill:#f2f2f2;
-    stroke-width:calc(1.05px / var(--width-divisor));
+.cls-35l {
+    fill: #f2f2f2;
+    stroke-width: calc(1.05px / var(--width-divisor));
 }
 /*-------------------------------*/
 
 /*------------not_supported_logo-----------*/
-.cls-16l{
-    fill:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:calc(1.25px / var(--width-divisor));
+.cls-16l {
+    fill: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: calc(1.25px / var(--width-divisor));
 }
 .cls-16l,
-.cls-36l{
-    stroke:#f2f2f2;
-    }
-.cls-26l{
-    fill:#f2f2f2;
+.cls-36l {
+    stroke: #f2f2f2;
 }
-.cls-36l{
-    fill:none;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    stroke-width:calc(2.1px / var(--width-divisor));
+.cls-26l {
+    fill: #f2f2f2;
+}
+.cls-36l {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: calc(2.1px / var(--width-divisor));
 }
 /*-------------------------------*/
 
 /*------------battery logo-----------*/
-.cls-3l{
-    fill:none;
-    stroke:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:calc(1.15px / var(--width-divisor));
+.cls-3l {
+    fill: none;
+    stroke: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: calc(1.15px / var(--width-divisor));
 }
-.cls-4l{
-    fill:#21697c;
+.cls-4l {
+    fill: #21697c;
 }
 /*-------------------------------*/

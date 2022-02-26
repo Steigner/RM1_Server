@@ -1,6 +1,6 @@
-.loading_background{
-    z-index: 10;    
-    background-color: #F2F2F2;
+.loading_background {
+    z-index: 10;
+    background-color: #f2f2f2;
     background-color: rgba(242, 242, 242, 1);
     position: absolute;
     top: 0;
@@ -9,16 +9,16 @@
     height: calc(960px / var(--height-divisor));
 }
 
-.wrapper{
+.wrapper {
     position: absolute;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     top: calc(600px / var(--height-divisor));
-    left: 50%
+    left: 50%;
 }
 
-.el{
+.el {
     position: absolute;
     opacity: 1;
     width: calc(4px / var(--height-divisor));
@@ -27,11 +27,11 @@
     background: white;
 }
 
-.loading_label{
+.loading_label {
     position: absolute;
     font-family: var(--font-light);
     font-size: calc(115px / var(--height-divisor));
-    color: #21697C;
+    color: #21697c;
     color: rgb(33, 105, 124);
     left: 50%;
     transform: translate(-50%);

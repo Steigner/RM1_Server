@@ -2,6 +2,7 @@
 from flask_login import UserMixin
 from . import db
 
+
 # Database class:
 #   input: UserMixin flask login, database model
 #   return: stringify session token for eneable only 1 user

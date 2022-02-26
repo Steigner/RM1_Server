@@ -1,29 +1,29 @@
-@import "menu_nav.css";
+@import 'menu_nav.css';
 
-::placeholder{
+::placeholder {
     opacity: 0.6;
-    color: #21697C;
+    color: #21697c;
     color: rgba(33, 105, 124, 1);
 }
 
-.post_container{
+.post_container {
     position: sticky;
     width: 100%;
     height: 90%;
 
     display: flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.find_patient{
-    background: #F2F2F2;
+.find_patient {
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
 
     position: sticky;
     display: grid;
-    align-items:center;
+    align-items: center;
 
     width: calc(820px / var(--width-divisor));
     height: calc(70px / var(--height-divisor));
@@ -32,14 +32,14 @@
     -webkit-border-radius: calc(10px / var(--width-divisor));
 }
 
-.find_logo{
+.find_logo {
     width: calc(40px / var(--width-divisor));
     height: calc(30px / var(--height-divisor));
 }
 
-.submit_button{
+.submit_button {
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: center;
     width: calc(50px / var(--width-divisor));
     height: calc(50px / var(--height-divisor));
@@ -50,19 +50,19 @@
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: #F2F2F2;
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
 }
 
-.input{
-    color: #21697C;
+.input {
+    color: #21697c;
     color: rgba(33, 105, 124, 1);
 
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     border: 0px solid #eee;
-    
+
     position: absolute;
     align-items: center;
     justify-self: center;
@@ -70,14 +70,14 @@
     width: 80%;
     height: 100%;
 
-    background: #F2F2F2;
+    background: #f2f2f2;
     background: rgba(242, 242, 242, 1);
     font-family: var(--font);
     font-size: calc(30px / var(--height-divisor));
 }
 
-/* SET UP KEYBOARD*/ 
-.keyboard{
+/* SET UP KEYBOARD*/
+.keyboard {
     border: 0;
     outline: none;
     -webkit-appearance: none;
@@ -91,33 +91,33 @@
     height: calc(45px / var(--height-divisor));
 }
 
-.keyboard_logo{
+.keyboard_logo {
     width: 100%;
     height: 100%;
 }
 
-#search.submit_button:active, .keyboard:active{
+#search.submit_button:active,
+.keyboard:active {
     opacity: 0.4;
 }
 
-/* -------- FIND LOGO --------- */ 
-.cls-11{
-    fill:none;
-    stroke:#21697c;
-    stroke-linecap:round;
-    stroke-linejoin:round;
+/* -------- FIND LOGO --------- */
+.cls-11 {
+    fill: none;
+    stroke: #21697c;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     stroke-width: calc(2.25px / var(--width-divisor));
 }
 
-
-/* -------- KEYBOARD LOGO --------- */ 
-.cls-7{
-    fill:#21697c;
+/* -------- KEYBOARD LOGO --------- */
+.cls-7 {
+    fill: #21697c;
 }
 
-.cls-8{
-    fill:none;
-    stroke:#21697c;
-    stroke-miterlimit:10;
-    stroke-width:2.5px;
+.cls-8 {
+    fill: none;
+    stroke: #21697c;
+    stroke-miterlimit: 10;
+    stroke-width: 2.5px;
 }

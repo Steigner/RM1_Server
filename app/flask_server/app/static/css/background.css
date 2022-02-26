@@ -1,6 +1,6 @@
 body::after {
-    content: "";
-    background-color: #F2F2F2;
+    content: '';
+    background-color: #f2f2f2;
     background-color: rgba(242, 242, 242, 1);
     opacity: 0.25;
     top: 0;

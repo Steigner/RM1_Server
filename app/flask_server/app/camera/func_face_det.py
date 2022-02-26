@@ -7,8 +7,6 @@ import numpy as np
 # script -> inicialized camera setting
 from app.camera.cam import Camera
 
-import pyrealsense2 as rs
-
 
 class FaceDet(Camera):
     # public classmethod:
@@ -55,7 +53,7 @@ class FaceDet(Camera):
         y2 = 640 - 200
 
         # appned landmarks points
-        land = []
+        # land = []
 
         # need to be color image converted to gray scale
         image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

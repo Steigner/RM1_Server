@@ -71,23 +71,23 @@ class Robot_info(object):
         s.connect((cls.HOST, cls.PORT_RT))
 
         # message size
-        packet_1 = s.recv(4)
+        s.recv(4)
         # time
-        packet_2 = s.recv(8)
+        s.recv(8)
         # q target
-        packet_3 = s.recv(48)
+        s.recv(48)
         # qd target
-        packet_4 = s.recv(48)
+        s.recv(48)
         # qdd target
-        packet_5 = s.recv(48)
+        s.recv(48)
         # I target
-        packet_6 = s.recv(48)
+        s.recv(48)
         # M target
-        packet_7 = s.recv(48)
+        s.recv(48)
         # q actual
-        packet_8 = s.recv(48)
+        s.recv(48)
         # qd actual
-        packet_9 = s.recv(48)
+        s.recv(48)
         # I actual
         # packet_10 = s.recv(48)
         packet_10_1 = s.recv(8)
@@ -126,47 +126,47 @@ class Robot_info(object):
         # print("current6[A] = " + str(curr_6))
 
         # I control
-        packet_11 = s.recv(48)
+        s.recv(48)
 
         # Tool vector actual
         # -------X----------
         packet_12 = s.recv(8)
         packet_12 = encode(packet_12, "hex")
         packet_12 = decode(packet_12, "hex")
-        x = struct.unpack("!d", packet_12)[0]
+        struct.unpack("!d", packet_12)[0]
         # print("\nX = " + str(x*1000))
 
         # -------Y----------
         packet_13 = s.recv(8)
         packet_13 = encode(packet_13, "hex")
         packet_13 = decode(packet_13, "hex")
-        y = struct.unpack("!d", packet_13)[0]
+        struct.unpack("!d", packet_13)[0]
         # print("Y = " + str(y*1000))
 
         # -------Z----------
         packet_14 = s.recv(8)
         packet_14 = encode(packet_14, "hex")
         packet_14 = decode(packet_14, "hex")
-        z = struct.unpack("!d", packet_14)[0]
+        struct.unpack("!d", packet_14)[0]
         # print("Z = " + str(z*1000)+ "\n")
 
         # -------RX----------
-        packet_15 = s.recv(8)
+        s.recv(8)
         # -------RY----------
-        packet_16 = s.recv(8)
+        s.recv(8)
         # -------RZ----------
-        packet_17 = s.recv(8)
+        s.recv(8)
 
         # tcp speed actual
-        packet_18 = s.recv(48)
+        s.recv(48)
         # tcp force
-        packet_19 = s.recv(48)
+        s.recv(48)
         # tool vector target
-        packet_20 = s.recv(48)
+        s.recv(48)
         # tcp speed target
-        packet_21 = s.recv(48)
+        s.recv(48)
         # digitals input bits
-        packet_22 = s.recv(8)
+        s.recv(8)
 
         # Motor temperatures
         # base

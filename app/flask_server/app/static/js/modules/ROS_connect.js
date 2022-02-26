@@ -1,3 +1,4 @@
+// get the ip address from the rosbridge
 function get_ip(){
     var ip_adress = "ws://localhost:9090";
     
@@ -18,6 +19,7 @@ function get_ip(){
     return ip_adress;
 }
 
+// connect to ros
 export function ROS_connect() {
     var ros = new ROSLIB.Ros();
     
