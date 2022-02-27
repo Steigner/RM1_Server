@@ -1,4 +1,9 @@
 # RM1 - Server
+
+## Python Flask
+
+One of option is to run as development server, then go to folder **./flask_server**
+
 ## Docker
 As mentioned above can be run as a docker. 
 
