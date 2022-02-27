@@ -27,9 +27,26 @@ In this repository there is a Python Flask Server, that takes care of running th
 
 For a fully functional application, it is necessary to implement both **RM1-Server** and **RM1-ROS** in your operating system. So you can run the simulation and see the application in operation. For real-world application, it is advisable to print the enclosed **RM1-Gripper** models with the fasteners on a 3D printer and assemble them.
 
-During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in docker or purely in python, for more information go to the **/app** directory.
+During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-compose or purely in Python, for more information go to the **/app** directory.
 
 ## Screenshots and videos
+![image](https://user-images.githubusercontent.com/54715463/155899512-e7d854bb-060b-4e19-be24-600c7cabbe04.png)
+
+![image](https://user-images.githubusercontent.com/54715463/155899679-3afab5fb-2a01-4d45-abb6-263c80247c3f.png)
+
+![image](https://user-images.githubusercontent.com/54715463/155899886-1813599a-59da-47e2-b654-82b5cb793f79.png)
+
+![image](https://user-images.githubusercontent.com/54715463/155900177-90c77f49-8372-4aa7-be7e-21ef67d234d2.png)
+
+![image](https://user-images.githubusercontent.com/54715463/155899981-0969caea-8504-43c1-b695-1da7be42af88.png)
+
+![image](https://user-images.githubusercontent.com/54715463/155900207-175ae7f0-7ab2-4afe-ba4e-03f5a46f3fd7.png)
+
+![image](https://user-images.githubusercontent.com/54715463/155900015-231af3f1-15e2-4520-85c3-ccabb89b4ef5.png)
+
+![image](https://user-images.githubusercontent.com/54715463/155900040-e9eb73f9-597c-438b-b270-e06cfaa8f251.png)
+
+![test](https://user-images.githubusercontent.com/54715463/155900091-78fa76ad-a566-49d8-b847-1ce7e81e3243.jpg)
 
 ## Authors
 
