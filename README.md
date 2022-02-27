@@ -16,18 +16,21 @@ RM1 is an experimental robotic platform created to automate antigen testing. Thi
 + RM1 - Gripper
 + RM1 - Seg. ANN
 
+In this repository there is a Python Flask Server, that takes care of running the kernel on the back-end, one of the curiosities is that the Intel Realsense camera is connected to the server. This is based on the original design, which intended for a local server only and ROS was to be used for robot control. The gripper and force-torque sensor are included in ROS, because the RG2 and Hex-e sensor are connected to the robot.
+
+For a fully functional application, it is necessary to implement both **RM1-Server** and **RM1-ROS** in your operating system. So you can run the simulation and see the application in operation. For real-world application, it is advisable to print the enclosed **RM1-Gripper** models with the fasteners on a 3D printer and assemble them.
+
+During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-compose or purely in Python, for more information go to the **/app** directory.
+
+**Server software equipment**
+
 | Part                       | Software                    |
 | -------------------------- | --------------------------- |
 | Conteiner                  | Docker-Compose              |
 | Package manager            | Poetry                      |
 | Back-end                   | Python 3                    |
 | Front-end                  | JavaScript, CSS, HTML       |
-
-In this repository there is a Python Flask Server, that takes care of running the kernel on the back-end, one of the curiosities is that the Intel Realsense camera is connected to the server. This is based on the original design, which intended for a local server only and ROS was to be used for robot control. The gripper and force-torque sensor are included in ROS, because the RG2 and Hex-e sensor are connected to the robot.
-
-For a fully functional application, it is necessary to implement both **RM1-Server** and **RM1-ROS** in your operating system. So you can run the simulation and see the application in operation. For real-world application, it is advisable to print the enclosed **RM1-Gripper** models with the fasteners on a 3D printer and assemble them.
-
-During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-compose or purely in Python, for more information go to the **/app** directory.
+| System run                 | Bash                        |
 
 ## Functions
 
@@ -44,7 +47,9 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 * Streaming basic data from robot
 * Generate PDF document base on HTML input
 * Brute force test to crack password
-* Simulation x Real world control of robot with motion to detected center of nostril
+* Basic Python tests
+* Pick and place, motion to detected center of nostril 
+* Simulation x Real world control of robot
 
 ## Screenshots and videos
 
@@ -75,3 +80,5 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 * Supervisor: Roman Parak
 
 ## References
+
+[Faculty of Mechanical Engineering BUT](https://www.fme.vutbr.cz/en)
