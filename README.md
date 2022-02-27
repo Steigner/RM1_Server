@@ -24,3 +24,5 @@ RM1 is an experimental robotic platform created to automate antigen testing. Thi
 | Front-end                  | JavaScript, CSS, HTML       |
 
 In this repository there is a Python Flask Server, that takes care of running the kernel on the back-end, one of the curiosities is that the Intel Realsense camera is connected to the server. This is based on the original design, which intended for a local server only and ROS was to be used for robot control. The gripper and force-torque sensor are included in ROS, because the RG2 and Hex-e sensor are connected to the robot.
+
+For a fully functional application, it is necessary to implement both **RM1-Server** and **RM1-ROS** in your operating system. So you can run the simulation and see the application in operation. For real-world application, it is advisable to print the enclosed **RM1-Gripper** models with the fasteners on a 3D printer and assemble them.
