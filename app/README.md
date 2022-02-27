@@ -27,7 +27,7 @@ user@user-pc:~$ docker-compose run
 
 ## ROS Control
 
-You can run ROS start bash script from this file. Attention: in **./run.sh** change catkin workspace. For example:
+You can run ROS start bash script from this file. Attention: in **./run.sh** change **catkin** workspace. For example:
 
 ```bash
 source ~/catkin_ws/devel/setup.bash
