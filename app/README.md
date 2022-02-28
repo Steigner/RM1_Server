@@ -1,7 +1,7 @@
 # RoboMedicinae1 - Server
 
 ## Sign in:
-There are signature options in the user database, such as:
+There are sign in options to the user database, such as:
 
 **User**
 <p> email: email@email.com      | password: heslo</p>
