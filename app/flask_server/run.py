@@ -1,12 +1,4 @@
-# ===================================================================
-# | Author: Martin Juricek    | Github: https://github.com/Steigner |
-# | SuperVisor: Roman Parak   | Github: https://github.com/rparak   |
-# ===================================================================
-# | Licence: MIT                                                    |
-# ===================================================================
-
-
-
+# script -> import create_app function
 from app import create_app
 
 app = create_app()

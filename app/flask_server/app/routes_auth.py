@@ -39,7 +39,16 @@ import uuid
 from base64 import b64encode
 
 # script -> store variables in back-end
-from .store_tmp import StoreID, StoreIP, Counter, StoreCam, DoneP, Sim, Point, Validation
+from .store_tmp import (
+    StoreID,
+    StoreIP,
+    Counter,
+    StoreCam,
+    DoneP,
+    Sim,
+    Point,
+    Validation,
+)
 
 # library -> create pdf from html
 import pdfkit
@@ -59,10 +68,12 @@ auth = Blueprint("auth", __name__)
 def index():
     return redirect(url_for(".sign_in"))
 
+
 # custom 400 handler
 @auth.errorhandler(400)
 def custom_400(error):
     return render_template("404.html")
+
 
 # page -> route sign in:
 # Note:
@@ -297,16 +308,19 @@ def patient_gen():
 @login_required
 def download():
     if DoneP.done:
-        pdfkit.from_url(request.host + "/patient_gen", "app/pdf/patient_declaration.pdf")
+        pdfkit.from_url(
+            request.host + "/patient_gen", "app/pdf/patient_declaration.pdf"
+        )
         path = "pdf/patient_declaration.pdf"
         try:
             return send_file(path, as_attachment=True)
 
         except FileNotFoundError:
             return render_template("404.html")
-    
+
     else:
         return render_template("404.html")
+
 
 # page -> route patient data:
 # Note:
@@ -317,14 +331,24 @@ def download():
 @login_required
 def patient_data():
     find = request.form["patient"]
-    patient = Patient.query.filter_by(pid=find).first()
-    image = b64encode(patient.photo).decode("utf-8")
+    if find:
+        patient = Patient.query.filter_by(pid=find).first()
+        image = b64encode(patient.photo).decode("utf-8")
 
-    StoreID.id = find
+        StoreID.id = find
 
-    return render_template(
-        "patient_data.html", patient=patient, obj=patient.photo, image=image, cam=StoreCam.cam, done=DoneP.done
-    )
+        return render_template(
+            "patient_data.html",
+            patient=patient,
+            obj=patient.photo,
+            image=image,
+            cam=StoreCam.cam,
+            done=DoneP.done,
+        )
+
+    else:
+        return render_template("patient_menu.html")
+
 
 # page -> route patient data:
 # Note:
@@ -345,19 +369,29 @@ def done():
 
 # page -> route patient data:
 # Note:
-#   ! NO SIM ! 
+#   ! NO SIM !
 #   1. show all data from db2 ibm database of patient
 #   2. get all numbers / strings / blob file -> decoded by b64
 #   2. init patient
 @auth.route("/patient_data_f", methods=["GET", "POST"])
 @login_required
 def patient_data_f():
-    patient = Patient.query.filter_by(pid=StoreID.id).first()
-    image = b64encode(patient.photo).decode("utf-8")
-    
-    return render_template(
-        "patient_data.html", patient=patient, obj=patient.photo, image=image, cam=StoreCam.cam, done=DoneP.done
-    )
+    if StoreID.id:
+        patient = Patient.query.filter_by(pid=StoreID.id).first()
+        image = b64encode(patient.photo).decode("utf-8")
+
+        return render_template(
+            "patient_data.html",
+            patient=patient,
+            obj=patient.photo,
+            image=image,
+            cam=StoreCam.cam,
+            done=DoneP.done,
+        )
+
+    else:
+        return render_template("patient_menu.html")
+
 
 # redirect page -> route sign out:
 # Note:
@@ -375,6 +409,7 @@ def sign_out():
     StoreCam.cam = "none"
     logout_user()
     return render_template("sign_out.html")
+
 
 @auth.teardown_request
 def teardown_request_func(error=None):

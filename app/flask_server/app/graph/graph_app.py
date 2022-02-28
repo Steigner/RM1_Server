@@ -24,7 +24,7 @@ class Show_PointCloud(object):
         else:
             # color_raw = o3d.io.read_image("face.jpg")
             # depth_raw = o3d.io.read_image("face.png")
-            
+
             # realworld test data
             # point = [170, 312]
 
@@ -87,6 +87,7 @@ class Show_PointCloud(object):
         ]
 
         return points[:, 0], points[:, 1], points[:, 2], col, s_point
+
 
 # TESTING PURPOSE
 if __name__ == "__main__":

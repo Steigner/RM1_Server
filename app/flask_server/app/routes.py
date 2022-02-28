@@ -404,9 +404,9 @@ def face_position():
 
         return render_template("con_pan_face_pos.html")
 
-
     else:
-       return render_template('con_pan.html')
+        return render_template("con_pan.html")
+
 
 # page -> face scan:
 # Note:
@@ -433,7 +433,9 @@ def face_scan():
                     return jsonify("once_again")
 
                 else:
-                    _, _, _, _, point = Show_PointCloud.load_pc(Point.point, sim=Sim.sim)
+                    _, _, _, _, point = Show_PointCloud.load_pc(
+                        Point.point, sim=Sim.sim
+                    )
                     Point.point = point
 
                     return jsonify("ok")
@@ -455,9 +457,10 @@ def face_scan():
                     return jsonify("nok")
 
         return render_template("con_pan_face_scan.html", sim=Sim.sim)
-        
+
     else:
-        return render_template('con_pan.html')
+        return render_template("con_pan.html")
+
 
 # page -> route patient data:
 # Note:

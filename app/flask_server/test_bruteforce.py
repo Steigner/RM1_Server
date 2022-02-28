@@ -1,11 +1,16 @@
+# library -> system-specific parameters and functions
 import sys
 
+# library -> simple HTTP library for python
 import requests
 
+# library -> functions creating iterators for efficient looping
 from itertools import product
 
+# library -> time manage
 from time import sleep
 
+# library -> regular expression operations
 from re import fullmatch
 
 # ! Note !
@@ -86,9 +91,7 @@ class TestBruteForce(object):
             print(self.coutv + "[INFO] String is a valid email" + self.cend)
 
         else:
-            print(
-                self.cout + "[WARNING] String is not valid email" + self.cend
-            )
+            print(self.cout + "[WARNING] String is not valid email" + self.cend)
             sys.exit()
 
         # test if is valid URL
@@ -145,11 +148,7 @@ class TestBruteForce(object):
             print(self.cout + "\n[WARNING] Stoping Cracking!" + self.cend)
             sys.exit()
 
-        print(
-            self.cout
-            + "\n[WARNING] Password is not in password list."
-            + self.cend
-        )
+        print(self.cout + "\n[WARNING] Password is not in password list." + self.cend)
 
     def gen_password(self):
         """
