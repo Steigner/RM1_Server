@@ -12,6 +12,9 @@ user@user-pc:~$ poetry install
 user@user-pc:~$ poetry run python run.py
 ```
 
+## JavaScript libraries
+Javascript libraries is imported by **cdnjs**, so for function is neccesary to be connected to internet. But one options is to use offline import, and this libraries is ziped in folder **./app/flask_server/app/static/js/lib**.
+
 ## Test Brute Force
 This is a very simple demonstration of brute force password cracking, to test it you need to disable CRSF in the code. CSRF(Cross-Site Request Forgery). This disable is situated in sciprt **.app/flask_server/app/forms.py**
 
