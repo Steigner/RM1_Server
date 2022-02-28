@@ -7,7 +7,7 @@ One of option is to run as development server, then go to folder **./flask_serve
 ## Docker
 As mentioned above can be run as a docker. 
 
-Dependencies:
+**Dependencies:**
 
 * Docker-compose - [url](https://docs.docker.com/)
 
@@ -40,7 +40,7 @@ source ~/catkin_tt/devel/setup.bash
 
 For control robot is neccesary to have ROS. More information in [RM1-ROS](https://github.com/Steigner/RM1_ROS).
 
-Dependencies:
+**Dependencies:**
 
 * ROS Melodic Morenia(Tested) - [url](http://wiki.ros.org/melodic)
 
