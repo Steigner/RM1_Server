@@ -57,7 +57,7 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 
 ## Screenshots and videos
 
-<p align="center"> <b>Click on full resolution</b> </p>
+<p align="center"> <b>Click to full resolution</b> </p>
 
 ![image](https://user-images.githubusercontent.com/54715463/155899512-e7d854bb-060b-4e19-be24-600c7cabbe04.png)
 
