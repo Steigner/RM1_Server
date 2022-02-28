@@ -75,6 +75,29 @@
 
 	<!-- script -> patient data manage -->
 	<script type="module" src="{{ url_for('static', filename = 'js/patient_data.js') }}"></script>
+
+	{% if cam == "Camera status: device is not pluged-in" %}
+		<script>
+			$("#face_id").prop("disabled", true);
+			$("#select").prop("disabled", true);
+		</script>
+	{% else %}
+		<script>
+			$("#face_id").prop("disabled", false);
+			$("#select").prop("disabled", false);
+		</script>
+	{% endif %}
+
+	{% if done %}
+		<script>
+			$("#gen_pdf").prop("disabled", false);
+		</script>
+	{% else %}
+		<script>
+			$("#gen_pdf").prop("disabled", true);
+		</script>
+	{% endif %}
+
 {% endblock %}
 
 </html>

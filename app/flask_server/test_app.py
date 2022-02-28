@@ -9,9 +9,6 @@ class TestCase(unittest.TestCase):
         app.config['LOGIN_DISABLED'] = True
         self.client = app.test_client()
 
-    def tearDown(self):
-        pass
-
     def test_root(self):
         response = self.client.get('/', follow_redirects=True)
         self.assertAlmostEqual(response.status_code, 200)

@@ -1,4 +1,7 @@
+# library -> image reconstruction to point cloud
 import open3d as o3d
+
+# library -> numpy data manage
 import numpy as np
 
 
@@ -21,7 +24,9 @@ class Show_PointCloud(object):
         else:
             # color_raw = o3d.io.read_image("face.jpg")
             # depth_raw = o3d.io.read_image("face.png")
-            point = [170, 312]
+            
+            # realworld test data
+            # point = [170, 312]
 
             color_raw = o3d.io.read_image("app/graph/face.jpg")
             depth_raw = o3d.io.read_image("app/graph/face.png")
@@ -54,8 +59,8 @@ class Show_PointCloud(object):
                 )
             )
 
-            tup = [6038]
-            print(tup)
+            # tup = [6038]
+            # print(tup)
             # print(pcd.points[tup[0][0]])
 
             # one of the possibility is set angle of motion to nostril by estimated normals
@@ -66,10 +71,10 @@ class Show_PointCloud(object):
             colours = np.asarray(pcd.colors)
             normals = np.asarray(pcd.normals)
 
-            print(normals[tup[0]][0], normals[tup[0]][1], normals[tup[0]][2])
+            # print(normals[tup[0]][0], normals[tup[0]][1], normals[tup[0]][2])
 
-            # s_point = pcd.points[tup[0][0]]
-            s_point = pcd.points[tup[0]]
+            s_point = pcd.points[tup[0][0]]
+            # s_point = pcd.points[tup[0]]
             # s_point = [0.025268396, 0.085912548, 0.50927734]
 
         # this is due to color in plotly graphs
@@ -83,6 +88,6 @@ class Show_PointCloud(object):
 
         return points[:, 0], points[:, 1], points[:, 2], col, s_point
 
-
+# TESTING PURPOSE
 if __name__ == "__main__":
     Show_PointCloud().load_pc()

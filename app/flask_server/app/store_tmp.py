@@ -29,9 +29,7 @@ class StoreCam:
 
 # store Validation for identification in FaceID
 class Validation:
-    # toto by melo by byt ofiko false
-    # val = False
-    val = True
+    val = False
 
     def __init__(self):
         pass
@@ -49,6 +47,20 @@ class Counter:
 # Point to save searched point in 3D reconstruction
 class Point:
     point = []
+
+    def __init__(self):
+        pass
+
+
+# Point to save searched point in 3D reconstruction
+class Sim:
+    sim = False
+
+    def __init__(self):
+        pass
+
+class DoneP:
+    done = False
 
     def __init__(self):
         pass

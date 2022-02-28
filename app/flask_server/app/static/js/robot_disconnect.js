@@ -2,6 +2,15 @@ import { ROS_connect } from './modules/ROS_connect.js';
 
 $(function () {
     $('#disconnect_button').click(function () {
+        // AJAX
+        // Note:
+        //  post robot connect process
+        $.ajax({
+            url: '/robot_disconnect',
+            type: 'POST',
+            data: { value: "disconnect" },
+        });
+
         $('.loading_background, .loading_label, .wrapper').show();
 
         var ros = ROS_connect();

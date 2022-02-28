@@ -39,7 +39,7 @@ import uuid
 from base64 import b64encode
 
 # script -> store variables in back-end
-from .store_tmp import StoreID, StoreIP, Counter
+from .store_tmp import StoreID, StoreIP, Counter, StoreCam, DoneP, Sim, Point, Validation
 
 # library -> create pdf from html
 import pdfkit
@@ -59,6 +59,10 @@ auth = Blueprint("auth", __name__)
 def index():
     return redirect(url_for(".sign_in"))
 
+# custom 400 handler
+@auth.errorhandler(400)
+def custom_400(error):
+    return render_template("404.html")
 
 # page -> route sign in:
 # Note:
@@ -292,14 +296,17 @@ def patient_gen():
 @auth.route("/download")
 @login_required
 def download():
-    pdfkit.from_url(request.host + "/patient_gen", "app/pdf/patient_declaration.pdf")
-    path = "pdf/patient_declaration.pdf"
-    try:
-        return send_file(path, as_attachment=True)
+    if DoneP.done:
+        pdfkit.from_url(request.host + "/patient_gen", "app/pdf/patient_declaration.pdf")
+        path = "pdf/patient_declaration.pdf"
+        try:
+            return send_file(path, as_attachment=True)
 
-    except FileNotFoundError:
+        except FileNotFoundError:
+            return render_template("404.html")
+    
+    else:
         return render_template("404.html")
-
 
 # page -> route patient data:
 # Note:
@@ -316,14 +323,45 @@ def patient_data():
     StoreID.id = find
 
     return render_template(
-        "patient_data.html", patient=patient, obj=patient.photo, image=image
+        "patient_data.html", patient=patient, obj=patient.photo, image=image, cam=StoreCam.cam, done=DoneP.done
     )
 
+# page -> route patient data:
+# Note:
+#   1. show all data from db2 ibm database of patient
+#   2. get all numbers / strings / blob file -> decoded by b64
+#   2. init patient
+@auth.route("/done", methods=["GET", "POST"])
+@login_required
+def done():
+    if request.method == "POST":
+        if request.form["value"] == "done":
+            DoneP.done = True
+            print(DoneP().done)
+            return jsonify("done")
 
-# !!redirect page -> route sign out:
+    return render_template("menu.html")
+
+
+# page -> route patient data:
+# Note:
+#   ! NO SIM ! 
+#   1. show all data from db2 ibm database of patient
+#   2. get all numbers / strings / blob file -> decoded by b64
+#   2. init patient
+@auth.route("/patient_data_f", methods=["GET", "POST"])
+@login_required
+def patient_data_f():
+    patient = Patient.query.filter_by(pid=StoreID.id).first()
+    image = b64encode(patient.photo).decode("utf-8")
+    
+    return render_template(
+        "patient_data.html", patient=patient, obj=patient.photo, image=image, cam=StoreCam.cam, done=DoneP.done
+    )
+
+# redirect page -> route sign out:
 # Note:
 #   1. all back end variables init to originals values and disconnect all devices
-#   2. in progress
 @auth.route("/sign_out")
 @login_required
 def sign_out():
@@ -331,9 +369,12 @@ def sign_out():
     StoreIP.ip = "none"
     StoreID.id = 0
     Counter.counter = 0
+    Point.point = []
+    Sim.sim = False
+    Validation.val = False
+    StoreCam.cam = "none"
     logout_user()
-    return redirect(url_for(".sign_in"))
-
+    return render_template("sign_out.html")
 
 @auth.teardown_request
 def teardown_request_func(error=None):

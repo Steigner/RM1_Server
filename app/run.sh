@@ -8,14 +8,24 @@ P1=$!
 sleep 2
 source ~/catkin_ws/devel/setup.bash
 rosrun tf2_web_republisher tf2_web_republisher &
-P3=$!
-
-sleep 3
-source ~/catkin_ws/devel/setup.bash
-rosrun robo_control switch.py &
 P2=$!
 
-wait $P1 $P2 $P3
+sleep 2
+source ~/catkin_ws/devel/setup.bash
+rosrun robo_control switch.py &
+P3=$!
+
+if [[ $1 != "sim" ]]
+then
+    sleep 2
+    source ~/catkin_ws/devel/setup.bash
+    roslaunch optoforce optoforce.launch &
+    P4=$!
+
+    wait $P1 $P2 $P3 $P4
+else
+    wait $P1 $P2 $P3
+fi
 
 sleep 5
 killall -9 roscore

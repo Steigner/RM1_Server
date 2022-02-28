@@ -37,6 +37,13 @@
 		</div>
 
 	</div>
+	
+	{% if sim %}
+		<script>
+			$("#scan").prop("disabled", true);
+			$(".back_button").click(function () {window.location.href = '/menu'});
+		</script>
+	{% endif %}
 
 {% endblock %}
 

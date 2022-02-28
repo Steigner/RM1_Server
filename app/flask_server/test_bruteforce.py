@@ -8,7 +8,7 @@ from time import sleep
 
 from re import fullmatch
 
-
+# ! Note !
 # INFO FOR CRACKING MUST BE CRSF FALSE!! in WTF forms
 # This script is tested by auto generated comment - Quod AI Code
 

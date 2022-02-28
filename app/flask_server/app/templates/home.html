@@ -56,10 +56,16 @@
         <script type="module">
             import {delete_warning_cookie, delete_error_cookie, insert_warning_cookie} from './static/js/modules/cookies.js';
             delete_error_cookie("Robot is not connected!");
+            $("#disconnect_button.button_home").prop("disabled", false);
+            $("#connect_button.button_home").prop("disabled", true);
+        </script>
+    {% else %}
+        <script>
+            $("#disconnect_button.button_home").prop("disabled", true);
+            $("#connect_button.button_home").prop("disabled", false);
         </script>
     {% endif %}
 
-    <!-- !! in progress fast dec. of scripts -->
     <script>
         $("#reload.button_home").prop("disabled", true);
         $( '.title' ).hide();
@@ -69,19 +75,6 @@
         }, 4000);
     </script>
 
-    <!-- 
-    {% if ip == "none" %}
-        <script>
-            $("#disconnect_button.button_home").prop("disabled", true);
-            $("#connect_button.button_home").prop("disabled", false);
-        </script>
-    {% else %}
-        <script>
-            $("#disconnect_button.button_home").prop("disabled", false);
-            $("#connect_button.button_home").prop("disabled", true);
-        </script>
-    {% endif %}
-    -->
     <script type="module" src="{{ url_for('static', filename = 'js/modules/ROS_connect.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename = 'js/robot_disconnect.js') }}"></script>
 

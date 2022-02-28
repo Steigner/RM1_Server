@@ -114,21 +114,20 @@ $(function () {
                 // connect to ROS
                 var ros = ROS_connect();
 
-                // twist change!!
-                var cmdVel = new ROSLIB.Topic({
+                var pub = new ROSLIB.Topic({
                     ros: ros,
                     name: '/switch',
                     messageType: 'std_msgs/String',
                 });
 
-                var twist = new ROSLIB.Message({
+                var mess = new ROSLIB.Message({
                     data: value,
                 });
                 
                 // on connection start listening
                 ros.on('connection', function () {
                     console.log('Connected and publishing');
-                    cmdVel.publish(twist);
+                    pub.publish(mess);
 
                     var listener = new ROSLIB.Topic({
                         ros: ros,
@@ -186,14 +185,9 @@ $(function () {
                                     $(
                                         '.loading_background, .loading_label, .wrapper'
                                     ).hide();
-                                        
-                                    var init = new ROSLIB.Message({
-                                        data: 'init_mot_kill',
-                                    });
-    
-                                    menu.publish(init);
-
+                                   
                                     window.location.href = '/home';
+                                    
                                 });
                             }, 3000);
                         } else if (
@@ -232,18 +226,13 @@ $(function () {
 
                                 // listen if is motion done
                                 listener.subscribe(function (message) {
-                                alert('Prepare for patient!');
-                                listener.unsubscribe();
-                                $(
-                                    '.loading_background, .loading_label, .wrapper'
-                                ).hide();
-                                var init = new ROSLIB.Message({
-                                    data: 'init_mot_kill',
-                                });
+                                    alert('Prepare for patient!');
+                                    listener.unsubscribe();
+                                    $(
+                                        '.loading_background, .loading_label, .wrapper'
+                                    ).hide();
 
-                                menu.publish(init);
-
-                                window.location.href = '/home';
+                                    window.location.href = '/home';
                                 });
                             }, 3000);
                         }

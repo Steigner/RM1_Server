@@ -5,6 +5,9 @@ import pyrealsense2 as rs
 from app.camera.cam import Camera
 
 
+"""UNUSED SCRIPT"""
+
+
 class TakePC(Camera):
     # public classmethod:
     #   input: none

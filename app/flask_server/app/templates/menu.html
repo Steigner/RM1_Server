@@ -47,31 +47,39 @@
 		</button>
 	</div>
 
-	<!--
 	{% if ip == "none"%}
 		<script>
-		$("#robot_inspection.input").prop("disabled", true);
-		$("#control_panel.input").prop("disabled", true);
-		$("#manual_control_robot.input").prop("disabled", true);
-		$("#face_model.input").prop("disabled", true);
-		</script>
-	{% elif cam == None %}
-		<script>
-		$("#robot_inspection.input").prop("disabled", false);
-		$("#control_panel.input").prop("disabled", true);
-		$("#manual_control_robot.input").prop("disabled", false);
-		$("#face_model.input").prop("disabled", true);
+			$("#robot_inspection.input").prop("disabled", true);
+			$("#manual_control_robot.input").prop("disabled", true);
+			$("#face_model.input").prop("disabled", true);
 		</script>
 	{% else %}
 		<script>
-		$("#robot_inspection.input").prop("disabled", false);
-		$("#control_panel.input").prop("disabled", false);
-		$("#manual_control_robot.input").prop("disabled", false);
-		$("#face_model.input").prop("disabled", true);
+			$("#robot_inspection.input").prop("disabled", false);
+			$("#manual_control_robot.input").prop("disabled", false);
+			$("#face_model.input").prop("disabled", false);
 		</script>
 	{% endif %}
-	-->
-  
+	
+	{% if cam == "Camera status: device is not pluged-in" %}
+		<script>
+			$("#control_panel.input").prop("disabled", true);
+			$("#face_model.input").prop("disabled", true);
+		</script>
+	{% else %}
+		<script>
+			$("#control_panel.input").prop("disabled", false);
+			$("#face_model.input").prop("disabled", false);
+		</script>
+	{% endif %}
+
+	{% if sim %}
+		<script>
+			$("#robot_inspection.input").prop("disabled", true);
+			$("#face_model.input").prop("disabled", false);
+		</script>
+	{% endif %}
+
 {% endblock %}
 
 </html>

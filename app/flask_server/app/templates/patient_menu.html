@@ -37,7 +37,7 @@
 	</div>
 
 	<!-- Protect before camera is initialized -->
-	{% if cam == None %}
+	{% if cam == "Camera status: device is not pluged-in" %}
 		<script>
 			$("#QR_detection.nav_button").prop("disabled", true);
 		</script>

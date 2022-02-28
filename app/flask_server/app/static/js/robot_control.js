@@ -275,8 +275,6 @@ class RobotControl {
         });
     }
 
-    // =============================
-    // IN PROGRESS
     emergency_stop() {
         var data = new ROSLIB.Message({
             data: 'emergency_stop',

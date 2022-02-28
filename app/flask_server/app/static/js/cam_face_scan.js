@@ -36,7 +36,7 @@ $(function () {
     });
 
     $('#test').click(function () {
-        // $(".loading_background, .loading_label, .wrapper").show();
+        $(".loading_background, .loading_label, .wrapper").show();
         
         // ROS NODES
         var ros = ROS_connect();
@@ -79,6 +79,32 @@ $(function () {
                         response.point[1],
                         response.point[2],
                     ]);
+
+                    var listener = new ROSLIB.Topic({
+                        ros: ros,
+                        name: '/info',
+                        messageType: 'std_msgs/String',
+                    });
+
+                    // listen if is motion done
+                    listener.subscribe(function (message) {
+                        listener.unsubscribe();
+                        $(
+                            '.loading_background, .loading_label, .wrapper'
+                        ).hide();
+
+                        $.ajax({
+                            url: '/done',
+                            type: 'POST',
+                            data: { value: 'done' },
+                            success: function (response) {
+                                alert("Process is completed!");
+                            }
+                        });
+
+                        // !! In case of no sim !!
+                        // window.location.href = '/patient_find_f';
+                    });
                 }
             },
             error: function (error) {
