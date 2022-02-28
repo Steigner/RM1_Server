@@ -19,7 +19,7 @@ As mentioned above can be run as a docker.
 
 **Dependencies:**
 
-* Docker-compose - [url](https://docs.docker.com/)
+* Docker-compose - [=>](https://docs.docker.com/)
 
 All in one.
 Builds, creates, starts, and attaches to containers for a service:
@@ -52,7 +52,7 @@ For control robot is neccesary to have ROS. More information in [RM1-ROS](https:
 
 **Dependencies:**
 
-* ROS Melodic Morenia(Tested) - [url](http://wiki.ros.org/melodic)
+* ROS Melodic Morenia(Tested) - [=>](http://wiki.ros.org/melodic)
 
 Run ROS Back-end as simulation:
 
