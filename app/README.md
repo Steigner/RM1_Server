@@ -1,5 +1,15 @@
 # RoboMedicinae1 - Server
 
+## Sign in:
+There are signature options in the user database, such as:
+
+**User**
+<p> email: email@email.com      | password: heslo</p>
+<p> email: author@email.com     | password: heslo</p>
+
+**Admin**
+<p> email: supervisor@email.com | password: heslo</p>
+
 ## Python Flask
 
 One of option is to run as development server, then go to folder **./flask_server**
