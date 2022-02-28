@@ -1,6 +1,6 @@
 # RoboMedicinae1 - Server
 
-## Sign in:
+## Sign in
 There are sign in options to the user database, such as:
 
 **User**
