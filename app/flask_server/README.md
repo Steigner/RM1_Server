@@ -38,3 +38,16 @@ Code formatter for JS, CSS i used extension to Visual Studio Code Prettier. In *
 
 **Dependencies:**
 * Prettier [=>](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+## UnitTest
+The application also has a basic Python unittests, can be changed as needed. To start:
+
+```console
+user@user-pc:~$ poetry run python test_app.py
+```
+
+**----------------------------------------------------------------------**
+
+Ran 16 tests in 49.476s
+
+OK
