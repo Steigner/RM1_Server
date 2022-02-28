@@ -19,6 +19,7 @@ if [[ $1 != "sim" ]]
 then
     sleep 2
     source ~/catkin_ws/devel/setup.bash
+    sudo chmod a+rw /dev/ttyACM0
     roslaunch optoforce optoforce.launch &
     P4=$!
 
