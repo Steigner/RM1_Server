@@ -1,4 +1,7 @@
+# library -> subprocess management
 import subprocess
+
+# library CSV (Comma Separated Values) format
 import csv
 
 
