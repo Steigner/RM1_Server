@@ -38,7 +38,7 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 
 ## Functions
 
-* Search patient in database by PID/Surname or QR code reader
+* Search patient in database by PIN(Perosnal Identification Number)/Surname or QR code reader with PIN
 * Face ID - compare of patient from streaming color image by photo to database
 * Face detection - detection of human face landmarks
 * Scan face - scan aligned color image to depth and reconstructed 3D point cloud
