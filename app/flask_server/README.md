@@ -12,6 +12,17 @@ user@user-pc:~$ poetry install
 user@user-pc:~$ poetry run python run.py
 ```
 
+or
+
+* PIP [=>](https://pip.pypa.io/en/stable/)
+
+```console
+user@user-pc:~$ python3 -m venv my_venv
+user@user-pc:~$ source my_venv/bin/activate
+(my_venv) user@user-pc:~$ pip install -r requirements.txt
+(my_venv) user@user-pc:~$ python3 run.py
+```
+
 ## JavaScript libraries
 Javascript libraries is imported by **cdnjs**, so for function is neccesary to be connected to internet. But one options is to use offline import, and I ziped libraries in folder **./app/flask_server/app/static/js/lib**.
 
