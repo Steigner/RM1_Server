@@ -38,14 +38,14 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 
 ## Functions
 
-* Search patient in database by PID/Surname or QR code reader
+* Search patient in database by PIN(Perosnal Identification Number)/Surname or QR code reader with PIN
 * Face ID - compare of patient from streaming color image by photo to database
 * Face detection - detection of human face landmarks
 * Scan face - scan aligned color image to depth and reconstructed 3D point cloud
 * Identification of center of nostril - own programmed seg. cnn for nostrils with post processing of centroid
 * Manual control of robot - simple UI for control robot joints
-* Show point cloud in broswer
-* Show digital twin in broswer
+* Show point cloud in browser
+* Show digital twin in browser
 * Get basic data about weather
 * Streaming color, depth, infra image 
 * Streaming basic data from robot
