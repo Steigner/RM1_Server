@@ -1,13 +1,13 @@
 # RoboMedicinae1 - Server
 
 ## Sign in
-There are sign in options to the user database, such as:
+There are options for sign in into the user database, such as:
 
-**User**
+**User:**
 <p> email: email@email.com      | password: heslo</p>
 <p> email: author@email.com     | password: heslo</p>
 
-**Admin**
+**Admin:**
 <p> email: supervisor@email.com | password: heslo</p>
 
 ## Python Flask
