@@ -73,7 +73,7 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 
 ![image](https://user-images.githubusercontent.com/54715463/155900015-231af3f1-15e2-4520-85c3-ccabb89b4ef5.png)
 
-![image](https://user-images.githubusercontent.com/54715463/155900040-e9eb73f9-597c-438b-b270-e06cfaa8f251.png)
+![patient_data](https://user-images.githubusercontent.com/54715463/160019352-1d882d6d-75cd-4df8-89b8-99d5c110be24.png)
 
 ![test](https://user-images.githubusercontent.com/54715463/155900091-78fa76ad-a566-49d8-b847-1ce7e81e3243.jpg)
 
