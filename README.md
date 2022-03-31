@@ -26,6 +26,9 @@ For a fully functional application, it is necessary to implement both **RM1-Serv
 
 During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-compose or purely in Python, for more information go to the **/app** directory.
 
+* 1280x720
+* 1080x960
+
 **Server software equipment**
 
 | Part                       | Software                    |
