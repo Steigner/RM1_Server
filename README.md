@@ -18,13 +18,16 @@ RM1 is an experimental robotic platform created to automate antigen testing. Thi
 + [<=](https://github.com/Steigner/RM1_server) RM1 - Server
 + [<=](https://github.com/Steigner/RM1_ROS) RM1 - ROS         
 + [<=](https://github.com/Steigner/RM1_Gripper) RM1 - Gripper
-+ RM1 - Seg. ANN
++ [<=](https://github.com/Steigner/RM1_SegCNN) RM1 - SegCNN
 
 In this repository there is a Python Flask Server, that takes care of running the kernel on the back-end, one of the curiosities is that the Intel Realsense camera is connected to the server. This is based on the original design, which intended for a local server only and ROS was to be used for robot control. The gripper and force-torque sensor are controled and included in ROS, because the RG2 and Hex-e sensor are connected to the robot.
 
 For a fully functional application, it is necessary to implement both **RM1-Server** and **RM1-ROS** in your operating system. So you can run the simulation and see the application in operation. For real-world application, it is advisable to print the enclosed **RM1-Gripper** models with the fasteners on a 3D printer and assemble them.
 
 During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-compose or purely in Python, for more information go to the **/app** directory.
+
+* 1280x720
+* 1080x960
 
 **Server software equipment**
 
