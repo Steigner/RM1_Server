@@ -37,7 +37,7 @@ from .camera.func_take_pc import TakePC
 from .robot.get_data import Robot_info
 
 # script -> store variables in back-end
-from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation, Point, Sim
+from .store_tmp import StoreID, StoreIP, StoreCam, Counter, Validation, Point, Sim, Point2
 
 # script -> detect server ip-adress(self ip adress)
 from .self_ipadress import get_ip
@@ -205,7 +205,7 @@ def menu():
 @app.route("/con_pan")
 @login_required
 def con_pan():
-    return render_template("con_pan.html")
+    return render_template("con_pan.html", pid=StoreID.id)
 
 
 # page -> route robot control:
@@ -423,6 +423,8 @@ def face_scan():
                 try:
                     NostrillDet.start()
                     Point.point = NostrillDet.scan_nostrill()
+                    
+                    print(Point().point)
                     time.sleep(0.5)
                     NostrillDet.stop()
 
@@ -436,19 +438,21 @@ def face_scan():
                     _, _, _, _, point = Show_PointCloud.load_pc(
                         Point.point, sim=Sim.sim
                     )
-                    Point.point = point
+                    print(Sim.sim)
+                    Point2.point = point
+                    print(Point2().point)
 
                     return jsonify("ok")
 
             if request.form["value"] == "test":
-                if Point.point:
+                if Point2.point is not None:
                     return jsonify(
                         {
                             "sim": Sim.sim,
                             "point": [
-                                Point().point[0],
-                                Point().point[1],
-                                Point().point[2],
+                                Point2.point[0],
+                                Point2.point[1],
+                                Point2.point[2],
                             ],
                         }
                     )

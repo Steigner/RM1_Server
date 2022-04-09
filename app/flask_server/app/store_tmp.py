@@ -5,7 +5,7 @@
 
 # store id for search patient in database
 class StoreID:
-    id = 0
+    id = None
 
     def __init__(self):
         pass
@@ -51,6 +51,12 @@ class Point:
     def __init__(self):
         pass
 
+# Point to save searched point in 3D reconstruction
+class Point2:
+    point = []
+
+    def __init__(self):
+        pass
 
 # Point to save searched point in 3D reconstruction
 class Sim:

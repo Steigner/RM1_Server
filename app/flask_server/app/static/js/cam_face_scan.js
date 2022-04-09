@@ -88,6 +88,7 @@ $(function () {
 
                     // listen if is motion done
                     listener.subscribe(function (message) {
+                        console.log(message.data);
                         listener.unsubscribe();
                         $(
                             '.loading_background, .loading_label, .wrapper'
@@ -98,7 +99,14 @@ $(function () {
                             type: 'POST',
                             data: { value: 'done' },
                             success: function (response) {
-                                alert("Process is completed!");
+                                if (message.data == "emergency") {
+                                    //alert("Process is stopped!");
+                                }
+                                else{
+                                    alert("Process is completed!");
+                                }
+                                
+                                point.set([]);
                             }
                         });
 

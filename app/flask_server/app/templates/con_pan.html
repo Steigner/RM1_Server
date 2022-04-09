@@ -47,6 +47,16 @@
 		});
 	</script>
 
+	{% if pid == None%}
+		<script>
+			$("#face_id").prop("disabled", true);
+		</script>
+	{% else %}
+		<script>
+			$("#face_id").prop("disabled", false);
+		</script>
+	{% endif %}
+
 {% endblock %}
 
 </html>

@@ -10,7 +10,7 @@ from app.camera.cam import Camera
 class NostrillDet(Camera):
     @classmethod
     def __init_detection_model(cls):
-        cls.net = cv2.dnn.readNetFromONNX("app/camera/settings/nm_unet_1.onnx")
+        cls.net = cv2.dnn.readNetFromONNX("app/camera/settings/Unet.onnx")
 
     @classmethod
     def stop(cls):

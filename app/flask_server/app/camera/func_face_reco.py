@@ -1,5 +1,5 @@
 # library -> The world's simplest facial recognition api
-import face_recognition
+# import face_recognition
 
 # library -> opencv
 import cv2

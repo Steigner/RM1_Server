@@ -34,7 +34,7 @@ class Show_PointCloud(object):
             imge = np.asarray(color_raw)
             imge[point[1], point[0]] = [255, 255, 255]
 
-            print(point[1], point[0])
+            # print(point[1], point[0])
 
             color_raw = o3d.geometry.Image(imge)
 
