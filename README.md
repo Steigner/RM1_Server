@@ -15,6 +15,7 @@
 ## About
 RM1 is an experimental robotic platform created to automate antigen testing. This project was developed as part of a master's thesis. The aim was to create a functional and modular prototype that is easily modifiable and deployable after debugging. The basic idea is to create a web-based server that communicates with ROS. ROS was used in the work as a simulation and debugging environment, mainly for robot control. The thesis is divided into four main parts:
 
++ [<=](https://github.com/Steigner/Robo_Medicinae_I) Robo Medicinae I
 + [<=](https://github.com/Steigner/RM1_server) RM1 - Server
 + [<=](https://github.com/Steigner/RM1_ROS) RM1 - ROS         
 + [<=](https://github.com/Steigner/RM1_Gripper) RM1 - Gripper
@@ -58,6 +59,33 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 * Pick and place, motion to detected center of nostril 
 * Simulation x Real world control of robot
 
+
+## ARM architecture
+The solution was tested on a single board computer Nvidia Jetson Xavier Development Kit. This computer is based on ARM architecture while this server was developed on x86 architecture. The alternative of adding Docker Compose for ARM is not currently addressed. The solution has been tested on the Flask development server. Here are some notes on how to get the solution running on ARM:
+
+* Install Python >=3.8
+* Do not use Poetry package manager, some libries raise up installation error.
+* Install the libraries directly into Python PIP.
+* The main problem arises with Intel Realsense. -> It is recommended to build the SDK from source.
+
+Procedure:
+1) Download librealsense source as .zip: https://github.com/IntelRealSense/librealsense/releases/
+2) After downloading the .zip file, its contents should be extracted so that you have a librealsense folder
+3) go to the librealsense root directory
+
+```bash
+$ mkdir build && cd build
+$ cmake ../ -DFORCE_RSUSB_BACKEND=ON -DBUILD_PYTHON_BINDINGS:bool=true -DPYTHON_EXECUTABLE=/usr/bin/python3.8
+# Note: -DPYTHON_EXECUTABLE=/usr/bin/python3.8 -> path to installed Python
+$ make -j4
+$ sudo make install
+$ export PYTHONPATH=$PYTHONPATH:/home/jetson/Desktop/librealsense-2.50.0/build/wrappers/python
+# Note: librealsense-2.50.0 -> depands on version of downloaded version SDK (if you not change name)
+$ sudo nano .bashrc
+# Note: paste into .bashrc command export PYTHONPATH=$PYTHONPATH:/home/jetson/Desktop/librealsense-2.50.0/build/wrappers/python
+```
+Source: https://couka.de/2020/10/27/jetson-nano-install-librealsense-with-python-bindings/
+
 ## Screenshots and videos
 
 <p align="center"> <b>Click to full resolution</b> </p>
@@ -85,6 +113,11 @@ During the design, emphasis was put on modularity, for the benefit of the user i
 * Author: Martin Juricek
 * Designer: Katerina Monsportova
 * Supervisor: Roman Parak
+
+## Citation
+If you want to quote please check the header repository. 
+
+github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I) 
 
 ## References
 
