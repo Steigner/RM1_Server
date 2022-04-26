@@ -5,7 +5,7 @@
 ***
 
 # RoboMedicinae1 - Server
-<a href="https://github.com/Steigner/RM1_server/blob/main/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
+<a href="https://github.com/Steigner/RM1_server/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/Steigner/RM1_Server.svg"></a>
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 **Open-source, copy and modify what you need!**
@@ -119,9 +119,9 @@ Source: https://couka.de/2020/10/27/jetson-nano-install-librealsense-with-python
 * Supervisor: Roman Parak
 
 ## Citation
-If you want to quote please check the header repository. 
+If you want to cite please check the header repository. 
 
-github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I) 
+github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I#citation) 
 
 ## References
 
