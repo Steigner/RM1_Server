@@ -25,9 +25,9 @@ In this repository there is a Python Flask Server, that takes care of running th
 
 For a fully functional application, it is necessary to implement both **RM1-Server** and **RM1-ROS** in your operating system. So you can run the simulation and see the application in operation. For real-world application, it is advisable to print the enclosed **RM1-Gripper** models with the fasteners on a 3D printer and assemble them.
 
-During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-compose or purely in Python, for more information go to the **/app** directory.
+During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-Compose or purely in Python, for more information go to the **/app** directory.
 
-**Note** If there will be a problem with poetry in the **requriements.txt** file there should be a working library configuration.
+**Note:** If there will be a problem with poetry in the **requriements.txt** file there should be a working library configuration.
 
 Supported resolution:
 
