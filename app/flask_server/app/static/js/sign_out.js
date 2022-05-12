@@ -1,3 +1,6 @@
+// Script - connect to ROS and quit all
+// subprogrammes!
+
 var ros = new ROSLIB.Ros();
 
 ros.connect('ws://localhost:9090');

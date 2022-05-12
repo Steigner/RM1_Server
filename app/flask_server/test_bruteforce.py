@@ -27,7 +27,7 @@ class TestBruteForce(object):
         # number of combination of chars
         self.combination = 3
 
-        # path to generated passwords
+        # Attention! - Path to generated passwords - change !!
         self.path = "test_bruteforce.txt"
 
         self.__email = None

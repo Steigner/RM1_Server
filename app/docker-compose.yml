@@ -1,6 +1,7 @@
 version: "3.7"
 
 services:
+  # Run Flask server
   flask:
     build: ./flask_server
     container_name: flask_server
@@ -10,15 +11,16 @@ services:
     expose:
       - 8080
     
-    # eneable Camera to docker acces
-    devices:
-      - /dev/video0:/dev/video0
-      - /dev/video1:/dev/video1
-      - /dev/video2:/dev/video2
-      - /dev/video3:/dev/video3
-      - /dev/video4:/dev/video4
-      - /dev/video5:/dev/video5
+    # eneable Intel realsense D435i Camera to docker acces
+    # devices:
+    #  - /dev/video0:/dev/video0
+    #  - /dev/video1:/dev/video1
+    #  - /dev/video2:/dev/video2
+    #  - /dev/video3:/dev/video3
+    #  - /dev/video4:/dev/video4
+    #  - /dev/video5:/dev/video5
 
+  # Run Nginx container
   nginx:
     build: ./nginx
     container_name: nginx

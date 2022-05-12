@@ -11,7 +11,9 @@ $(function () {
 
         success: function (response) {
             var points = [];
-
+            
+            // Push PointCloud by rosbridge to ROS and visualize 
+            // by Rviz Tool
             for (let i = 0; i < response.x.length; i++) {
                 const dict = {
                     x: -response.x[i],
@@ -22,20 +24,24 @@ $(function () {
             }
 
             var ros = ROS_connect();
-
+            
+            // special point dlouc message type
             var pcd = new ROSLIB.Topic({
                 ros: ros,
                 name: '/pcd',
                 messageType: 'sensor_msgs/PointCloud',
             });
-
+            
+            // set tf link
             var data = new ROSLIB.Message({
                 header: { frame_id: 'camera_link' },
                 points: points,
             });
 
+            // publish
             pcd.publish(data);
-
+            
+            // Push center of nostril by rosbridge to ROS and visualize 
             var pcd2 = new ROSLIB.Topic({
                 ros: ros,
                 name: '/pcd2',
@@ -46,15 +52,17 @@ $(function () {
 
             const dict = { x: -response.nx, y: -response.ny, z: response.nz };
             points.push(dict);
-
+            
+            // set tf link
             var data2 = new ROSLIB.Message({
                 header: { frame_id: 'camera_link' },
                 points: points,
             });
-
+            
+            // publish
             pcd2.publish(data2);
 
-            // Define Data
+            // Define Data for visualization in Plotly.js
             var data1 = {
                 x: response.x,
                 y: response.y,
@@ -112,17 +120,20 @@ $(function () {
                     b: 0,
                     t: 0,
                 },
-
+                
+                // set sidebar
                 modebar: {
                     orientation: 'v',
                     bgcolor: 'rgba(242, 242, 242, 1)',
                     color: 'rgb(33, 105, 124)',
                     scale: 10,
                 },
-
+                
+                // background
                 paper_bgcolor: 'rgba(0,0,0,0)',
             };
-
+            
+            // hide until is loaded pointcloud
             Plotly.newPlot('point_cloud', datal, layout, {
                 displayModeBar: true,
             }).then(function () {

@@ -1,3 +1,7 @@
+// Script - simple change change data in database of users.
+// Simple interaction with tables by Javascript
+// All is done by AJAX request to server to change
+
 $(function () {
     $('.change').prop('disabled', true);
     $('.delete').prop('disabled', true);

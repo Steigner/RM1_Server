@@ -65,7 +65,7 @@ class Sim:
     def __init__(self):
         pass
 
-
+# Auxiliary variable if is done process
 class DoneP:
     done = False
 

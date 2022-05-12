@@ -16,16 +16,16 @@ rosrun robo_control switch.py &
 P3=$!
 
 if [[ $1 != "sim" ]]
-then
-    sleep 2
-    source ~/catkin_ws/devel/setup.bash
-    sudo chmod a+rw /dev/ttyACM0
-    roslaunch optoforce optoforce.launch &
-    P4=$!
+    then
+        sleep 2
+        source ~/catkin_ws/devel/setup.bash
+        sudo chmod a+rw /dev/ttyACM0
+        roslaunch optoforce optoforce.launch &
+        P4=$!
 
-    wait $P1 $P2 $P3 $P4
-else
-    wait $P1 $P2 $P3
+        wait $P1 $P2 $P3 $P4
+    else
+        wait $P1 $P2 $P3
 fi
 
 sleep 5

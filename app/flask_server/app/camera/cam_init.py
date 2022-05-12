@@ -4,6 +4,10 @@ import json
 
 
 class Camera_Init(object):
+    # public classmethod:
+    #   input: none
+    #   return: info and status of plugged Intel Realsense camera 
+    # Note: Check if camera is compatibile with solution.
     @classmethod
     def find_device_that_supports_advanced_mode(cls):
         DS5_product_ids = [
@@ -35,6 +39,10 @@ class Camera_Init(object):
 
                 return dev, info
 
+    # public classmethod:
+    #   input: check settings
+    #   return: status
+    # Note: Methods which eneable advanced mode in camera and put pre-settings.
     @classmethod
     def inicialize(cls, c=False):
         dev, info = cls.find_device_that_supports_advanced_mode()
