@@ -5,7 +5,7 @@
 ***
 
 # RoboMedicinae1 - Server
-<a href="https://github.com/Steigner/RM1_server/blob/main/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
+<a href="https://github.com/Steigner/RM1_server/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/Steigner/RM1_Server.svg"></a>
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 **Open-source, copy and modify what you need!**
@@ -25,9 +25,9 @@ In this repository there is a Python Flask Server, that takes care of running th
 
 For a fully functional application, it is necessary to implement both **RM1-Server** and **RM1-ROS** in your operating system. So you can run the simulation and see the application in operation. For real-world application, it is advisable to print the enclosed **RM1-Gripper** models with the fasteners on a 3D printer and assemble them.
 
-During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-compose or purely in Python, for more information go to the **/app** directory.
+During the design, emphasis was put on modularity, for the benefit of the user it is possible to run the server in Docker-Compose or purely in Python, for more information go to the **/app** directory.
 
-**Note** If there will be a problem with poetry in the **requriements.txt** file there should be a working library configuration.
+**Note:** If there will be a problem with poetry in the **requriements.txt** file there should be a working library configuration.
 
 Supported resolution:
 
@@ -119,9 +119,9 @@ Source: https://couka.de/2020/10/27/jetson-nano-install-librealsense-with-python
 * Supervisor: Roman Parak
 
 ## Citation
-If you want to quote please check the header repository. 
+If you want to cite please check the header repository. 
 
-github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I) 
+github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I#citation) 
 
 ## References
 
