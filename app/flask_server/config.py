@@ -11,7 +11,7 @@ class Config:
         "db_users": "sqlite:///database/db_users.db",
         "db_patients": "sqlite:///database/db_patients.db",
         # switch between db2 and sqlite
-        # 'db_patients': 'db2://sxj87782:6hns9qcp60qx39%409@dashdb-txn-sbox-yp-lon02-13.services.eu-gb.bluemix.net:50000/BLUDB'
+        # 'db_patients': 'db2://'
     }
     # property for commit changes into databases
     SQLALCHEMY_TRACK_MODIFICATIONS = True
